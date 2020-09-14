@@ -3,7 +3,7 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.12.2
   aws-ecs: circleci/aws-ecs@1.3.0
 jobs:
-  test:
+  Test:
     machine:
       image: circleci/classic:edge
     steps:
@@ -23,17 +23,17 @@ jobs:
 workflows:
   build_and_push_image:
     jobs:
-      - test
+      - Test
       - aws-ecr/build-and-push-image:
           name: ECR
           requires:
-            - test
+            - Test
           filters:
             branches:
               only:
                 - deploy
           account-url: AWS_ECR_ACCOUNT_URL
-          repo: AWS_RESOURCE_NAME_PREFIX
+          repo: ${AWS_RESOURCE_NAME_PREFIX}
           region: AWS_DEFAULT_REGION
           tag: CIRCLE_SHA1
       - aws-ecs/deploy-service-update:
