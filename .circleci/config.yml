@@ -32,15 +32,15 @@ workflows:
             branches:
               only:
                 - deploy
-          account-url: ${AWS_ECR_ACCOUNT_URL}
-          repo: ${AWS_RESOURCE_NAME_PREFIX}
-          region: ${AWS_DEFAULT_REGION}
-          tag: ${CIRCLE_SHA1}
+          account-url: AWS_ECR_ACCOUNT_URL
+          repo: "${AWS_RESOURCE_NAME_PREFIX}"
+          region: AWS_DEFAULT_REGION
+          tag: "${CIRCLE_SHA1}"
       - aws-ecs/deploy-service-update:
           name: ECS
           requires:
             - ECR
-          aws-region: ${AWS_DEFAULT_REGION}
-          family: ${AWS_RESOURCE_NAME_PREFIX}
-          cluster-name: ${AWS_RESOURCE_NAME_PREFIX}
+          aws-region: AWS_DEFAULT_REGION
+          family: "${AWS_RESOURCE_NAME_PREFIX}"
+          cluster-name: "${AWS_RESOURCE_NAME_PREFIX}"
           container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX},tag=${CIRCLE_SHA1}"
