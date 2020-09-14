@@ -35,7 +35,7 @@ workflows:
           account-url: AWS_ECR_ACCOUNT_URL
           repo: AWS_RESOURCE_NAME_PREFIX
           region: AWS_DEFAULT_REGION
-          tag: "latest"
+          tag: CIRCLE_SHA1
       - aws-ecs/deploy-service-update:
           name: ECS
           requires:
