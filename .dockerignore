@@ -1,0 +1,8 @@
+deployment
+docker-compose.yml
+Dockerfile
+Dockerfile.dev
+.gitignore
+tmp
+docker
+wecircles

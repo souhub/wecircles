@@ -1,0 +1,45 @@
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@6.12.2
+  aws-ecs: circleci/aws-ecs@1.3.0
+jobs:
+  test:
+    machine:
+      image: circleci/classic:edge
+    steps:
+      - checkout
+      - run:
+          name: docker-compose build
+          command: docker-compose build
+      - run:
+          name: docker-compose up
+          command: docker-compose up -d
+      - run:
+          name: go test
+          command: docker-compose run wecircles go test ./...
+      - run:
+          name: docker-compose down
+          command: docker-compose down
+workflows:
+  build_and_push_image:
+    jobs:
+      - test
+      - aws-ecr/build-and-push-image:
+          name: Build wecircles image
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - deploy
+          account-url: AWS_ECR_ACCOUNT_URL
+          repo: AWS_RESOURCE_NAME_PREFIX
+          region: AWS_DEFAULT_REGION
+          tag: CIRCLE_SHA1
+      - aws-ecs/deploy-service-update:
+          requires:
+            - Build wecircles image
+          aws-region: AWS_DEFAULT_REGION
+          family: AWS_RESOURCE_NAME_PREFIX
+          cluster-name: AWS_RESOURCE_NAME_PREFIX
+          container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX},tag=${CIRCLE_SHA1}"

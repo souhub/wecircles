@@ -1,0 +1,17 @@
+[{
+    "name": "wecircles",
+    "image": "535411933495.dkr.ecr.ap-northeast-1.amazonaws.com/wecircles",
+    "memoryReservation": 500,
+    "essential": true,
+    "portMappings": [{
+        "containerPort": 80,
+        "protocol": "tcp"
+    }],
+    "secrets": [{
+        "name": "DB_PASS",
+        "valueFrom": "/wecircles/rds/password"
+    }, {
+        "name": "DB_ENDPOINT",
+        "valueFrom": "/wecircles/rds/endpoint"
+    }]
+}]

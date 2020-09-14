@@ -1,0 +1,23 @@
+version: "3"
+services:
+  wecircles:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/go/src/github.com/souhub/wecircles
+    ports:
+      - "80:80"
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:8.0.20
+    volumes:
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+      - ./docker/mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: devPass
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306

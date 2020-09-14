@@ -1,0 +1,15 @@
+# configs
+configs/.env
+
+# deployment
+deployment/aws/.terraform
+deployment/aws/terraform.tfstate
+deployment/aws/.terraform.tfstate.lock.info
+deployment/aws/terraform.tfstate.backup
+
+# docker
+docker/mysql/data
+
+# others
+tmp
+wecircles

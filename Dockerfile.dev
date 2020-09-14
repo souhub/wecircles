@@ -1,0 +1,27 @@
+# _________________Development___________________________
+FROM golang:1.15.0-alpine3.12
+
+WORKDIR /go/src/github.com/souhub/wecircles
+
+RUN apk add --no-cache \
+    alpine-sdk \
+    git \
+    && go get github.com/pilu/fresh
+
+COPY . .
+
+RUN go build
+
+ENV DB_USER root
+
+ENV DB_PASS devPass
+
+ENV DB_ENDPOINT mysql:3306
+
+ENV DB_PROTOCOL tcp
+
+ENV DB_NAME wecircles
+
+EXPOSE 80
+
+CMD ["fresh"]
