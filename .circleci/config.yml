@@ -32,7 +32,7 @@ workflows:
             branches:
               only:
                 - deploy
-          account-url: AWS_ECR_ACCOUNT_URL
+          account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
           repo: AWS_RESOURCE_NAME_PREFIX
           region: AWS_DEFAULT_REGION
           tag: CIRCLE_SHA1
