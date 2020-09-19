@@ -1,0 +1,33 @@
+{{define "content"}}
+<div class="mx-auto" style="width: 50%;">
+  <form action="/post/update" method="post">
+    <h1>
+      <input
+        type="text"
+        name="title"
+        value="{{.Title}}"
+        class="form-control font-weight-bold"
+        style="font-size: 30px;"
+      />
+    </h1>
+    <a>{{.UserName}}</a>
+    <p>{{.CreatedAt}}</p>
+    <p>
+      <textarea
+        type="text"
+        name="body"
+        class="form-control auto-resize"
+        style="line-height: 16px; white-space: prewrap;"
+        rows="50"
+      >
+{{.Body}}</textarea
+      >
+    </p>
+    <button type="submit" class="btn btn-outline-success btn-block">
+      更新
+    </button>
+    <input type="hidden" name="uuid" value="{{.Uuid}}" />
+  </form>
+  <a href="/" class="btn btn-outline-secondary btn-block mt-3">戻る</a>
+</div>
+{{end}}

@@ -1,7 +1,11 @@
 {{define "content"}}
-<h1 class="text-center">みんなの学習日誌</h1>
 
-{{range .}}
+<div>
+  {{.Name}}
+</div>
+
+{{range .Posts}}
+<img src="/static/img/user/default_profile.jpeg" />
 <div class="card mx-auto mb-5" style="width: 55%;">
   <a href="/post/show?id={{.Uuid}}">
     <svg
@@ -30,10 +34,9 @@
       {{end}}
     </div>
     <div class="card-body">
-      <a href="/user/show?id={{.UserIdStr}}">{{.UserIdStr}}</a>
+      <a href="#">{{.UserName}}</a>
       <p>{{.CreatedAt}}</p>
     </div>
   </a>
 </div>
-
 {{end}} {{end}}
