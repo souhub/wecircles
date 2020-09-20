@@ -1,0 +1,68 @@
+package route
+
+import (
+	"errors"
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"text/template"
+	"wecircles/data"
+)
+
+//"_cookie"のValueとUuidと同じUuidを持つSessionを取得
+func session(w http.ResponseWriter, r *http.Request) (sess data.Session, err error) {
+	cookie, err := r.Cookie("_cookie")
+	if err == nil {
+		sess = data.Session{Uuid: cookie.Value}
+		if ok, _ := sess.Check(); !ok {
+			err = errors.New("Invalid Session")
+		}
+	}
+	return
+}
+
+func parseTemplateFiles(filenames ...string) (t *template.Template) {
+	var files []string
+	for _, file := range filenames {
+		files = append(files, fmt.Sprintf("web/templates/%s.html", file))
+	}
+	t = template.Must(t.ParseFiles(files...))
+	return
+}
+
+func upload(w http.ResponseWriter, r *http.Request) {
+	//メソッドをPOSTのみ許可
+	if r.Method != "POST" {
+		warn("許可されていないメソッド")
+	}
+
+	//formから送信されたファイルを解析
+	file, fileHeader, err := r.FormFile("image")
+	if err != nil {
+		warn("ファイルのアップロード失敗")
+	}
+	//アップロードされたファイル名を取得
+	uploadedFileName := fileHeader.Filename
+	//アップロードされたファイルを置くパスを設定
+	imagePath := "web/img/user/" + uploadedFileName
+
+	//imagePathにアップロードされたファイルを保存
+	saveImage, err := os.Create(imagePath)
+	if err != nil {
+		warn("ファイルの確保失敗")
+	}
+
+	//保存用ファイルにアップロードされたファイルを書き込む
+	_, err = io.Copy(saveImage, file)
+	if err != nil {
+		warn("アップロードしたファイルの書き込み失敗")
+	}
+
+	//saveImageとfileを最後に閉じる
+	defer saveImage.Close()
+	defer file.Close()
+
+	//もう1周
+	http.Redirect(w, r, "/mypage", 302)
+}

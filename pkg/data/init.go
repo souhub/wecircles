@@ -18,6 +18,7 @@ func init() {
 	dbEndpoint := os.Getenv("DB_ENDPOINT")
 	dbName := os.Getenv("DB_NAME")
 	dsn := fmt.Sprintf("%s:%s@%s(%s)/%s", dBUser, dBPass, dbProtocol, dbEndpoint, dbName)
+	var err error
 	db, err = sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)
@@ -31,8 +32,7 @@ func init() {
 		userIdStr STRING,
 		password STRING,
 		image_path STRING,
-		created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP `
+		created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP`
 	_, err = db.Exec(cmd)
 	if err != nil {
 		log.Fatal(err)
@@ -44,9 +44,8 @@ func init() {
 		uuid STRING
 		email STRING
 		user_id INT
-		user_str STRING
-		created_at TIMESTAMP NOT NULL DEFAULT CURRNET_TIMESTAMP,
-		updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`
+		user_id_str STRING
+		created_at TIMESTAMP NOT NULL DEFAULT CURRNET_TIMESTAMP`
 	_, err = db.Exec(cmd)
 	if err != nil {
 		log.Fatal(err)

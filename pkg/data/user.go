@@ -1,11 +1,10 @@
 package data
 
 import (
+	"log"
 	"time"
 
 	"github.com/google/uuid"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/souhub/wecircles/pkg/config"
 )
 
 type User struct {
@@ -17,6 +16,7 @@ type User struct {
 	Password  string `validate:"required"`
 	ImgPass   string
 	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 type Session struct {
@@ -29,38 +29,53 @@ type Session struct {
 }
 
 func Users() (users []User, err error) {
-	db := config.NewDB()
-	err = db.Table("users").Find(&users).Error
+	defer db.Close()
+	cmd := "SELECT * FROM users"
+	rows, err := db.Query(cmd)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	for rows.Next() {
+		var user User
+		err = rows.Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt, &user.UpdatedAt)
+		if err != nil {
+			return
+		}
+		users = append(users, user)
+	}
+	rows.Close()
 	return
 }
 
-func UserByEmail(email string) (user User) {
-	db := config.NewDB()
-	db.Table("users").Where("email=?", email).Scan(&user)
-	return user
+func UserByEmail(email string) (user User, err error) {
+	defer db.Close()
+	cmd := "SELECT * FROM users WHERE email=?"
+	err = db.QueryRow(cmd, email).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt, &user.UpdatedAt)
+	return
 }
 
 func UserByUserIdStr(user_id_str string) (user User, err error) {
-	db := config.NewDB()
-	err = db.Table("users").Where("user_id_str=?", user_id_str).Scan(&user).Error
+	defer db.Close()
+	cmd := "SELECT * FROM users WHERE user_id_str=?"
+	err = db.QueryRow(cmd, user_id_str).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt, &user.UpdatedAt)
+	return user, err
+}
+
+func (user *User) CreateSession() (session Session, err error) {
+	statement := "INSERT INTO sessions (uuid,email,user_id,user_id_str) VALUES (?,?,?,?) RETURNING id,uuid,email,user_id,user_id_str,created_at"
+	stmt, err := db.Prepare(statement)
+	if err != nil {
+		return
+	}
+	defer stmt.Close()
+	err = stmt.QueryRow(uuid.New().String(), user.Email, user.Id).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.UserIdStr, &session.CreatedAt)
 	return
 }
 
-func (user *User) CreateSession() Session {
-	session := Session{
-		Uuid:      uuid.New().String(),
-		Email:     user.Email,
-		UserId:    user.Id,
-		CreatedAt: time.Now(),
-	}
-	db := config.NewDB()
-	db.Table("sessions").Create(&session)
-	return session
-}
-
 func (session *Session) Check() (valid bool, err error) {
-	db := config.NewDB()
-	err = db.Table("sessions").Where("uuid=?", session.Uuid).Scan(&session).Error
+	defer db.Close()
+	cmd := "SELECT * FROM sessions WHERE uuid=?"
+	err = db.QueryRow(cmd, session.Uuid).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
 	if err != nil {
 		valid = false
 		return
@@ -72,20 +87,24 @@ func (session *Session) Check() (valid bool, err error) {
 }
 
 func (session *Session) User() (user User, err error) {
-	user = User{}
-	db := config.NewDB()
-	err = db.Table("users").Where("id=?", session.UserId).Scan(&user).Error
+	defer db.Close()
+	cmd := "SELECT * FROM users WHERE id=?"
+	err = db.QueryRow(cmd, session.UserId).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Password, &user.ImgPass, &user.CreatedAt)
 	return
 }
 
-func (session *Session) UpdateUser(userPtr *User, attr map[string]interface{}) (err error) {
-	db := config.NewDB()
-	err = db.Model(userPtr).Update(attr).Error
+func (user *User) UpdateUser() (err error) {
+	defer db.Close()
+	statement := "UPDATE users SET name=$2,userIdStr=$3,password=$4,image_path=$5, WHERE id=$1"
+	stmt, err := db.Prepare(statement)
+	defer stmt.Close()
+	_, err = stmt.Exec(user.Id, user.Name, user.UserIdStr, user.Password, user.ImgPass)
 	return
 }
 
-func (session *Session) DeleteUser(userPtr *User) (err error) {
-	db := config.NewDB()
-	err = db.Delete(userPtr).Error
-	return
+func (session *Session) DeleteUser(user User) (err error) {
+	defer db.Close()
+	cmd := "DELETE FROM users WHERE id=?"
+	_, err = db.Exec(cmd, user.Id)
+	return err
 }
