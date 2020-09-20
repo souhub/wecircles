@@ -1,10 +1,10 @@
 package data
 
 import (
-	"log"
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/souhub/wecircles/pkg/logging"
 )
 
 type User struct {
@@ -16,7 +16,6 @@ type User struct {
 	Password  string `validate:"required"`
 	ImgPass   string
 	CreatedAt time.Time
-	UpdatedAt time.Time
 }
 
 type Session struct {
@@ -33,13 +32,13 @@ func Users() (users []User, err error) {
 	cmd := "SELECT * FROM users"
 	rows, err := db.Query(cmd)
 	if err != nil {
-		log.Fatalln(err)
+		logging.Warn("Coudn't find users.")
 	}
 	for rows.Next() {
 		var user User
-		err = rows.Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt, &user.UpdatedAt)
+		err = rows.Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
 		if err != nil {
-			return
+			logging.Warn("Couldn't find a user.")
 		}
 		users = append(users, user)
 	}
@@ -49,20 +48,20 @@ func Users() (users []User, err error) {
 
 func UserByEmail(email string) (user User, err error) {
 	defer db.Close()
-	cmd := "SELECT * FROM users WHERE email=?"
-	err = db.QueryRow(cmd, email).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt, &user.UpdatedAt)
+	cmd := "SELECT * FROM users WHERE email=$1"
+	err = db.QueryRow(cmd, email).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
 	return
 }
 
 func UserByUserIdStr(user_id_str string) (user User, err error) {
 	defer db.Close()
-	cmd := "SELECT * FROM users WHERE user_id_str=?"
-	err = db.QueryRow(cmd, user_id_str).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt, &user.UpdatedAt)
-	return user, err
+	cmd := "SELECT * FROM users WHERE user_id_str=$1"
+	err = db.QueryRow(cmd, user_id_str).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
+	return
 }
 
 func (user *User) CreateSession() (session Session, err error) {
-	statement := "INSERT INTO sessions (uuid,email,user_id,user_id_str) VALUES (?,?,?,?) RETURNING id,uuid,email,user_id,user_id_str,created_at"
+	statement := "INSERT INTO sessions (uuid,email,user_id,user_id_str) VALUES ($1,$2,$3,$4) RETURNING id,uuid,email,user_id,user_id_str,created_at"
 	stmt, err := db.Prepare(statement)
 	if err != nil {
 		return
@@ -74,7 +73,7 @@ func (user *User) CreateSession() (session Session, err error) {
 
 func (session *Session) Check() (valid bool, err error) {
 	defer db.Close()
-	cmd := "SELECT * FROM sessions WHERE uuid=?"
+	cmd := "SELECT * FROM sessions WHERE uuid=$1"
 	err = db.QueryRow(cmd, session.Uuid).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
 	if err != nil {
 		valid = false
@@ -88,7 +87,7 @@ func (session *Session) Check() (valid bool, err error) {
 
 func (session *Session) User() (user User, err error) {
 	defer db.Close()
-	cmd := "SELECT * FROM users WHERE id=?"
+	cmd := "SELECT * FROM users WHERE id=$1"
 	err = db.QueryRow(cmd, session.UserId).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Password, &user.ImgPass, &user.CreatedAt)
 	return
 }
@@ -104,7 +103,7 @@ func (user *User) UpdateUser() (err error) {
 
 func (session *Session) DeleteUser(user User) (err error) {
 	defer db.Close()
-	cmd := "DELETE FROM users WHERE id=?"
+	cmd := "DELETE FROM users WHERE id=$1"
 	_, err = db.Exec(cmd, user.Id)
 	return err
 }

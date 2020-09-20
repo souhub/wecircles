@@ -5,11 +5,15 @@ import (
 	"net/http"
 
 	"github.com/souhub/wecircles/pkg/data"
+	"github.com/souhub/wecircles/pkg/logging"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	_, err := session(w, r)
-	posts := data.Posts()
+	if err != nil {
+		logging.Warn("Coudn't find your session.")
+	}
+	posts, err := data.Posts()
 	if err != nil {
 		tmp := parseTemplateFiles("layout", "index", "navbar.public")
 		if err := tmp.Execute(w, posts); err != nil {
@@ -21,5 +25,4 @@ func Index(w http.ResponseWriter, r *http.Request) {
 			log.Fatal(err)
 		}
 	}
-
 }

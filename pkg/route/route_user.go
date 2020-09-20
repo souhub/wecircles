@@ -13,7 +13,7 @@ func myPage(w http.ResponseWriter, r *http.Request) {
 	}
 	user, err := session.User()
 	name := user.Name
-	posts, err := user.PostByUser()
+	posts, err := user.PostsByUser()
 	type Data struct {
 		Name  string
 		Posts []data.Post

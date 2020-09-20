@@ -9,6 +9,7 @@ import (
 	"text/template"
 
 	"github.com/souhub/wecircles/pkg/data"
+	"github.com/souhub/wecircles/pkg/logging"
 )
 
 //"_cookie"のValueとUuidと同じUuidを持つSessionを取得
@@ -35,13 +36,13 @@ func parseTemplateFiles(filenames ...string) (t *template.Template) {
 func upload(w http.ResponseWriter, r *http.Request) {
 	//メソッドをPOSTのみ許可
 	if r.Method != "POST" {
-		warn("許可されていないメソッド")
+		logging.Warn("許可されていないメソッド")
 	}
 
 	//formから送信されたファイルを解析
 	file, fileHeader, err := r.FormFile("image")
 	if err != nil {
-		warn("ファイルのアップロード失敗")
+		logging.Warn("ファイルのアップロード失敗")
 	}
 	//アップロードされたファイル名を取得
 	uploadedFileName := fileHeader.Filename
@@ -51,13 +52,13 @@ func upload(w http.ResponseWriter, r *http.Request) {
 	//imagePathにアップロードされたファイルを保存
 	saveImage, err := os.Create(imagePath)
 	if err != nil {
-		warn("ファイルの確保失敗")
+		logging.Warn("ファイルの確保失敗")
 	}
 
 	//保存用ファイルにアップロードされたファイルを書き込む
 	_, err = io.Copy(saveImage, file)
 	if err != nil {
-		warn("アップロードしたファイルの書き込み失敗")
+		logging.Warn("アップロードしたファイルの書き込み失敗")
 	}
 
 	//saveImageとfileを最後に閉じる
