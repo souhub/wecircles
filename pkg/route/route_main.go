@@ -7,7 +7,7 @@ import (
 	"github.com/souhub/wecircles/pkg/data"
 )
 
-func index(w http.ResponseWriter, r *http.Request) {
+func Index(w http.ResponseWriter, r *http.Request) {
 	_, err := session(w, r)
 	posts := data.Posts()
 	if err != nil {
