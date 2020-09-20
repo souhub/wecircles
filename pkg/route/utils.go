@@ -7,7 +7,8 @@ import (
 	"net/http"
 	"os"
 	"text/template"
-	"wecircles/data"
+
+	"github.com/souhub/wecircles/pkg/data"
 )
 
 //"_cookie"のValueとUuidと同じUuidを持つSessionを取得

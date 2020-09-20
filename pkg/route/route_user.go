@@ -2,7 +2,8 @@ package route
 
 import (
 	"net/http"
-	"wecircles/data"
+
+	"github.com/souhub/wecircles/pkg/data"
 )
 
 func myPage(w http.ResponseWriter, r *http.Request) {
