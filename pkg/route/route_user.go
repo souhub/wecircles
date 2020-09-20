@@ -6,7 +6,7 @@ import (
 	"github.com/souhub/wecircles/pkg/data"
 )
 
-func myPage(w http.ResponseWriter, r *http.Request) {
+func MyPage(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)

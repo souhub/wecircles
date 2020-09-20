@@ -12,7 +12,7 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-func newPost(w http.ResponseWriter, r *http.Request) {
+func NewPost(w http.ResponseWriter, r *http.Request) {
 	_, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
@@ -24,7 +24,7 @@ func newPost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func createPost(w http.ResponseWriter, r *http.Request) {
+func CreatePost(w http.ResponseWriter, r *http.Request) {
 	sess, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
@@ -70,7 +70,7 @@ func createPost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func showPost(w http.ResponseWriter, r *http.Request) {
+func ShowPost(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
 	uuid := vals.Get("id")
 	post, _ := data.PostByUuid(uuid)
@@ -88,7 +88,7 @@ func showPost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func editPost(w http.ResponseWriter, r *http.Request) {
+func EditPost(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
 	uuid := vals.Get("id")
 	post, _ := data.PostByUuid(uuid)
@@ -103,7 +103,7 @@ func editPost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func updatePost(w http.ResponseWriter, r *http.Request) {
+func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	sess, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
@@ -145,7 +145,7 @@ func updatePost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func deletePost(w http.ResponseWriter, r *http.Request) {
+func DeletePost(w http.ResponseWriter, r *http.Request) {
 	sess, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
