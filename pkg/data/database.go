@@ -22,5 +22,4 @@ func NewDB() *sql.DB {
 		log.Fatal(err)
 	}
 	return dbConnection
-
 }

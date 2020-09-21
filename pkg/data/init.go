@@ -26,13 +26,15 @@ func init() {
 
 	// Create users table
 	cmd := `CREATE TABLE IF NOT EXISTS users(
-		id INT AUTO_INCREMENT,
+		id INT NOT NULL AUTO_INCREMENT,
 		uuid STRING,
 		name STRING,
 		userIdStr STRING,
 		password STRING,
 		image_path STRING,
-		created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP`
+		created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		PRIMARY KEY (id)
+		)`
 	_, err = db.Exec(cmd)
 	if err != nil {
 		log.Fatal(err)
@@ -40,12 +42,14 @@ func init() {
 
 	// Create sessions table
 	cmd = `CREATE TABLE IF NOT EXISTS sessions(
-		id INT AUTO_INCREMENT
+		id INT NOT NULL AUTO_INCREMENT
 		uuid STRING
 		email STRING
 		user_id INT
 		user_id_str STRING
-		created_at TIMESTAMP NOT NULL DEFAULT CURRNET_TIMESTAMP`
+		created_at TIMESTAMP NOT NULL DEFAULT CURRNET_TIMESTAMP,
+		PRIMARY KEY (id)
+		)`
 	_, err = db.Exec(cmd)
 	if err != nil {
 		log.Fatal(err)

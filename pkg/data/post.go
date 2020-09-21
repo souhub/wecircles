@@ -44,10 +44,9 @@ func PostByUuid(uuid string) (post Post, err error) {
 }
 
 func (user *User) CreatePost(post *Post) (err error) {
-	statement := "INSERT INTO posts (uuid,title,body,user_id,user_id_str,user_name) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id"
-	stmt, err := db.Prepare(statement)
-	defer stmt.Close()
-	err = stmt.QueryRow(uuid.New().String(), post.Title, post.Body, user.Id, user.UserIdStr, user.Name).Scan(&post.Id)
+	defer db.Close()
+	cmd := "INSERT INTO posts (uuid,title,body,user_id,user_id_str,user_name) VALUES ($1,$2,$3,$4,$5,$6)"
+	_, err = db.Exec(cmd, uuid.New().String(), post.Title, post.Body, user.Id, user.UserIdStr, user.Name)
 	return
 }
 
