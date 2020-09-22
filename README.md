@@ -4,5 +4,16 @@
 
 ## 使用技術
 
-- Golsng1.15.0
-- MySQL8.20.0
+- Go:1.15.0
+- MySQL:8.20.0
+- Docker
+- Docker Compose
+- Terraform
+- AWS
+  - VPC
+  - RDS
+  - ECR
+  - ECS (Fargate)
+  - ACM
+  - SSM
+  - Route53
