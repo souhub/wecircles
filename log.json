@@ -1,1 +1,6 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"fatal","line":41,"msg":"Failed to use the database.","time":"2020-09-22T09:38:46Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Coudn't find your session.","time":"2020-09-22T09:54:32Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Coudn't find posts.","time":"2020-09-22T09:54:32Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Coudn't find your session.","time":"2020-09-22T09:54:32Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Coudn't find posts.","time":"2020-09-22T09:54:32Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Coudn't find your session.","time":"2020-09-22T09:54:32Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Coudn't find posts.","time":"2020-09-22T09:54:32Z"}
