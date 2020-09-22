@@ -34,10 +34,13 @@
   - SSM
   - Route53
   - Cloud Watch
+- CircleCI 自動デプロイ
 
 ### インフラ構成図
 
 ### テスト
+
+- CircleCI 自動テスト
 
 ### その他
 
