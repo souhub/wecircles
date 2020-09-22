@@ -10,7 +10,7 @@ import (
 var logFile *os.File
 
 func init() {
-	logFile, _ = os.OpenFile("./log.json", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0755)
+	logFile, _ = os.OpenFile("./log.json", os.O_WRONLY|os.O_CREATE, 0755)
 
 	// Log as JSON instead of the default ASCII formatter.
 	log.SetFormatter(&log.JSONFormatter{})
@@ -39,5 +39,5 @@ func Fatal(msg string) {
 	log.WithFields(log.Fields{
 		"file": GetCurrentFile(),
 		"line": GetCurrentFileLine(),
-	}).Warn(msg)
+	}).Fatal(msg)
 }

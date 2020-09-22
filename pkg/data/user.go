@@ -28,6 +28,7 @@ type Session struct {
 }
 
 func Users() (users []User, err error) {
+	db := NewDB()
 	defer db.Close()
 	cmd := "SELECT * FROM users"
 	rows, err := db.Query(cmd)
@@ -47,6 +48,7 @@ func Users() (users []User, err error) {
 }
 
 func UserByEmail(email string) (user User, err error) {
+	db := NewDB()
 	defer db.Close()
 	cmd := "SELECT * FROM users WHERE email=$1"
 	err = db.QueryRow(cmd, email).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
@@ -54,6 +56,7 @@ func UserByEmail(email string) (user User, err error) {
 }
 
 func UserByUserIdStr(user_id_str string) (user User, err error) {
+	db := NewDB()
 	defer db.Close()
 	cmd := "SELECT * FROM users WHERE user_id_str=$1"
 	err = db.QueryRow(cmd, user_id_str).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
@@ -61,6 +64,8 @@ func UserByUserIdStr(user_id_str string) (user User, err error) {
 }
 
 func (user *User) CreateSession() (session Session, err error) {
+	db := NewDB()
+	defer db.Close()
 	statement := "INSERT INTO sessions (uuid,email,user_id,user_id_str) VALUES ($1,$2,$3,$4) RETURNING id,uuid,email,user_id,user_id_str,created_at"
 	stmt, err := db.Prepare(statement)
 	if err != nil {
@@ -72,6 +77,7 @@ func (user *User) CreateSession() (session Session, err error) {
 }
 
 func (session *Session) Check() (valid bool, err error) {
+	db := NewDB()
 	defer db.Close()
 	cmd := "SELECT * FROM sessions WHERE uuid=$1"
 	err = db.QueryRow(cmd, session.Uuid).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
@@ -86,6 +92,7 @@ func (session *Session) Check() (valid bool, err error) {
 }
 
 func (session *Session) User() (user User, err error) {
+	db := NewDB()
 	defer db.Close()
 	cmd := "SELECT * FROM users WHERE id=$1"
 	err = db.QueryRow(cmd, session.UserId).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Password, &user.ImgPass, &user.CreatedAt)
@@ -93,6 +100,7 @@ func (session *Session) User() (user User, err error) {
 }
 
 func (user *User) UpdateUser() (err error) {
+	db := NewDB()
 	defer db.Close()
 	statement := "UPDATE users SET name=$2,userIdStr=$3,password=$4,image_path=$5, WHERE id=$1"
 	stmt, err := db.Prepare(statement)
@@ -102,6 +110,7 @@ func (user *User) UpdateUser() (err error) {
 }
 
 func (session *Session) DeleteUser(user User) (err error) {
+	db := NewDB()
 	defer db.Close()
 	cmd := "DELETE FROM users WHERE id=$1"
 	_, err = db.Exec(cmd, user.Id)

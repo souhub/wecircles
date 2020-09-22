@@ -17,6 +17,7 @@ type Post struct {
 }
 
 func Posts() (posts []Post, err error) {
+	db := NewDB()
 	defer db.Close()
 	cmd := "SELECT * FROM posts"
 	rows, err := db.Query(cmd)
@@ -36,14 +37,16 @@ func Posts() (posts []Post, err error) {
 }
 
 func PostByUuid(uuid string) (post Post, err error) {
-	post = Post{}
+	db := NewDB()
 	defer db.Close()
+	post = Post{}
 	cmd := "SELECT * FROM users WHERE uuid=$1"
 	err = db.QueryRow(cmd, uuid).Scan(&post.Id, &post.Uuid, &post.Title, &post.UserId, &post.UserIdStr, &post.UserName, &post.CreatedAt, &post.CreatedAt)
 	return
 }
 
 func (user *User) CreatePost(post *Post) (err error) {
+	db := NewDB()
 	defer db.Close()
 	cmd := "INSERT INTO posts (uuid,title,body,user_id,user_id_str,user_name) VALUES ($1,$2,$3,$4,$5,$6)"
 	_, err = db.Exec(cmd, uuid.New().String(), post.Title, post.Body, user.Id, user.UserIdStr, user.Name)
@@ -51,6 +54,7 @@ func (user *User) CreatePost(post *Post) (err error) {
 }
 
 func (post *Post) UpdatePost() (err error) {
+	db := NewDB()
 	defer db.Close()
 	cmd := "UPDATE posts SET title=$2,body=$3 WHERE id=$1"
 	_, err = db.Exec(cmd, post.Id, post.Title, post.Body)
@@ -58,6 +62,7 @@ func (post *Post) UpdatePost() (err error) {
 }
 
 func (post *Post) DeletePost() (err error) {
+	db := NewDB()
 	defer db.Close()
 	cmd := "DELETE from posts WHERE id=$1"
 	_, err = db.Exec(cmd, post.Id)
@@ -65,6 +70,7 @@ func (post *Post) DeletePost() (err error) {
 }
 
 func (user *User) PostsByUser() (posts []Post, err error) {
+	db := NewDB()
 	defer db.Close()
 	cmd := "SELECT * FROM posts WHERE user_id=$1"
 	rows, err := db.Query(cmd, user.Id)

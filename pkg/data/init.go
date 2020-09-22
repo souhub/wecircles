@@ -4,57 +4,60 @@ import (
 	"crypto/sha256"
 	"database/sql"
 	"fmt"
-	"log"
 	"os"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/souhub/wecircles/pkg/logging"
 )
 
-var db *sql.DB
-
 func init() {
+	db := NewDB()
+	defer db.Close()
+	// Create users table
+	cmd := `CREATE TABLE IF NOT EXISTS users(
+		id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		uuid VARCHAR(255),
+		name VARCHAR(255),
+		user_id_str VARCHAR(255),
+		email VARCHAR(255),
+		password VARCHAR(255),
+		image_path VARCHAR(255),
+		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+		)`
+	_, err := db.Exec(cmd)
+	if err != nil {
+		logging.Fatal("Failed to Create users table.")
+	}
+
+	// Create sessions table
+	cmd = `CREATE TABLE IF NOT EXISTS sessions(
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		uuid VARCHAR(255),
+		email VARCHAR(255),
+		user_id INT,
+		user_id_str VARCHAR(255),
+		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+		)`
+	_, err = db.Exec(cmd)
+	if err != nil {
+		logging.Fatal("Failed to Create sessions table.")
+	}
+}
+
+func NewDB() *sql.DB {
 	// Connect to DataBase
+	var db *sql.DB
 	dBUser := os.Getenv("DB_USER")
 	dBPass := os.Getenv("DB_PASS")
 	dbProtocol := os.Getenv("DB_PROTOCOL")
 	dbEndpoint := os.Getenv("DB_ENDPOINT")
 	dbName := os.Getenv("DB_NAME")
 	dsn := fmt.Sprintf("%s:%s@%s(%s)/%s", dBUser, dBPass, dbProtocol, dbEndpoint, dbName)
-	var err error
-	db, err = sql.Open("mysql", dsn)
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
-		log.Fatal(err)
+		logging.Fatal("Failed to connect the database.")
 	}
-
-	// Create users table
-	cmd := `CREATE TABLE IF NOT EXISTS users(
-		id INT NOT NULL AUTO_INCREMENT,
-		uuid STRING,
-		name STRING,
-		userIdStr STRING,
-		password STRING,
-		image_path STRING,
-		created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		PRIMARY KEY (id)
-		)`
-	_, err = db.Exec(cmd)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Create sessions table
-	cmd = `CREATE TABLE IF NOT EXISTS sessions(
-		id INT NOT NULL AUTO_INCREMENT
-		uuid STRING
-		email STRING
-		user_id INT
-		user_id_str STRING
-		created_at TIMESTAMP NOT NULL DEFAULT CURRNET_TIMESTAMP,
-		PRIMARY KEY (id)
-		)`
-	_, err = db.Exec(cmd)
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	return db
 }
 
 func Encrypt(plainpass string) (cryptpass string) {

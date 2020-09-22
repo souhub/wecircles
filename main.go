@@ -11,11 +11,11 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", files))
 
 	http.HandleFunc("/", route.Index)
-	http.HandleFunc("/login", rpute.Login)
-	http.HandleFunc("/signup", route.Signup)
-	http.HandleFunc("/signup_account", route.SignupAccount)
-	http.HandleFunc("/authenticate", route.Authenticate)
-	http.HandleFunc("/logout", route.Logout)
+	// http.HandleFunc("/login", route.Login)
+	// http.HandleFunc("/signup", route.Signup)
+	// http.HandleFunc("/signup_account", route.SignupAccount)
+	// http.HandleFunc("/authenticate", route.Authenticate)
+	// http.HandleFunc("/logout", route.Logout)
 
 	http.HandleFunc("/post/new", route.NewPost)
 	http.HandleFunc("/post/create", route.CreatePost)

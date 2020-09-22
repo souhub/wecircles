@@ -12,12 +12,13 @@ services:
       - mysql
   mysql:
     image: mysql:8.0.20
-    volumes:
-      - ./docker/mysql/init:/docker-entrypoint-initdb.d
-      - ./docker/mysql/data:/var/lib/mysql
+    # volumes:
+    #   - ./docker/mysql/init:/docker-entrypoint-initdb.d
+    #   - ./docker/mysql/data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: devPass
+      MYSQL_DATABASE: wecircles
     ports:
       - "3306:3306"
     expose:
-      - 3306
+      - "3306"
