@@ -24,6 +24,7 @@
 
 ### 本番環境
 
+- CircleCI 自動デプロイ
 - Terraform:0.13.3
 - AWS
   - VPC
@@ -34,7 +35,6 @@
   - SSM
   - Route53
   - Cloud Watch
-- CircleCI 自動デプロイ
 
 ### インフラ構成図
 
