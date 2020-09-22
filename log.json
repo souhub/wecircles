@@ -1,6 +1,24 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Coudn't find your session.","time":"2020-09-22T09:54:32Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Coudn't find posts.","time":"2020-09-22T09:54:32Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Coudn't find your session.","time":"2020-09-22T09:54:32Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Coudn't find posts.","time":"2020-09-22T09:54:32Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Coudn't find your session.","time":"2020-09-22T09:54:32Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Coudn't find posts.","time":"2020-09-22T09:54:32Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find the session.","time":"2020-09-22T16:32:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find posts.","time":"2020-09-22T16:32:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find the session.","time":"2020-09-22T16:32:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find posts.","time":"2020-09-22T16:32:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find the session.","time":"2020-09-22T16:32:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find posts.","time":"2020-09-22T16:32:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find the session.","time":"2020-09-22T16:36:25Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find posts.","time":"2020-09-22T16:36:25Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find the session.","time":"2020-09-22T16:36:25Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find posts.","time":"2020-09-22T16:36:25Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find the session.","time":"2020-09-22T16:36:25Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find posts.","time":"2020-09-22T16:36:25Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find the session.","time":"2020-09-22T16:23:24Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find posts.","time":"2020-09-22T16:23:24Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find the session.","time":"2020-09-22T16:23:24Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find posts.","time":"2020-09-22T16:23:24Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find the session.","time":"2020-09-22T16:23:24Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find posts.","time":"2020-09-22T16:23:24Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find the session.","time":"2020-09-22T16:23:38Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find posts.","time":"2020-09-22T16:23:38Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find the session.","time":"2020-09-22T16:23:38Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find posts.","time":"2020-09-22T16:23:38Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find the session.","time":"2020-09-22T16:23:38Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find posts.","time":"2020-09-22T16:23:38Z"}

@@ -153,7 +153,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	// }
 	user.Name = r.PostFormValue("name")
 	user.ImgPass = uploadedFileName
-	if err = user.UpdateUser(); err != nil {
+	if err = user.Update(); err != nil {
 		logging.Warn("Failed to update your user account.")
 	}
 	http.Redirect(w, r, "/", 302)

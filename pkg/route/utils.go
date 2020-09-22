@@ -33,6 +33,7 @@ func parseTemplateFiles(filenames ...string) (t *template.Template) {
 	return
 }
 
+// Create the user image
 func upload(w http.ResponseWriter, r *http.Request) {
 	//メソッドをPOSTのみ許可
 	if r.Method != "POST" {

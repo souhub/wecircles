@@ -1,21 +1,23 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/souhub/wecircles/pkg/route"
 )
 
 func main() {
-	files := http.FileServer(http.Dir("view"))
-	http.Handle("/static/", http.StripPrefix("/static/", files))
+	// files := http.FileServer(http.Dir("web"))
+	// http.Handle("/static/", http.StripPrefix("/static/", files))
 
+	http.HandleFunc("/smp", route.Smp)
 	http.HandleFunc("/", route.Index)
-	// http.HandleFunc("/login", route.Login)
-	// http.HandleFunc("/signup", route.Signup)
-	// http.HandleFunc("/signup_account", route.SignupAccount)
-	// http.HandleFunc("/authenticate", route.Authenticate)
-	// http.HandleFunc("/logout", route.Logout)
+	http.HandleFunc("/login", route.Login)
+	http.HandleFunc("/signup", route.Signup)
+	http.HandleFunc("/signup_account", route.SignupAccount)
+	http.HandleFunc("/authenticate", route.Authenticate)
+	http.HandleFunc("/logout", route.Logout)
 
 	http.HandleFunc("/post/new", route.NewPost)
 	http.HandleFunc("/post/create", route.CreatePost)
@@ -28,5 +30,5 @@ func main() {
 	http.HandleFunc("/user/edit", route.EditUser)
 	http.HandleFunc("/user/update", route.UpdateUser)
 	http.HandleFunc("/user/show", route.ShowUser)
-	http.ListenAndServe(":80", nil)
+	log.Fatal(http.ListenAndServe(":80", nil))
 }

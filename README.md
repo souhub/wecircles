@@ -21,6 +21,7 @@
 
 - Docker:19.03.13-beta2
 - Docker Compose:1.27.0
+- Visual Studio Code:1.49
 
 ### 本番環境
 

@@ -18,20 +18,13 @@ type User struct {
 	CreatedAt time.Time
 }
 
-type Session struct {
-	Id        int
-	Uuid      string
-	Email     string
-	UserId    int
-	UserIdStr string
-	CreatedAt time.Time
-}
-
+// Get all users from users
 func Users() (users []User, err error) {
 	db := NewDB()
 	defer db.Close()
-	cmd := "SELECT * FROM users"
-	rows, err := db.Query(cmd)
+	query := `SELECT *
+			FROM users`
+	rows, err := db.Query(query)
 	if err != nil {
 		logging.Warn("Coudn't find users.")
 	}
@@ -47,72 +40,85 @@ func Users() (users []User, err error) {
 	return
 }
 
+// Get the session for an existing user
+func (user *User) Session() (session Session, err error) {
+	db := NewDB()
+	defer db.Close()
+	session = Session{}
+	query := `SELECT * FROM sessions
+			  WHERE user_id = ?`
+	err = db.QueryRow(query, user.Id).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.UserIdStr, &session.CreatedAt)
+	return
+}
+
+// Get the user from his email address
 func UserByEmail(email string) (user User, err error) {
 	db := NewDB()
 	defer db.Close()
-	cmd := "SELECT * FROM users WHERE email=$1"
-	err = db.QueryRow(cmd, email).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
+	query := `SELECT * FROM users
+			  WHERE email=?`
+	err = db.QueryRow(query, email).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
 	return
 }
 
+// Get the user from his uuid
 func UserByUserIdStr(user_id_str string) (user User, err error) {
 	db := NewDB()
 	defer db.Close()
-	cmd := "SELECT * FROM users WHERE user_id_str=$1"
-	err = db.QueryRow(cmd, user_id_str).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
+	query := `SELECT * FROM users
+			  WHERE user_id_str=?`
+	err = db.QueryRow(query, user_id_str).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
 	return
 }
 
+// Create a new user
+func (user *User) Create() (err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `INSERT INTO users (uuid, name, email, password)
+			VALUES (?,?,?,?)`
+	_, err = db.Exec(query, user.Uuid, user.Name, user.Email, user.Password)
+	return
+}
+
+// Create a new session for an existing user
 func (user *User) CreateSession() (session Session, err error) {
 	db := NewDB()
 	defer db.Close()
-	statement := "INSERT INTO sessions (uuid,email,user_id,user_id_str) VALUES ($1,$2,$3,$4) RETURNING id,uuid,email,user_id,user_id_str,created_at"
-	stmt, err := db.Prepare(statement)
-	if err != nil {
-		return
-	}
-	defer stmt.Close()
-	err = stmt.QueryRow(uuid.New().String(), user.Email, user.Id).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.UserIdStr, &session.CreatedAt)
+	query := `INSERT INTO sessions (uuid, email, user_id, user_id_str)
+			  VALUES (?,?,?,?)`
+	err = db.QueryRow(query, uuid.New().String(), user.Email, user.Id).Scan(&session.Uuid, &session.Email, &session.UserId, &session.UserIdStr)
 	return
 }
 
-func (session *Session) Check() (valid bool, err error) {
+// Update the user
+func (user *User) Update() (err error) {
 	db := NewDB()
 	defer db.Close()
-	cmd := "SELECT * FROM sessions WHERE uuid=$1"
-	err = db.QueryRow(cmd, session.Uuid).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
-	if err != nil {
-		valid = false
-		return
-	}
-	if session.Id != 0 {
-		valid = true
-	}
-	return
-}
-
-func (session *Session) User() (user User, err error) {
-	db := NewDB()
-	defer db.Close()
-	cmd := "SELECT * FROM users WHERE id=$1"
-	err = db.QueryRow(cmd, session.UserId).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Password, &user.ImgPass, &user.CreatedAt)
-	return
-}
-
-func (user *User) UpdateUser() (err error) {
-	db := NewDB()
-	defer db.Close()
-	statement := "UPDATE users SET name=$2,userIdStr=$3,password=$4,image_path=$5, WHERE id=$1"
+	statement := `UPDATE users
+				  SET name=?, userIdStr=?, password=?, image_path=?
+				  WHERE id=?`
 	stmt, err := db.Prepare(statement)
 	defer stmt.Close()
 	_, err = stmt.Exec(user.Id, user.Name, user.UserIdStr, user.Password, user.ImgPass)
 	return
 }
 
-func (session *Session) DeleteUser(user User) (err error) {
+// Delete the user
+func (user *User) Delete() (err error) {
 	db := NewDB()
 	defer db.Close()
-	cmd := "DELETE FROM users WHERE id=$1"
-	_, err = db.Exec(cmd, user.Id)
-	return err
+	query := `DELETE from users
+			  WHERE id=?`
+	_, err = db.Exec(query, user.Id)
+	return
+}
+
+// Delete all of the users
+func ResetUsers() (err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `DELETE from users`
+	_, err = db.Exec(query)
+	return
 }

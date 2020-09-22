@@ -12,18 +12,21 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
+// GET /post/new
+// Show the form page to create the new post
 func NewPost(w http.ResponseWriter, r *http.Request) {
 	_, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	} else {
-		// tmp := template.Must(template.ParseFiles("templates/layout.html", "templates/post.new.html", "templates/navbar.private.html"))
 		tmp := parseTemplateFiles("layout", "post.new", "navbar.private")
 		uuid := uuid.New()
 		tmp.Execute(w, uuid)
 	}
 }
 
+// POST /post/create
+// Create the new post
 func CreatePost(w http.ResponseWriter, r *http.Request) {
 	sess, err := session(w, r)
 	if err != nil {
@@ -31,11 +34,11 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	} else {
 		err = r.ParseForm()
 		if err != nil {
-			logging.Warn("NoForm")
+			logging.Warn("Failed to parse the post form")
 		}
 		user, err := sess.User()
 		if err != nil {
-			logging.Warn("NoUser")
+			logging.Warn("Failed to find the user form the session")
 		}
 		//createdAtを作成
 		now := time.Now()
@@ -66,10 +69,11 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		}
 		url := fmt.Sprint("/post/show?id=", uuid)
 		http.Redirect(w, r, url, 302)
-
 	}
 }
 
+// GET /post/show
+// Show the post
 func ShowPost(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
 	uuid := vals.Get("id")
@@ -88,6 +92,8 @@ func ShowPost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// GET /post/edit
+// Show the post edit form
 func EditPost(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
 	uuid := vals.Get("id")
@@ -103,6 +109,8 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// POST /post/update
+// Update the post
 func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	sess, err := session(w, r)
 	if err != nil {
@@ -145,6 +153,8 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// DELETE /post/delete
+// Delete the post
 func DeletePost(w http.ResponseWriter, r *http.Request) {
 	sess, err := session(w, r)
 	if err != nil {
@@ -163,7 +173,7 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 	if user.Id != post.UserId {
 		http.Redirect(w, r, "/", 302)
 	}
-	err = post.DeletePost()
+	err = post.Delete()
 	if err != nil {
 		logging.Warn("Failed to delete your post.")
 	}
