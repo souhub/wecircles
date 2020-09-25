@@ -8,24 +8,30 @@
 
 ## 機能一覧
 
+- ユーザ登録前
+
+  - 日記閲覧
+  - ユーザー情報閲覧
+
+- ユーザー登録後
+
+  - ログイン・ログアウト
+  - 日記投稿・編集
+  - マイページ閲覧
+  - プロフィール画像設定
+  - ユーザー情報編集
+
 ## 使用技術
 
-### フロントエンド
-
-### バックエンド
-
+- Git:2.23.0
+- Github
+- Bootstrap:4.5.0
 - Go:1.15.0
 - MySQL:8.20.0
-
-### 開発環境
-
 - Docker:19.03.13-beta2
 - Docker Compose:1.27.0
 - Visual Studio Code:1.49
-
-### 本番環境
-
-- CircleCI 自動デプロイ
+- CircleCI (CI/CD)
 - Terraform:0.13.3
 - AWS
   - VPC
@@ -39,11 +45,4 @@
 
 ### インフラ構成図
 
-### テスト
-
-- CircleCI 自動テスト
-
-### その他
-
-- Git:2.23.0
-- Github
+![インフラ構成図](/assets/infra_structures.png)
