@@ -2,16 +2,16 @@
 <h1 class="text-center">ログイン</h1>
 <form role="form" action="/authenticate" method="post">
   <div class="form-group">
-    <label for="email">Email address</label>
+    <label for="useridstr">User ID</label>
     <input
-      type="email"
-      name="email"
+      type="text"
+      name="useridstr"
       class="form-control"
-      placeholder="Email"
+      placeholder="Input your UserID"
       required
     />
-    <small id="emailHelp" class="form-text text-muted"
-      >We'll never share your email with anyone else.</small
+    <small class="form-text text-muted"
+      >We'll never share your User ID with anyone else.</small
     >
   </div>
   <div class="form-group">
@@ -24,7 +24,7 @@
       required
     />
   </div>
-  <button type="submit" class="btn btn-primary" style="width: 100%;">
+  <button type="submit" class="btn btn-primary" style="width: 100%">
     ログイン
   </button>
 </form>

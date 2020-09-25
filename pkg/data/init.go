@@ -15,7 +15,7 @@ func init() {
 	defer db.Close()
 	// Create users table
 	cmd := `CREATE TABLE IF NOT EXISTS users(
-		id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		id INT AUTO_INCREMENT PRIMARY KEY,
 		uuid VARCHAR(255),
 		name VARCHAR(255),
 		user_id_str VARCHAR(255),
@@ -26,7 +26,7 @@ func init() {
 		)`
 	_, err := db.Exec(cmd)
 	if err != nil {
-		logging.Fatal("Failed to Create users table.")
+		logging.Warn("Failed to Create users table.")
 	}
 
 	// Create sessions table
@@ -40,8 +40,24 @@ func init() {
 		)`
 	_, err = db.Exec(cmd)
 	if err != nil {
-		logging.Fatal("Failed to Create sessions table.")
+		logging.Warn("Failed to Create sessions table.")
 	}
+
+	// Create sessions table
+	cmd = `CREATE TABLE IF NOT EXISTS posts(
+			id INT AUTO_INCREMENT PRIMARY KEY,
+			uuid VARCHAR(255),
+			title TEXT,
+			user_id INT,
+			user_id_str VARCHAR(255),
+			user_name VARCHAR(255),
+			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+			)`
+	_, err = db.Exec(cmd)
+	if err != nil {
+		logging.Warn("Failed to Create posts table.")
+	}
+
 }
 
 func NewDB() *sql.DB {

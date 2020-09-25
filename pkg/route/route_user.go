@@ -35,18 +35,20 @@ func ShowUser(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
+		return
 	}
 	vals := r.URL.Query()
-	user_id_str := vals.Get(("id"))
-	user, err := data.UserByUserIdStr(user_id_str)
+	// user_id_str := vals.Get(("id"))
+	user, err := data.UserByUserIdStr(vals.Get(("id")))
 	if err != nil {
-		logging.Warn("Failed to find users.")
+		logging.Warn("Failed to find user.")
+		return
 	}
-	if session.UserId != user.Id {
+	if session.UserIdStr != user.UserIdStr {
 		name := user.Name
 		posts, err := user.PostsByUser()
 		if err != nil {
-			logging.Warn("Failed to find posts.")
+			logging.Warn("Failed to find your posts.")
 		}
 		type Data struct {
 			Name  string
@@ -102,7 +104,6 @@ func EditUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
-
 	session, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
@@ -147,12 +148,20 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		logging.Warn("Failed to parse form")
 	}
 
+	db := data.NewDB()
+	query := `INSERT INTO users img_pass
+			  VALUES ?
+			  WHERE user_id_str=?`
+	_, err = db.Exec(query, uploadedFileName, user.UserIdStr)
+	db.Close()
+
 	// attr := map[string]interface{}{
 	// 	"Name":    r.PostFormValue("name"),
 	// 	"ImgPass": uploadedFileName,
 	// }
+
 	user.Name = r.PostFormValue("name")
-	user.ImgPass = uploadedFileName
+	// user.ImgPass = uploadedFileName
 	if err = user.Update(); err != nil {
 		logging.Warn("Failed to update your user account.")
 	}

@@ -11,7 +11,6 @@ func main() {
 	// files := http.FileServer(http.Dir("web"))
 	// http.Handle("/static/", http.StripPrefix("/static/", files))
 
-	http.HandleFunc("/smp", route.Smp)
 	http.HandleFunc("/", route.Index)
 	http.HandleFunc("/login", route.Login)
 	http.HandleFunc("/signup", route.Signup)

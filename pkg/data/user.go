@@ -1,8 +1,6 @@
 package data
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 	"github.com/souhub/wecircles/pkg/logging"
 )
@@ -15,7 +13,7 @@ type User struct {
 	Email     string `validate:"required,email"`
 	Password  string `validate:"required"`
 	ImgPass   string
-	CreatedAt time.Time
+	CreatedAt string
 }
 
 // Get all users from users
@@ -23,16 +21,16 @@ func Users() (users []User, err error) {
 	db := NewDB()
 	defer db.Close()
 	query := `SELECT *
-			FROM users`
+			  FROM users`
 	rows, err := db.Query(query)
 	if err != nil {
-		logging.Warn("Coudn't find users.")
+		logging.Warn("Failed to find users.")
 	}
 	for rows.Next() {
 		var user User
 		err = rows.Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
 		if err != nil {
-			logging.Warn("Couldn't find a user.")
+			logging.Warn("Failed to find a user.")
 		}
 		users = append(users, user)
 	}
@@ -62,22 +60,35 @@ func UserByEmail(email string) (user User, err error) {
 }
 
 // Get the user from his uuid
-func UserByUserIdStr(user_id_str string) (user User, err error) {
+// func UserByUserIdStr(user_id_str string) (user User, err error) {
+// 	db := NewDB()
+// 	defer db.Close()
+// 	query := `SELECT * FROM users
+// 			  WHERE user_id_str=?`
+// 	err = db.QueryRow(query, user_id_str).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
+// 	return user, err
+// }
+func UserByUserIdStr(useridstr string) (user User, err error) {
 	db := NewDB()
 	defer db.Close()
-	query := `SELECT * FROM users
+	query := `SELECT name, user_id_str, email, password FROM users
 			  WHERE user_id_str=?`
-	err = db.QueryRow(query, user_id_str).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
-	return
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		logging.Warn("Failed to prepare the statements;")
+	}
+	defer stmt.Close()
+	err = stmt.QueryRow(useridstr).Scan(&user.Name, &user.UserIdStr, &user.Email, &user.Password)
+	return user, err
 }
 
 // Create a new user
 func (user *User) Create() (err error) {
 	db := NewDB()
 	defer db.Close()
-	query := `INSERT INTO users (uuid, name, email, password)
+	query := `INSERT INTO users (name, user_id_str, email, password)
 			VALUES (?,?,?,?)`
-	_, err = db.Exec(query, user.Uuid, user.Name, user.Email, user.Password)
+	_, err = db.Exec(query, user.Name, user.UserIdStr, user.Email, user.Password)
 	return
 }
 
@@ -87,20 +98,44 @@ func (user *User) CreateSession() (session Session, err error) {
 	defer db.Close()
 	query := `INSERT INTO sessions (uuid, email, user_id, user_id_str)
 			  VALUES (?,?,?,?)`
-	err = db.QueryRow(query, uuid.New().String(), user.Email, user.Id).Scan(&session.Uuid, &session.Email, &session.UserId, &session.UserIdStr)
+	_, err = db.Exec(query, uuid.New().String(), user.Email, user.Id, user.UserIdStr)
+	if err != nil {
+		logging.Warn("Failed to insert the new session")
+	}
+	query = `SELECT * from sessions
+			 WHERE user_id=?`
+	stmt, err := db.Prepare(query)
+	defer stmt.Close()
+	err = stmt.QueryRow(user.Id).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.UserIdStr, &session.CreatedAt)
 	return
 }
+
+// Create a new session for an existing user
+// func (user *User) CreateSession() (session Session, err error) {
+// 	db := NewDB()
+// 	defer db.Close()
+// 	query := `INSERT INTO sessions (uuid, email, user_id, user_id_str)
+// 			  VALUES (?,?,?,?)`
+// 	_, err = db.Exec(query, uuid.New().String(), user.Email, user.Id, user.UserIdStr)
+// 	if err != nil {
+// 		logging.Warn("Failed to insert the new session")
+// 	}
+// 	query = `SELECT * from sessions
+// 			 WHERE user_id_str=?`
+// 	stmt, err := db.Prepare(query)
+// 	defer stmt.Close()
+// 	err = stmt.QueryRow(user.UserIdStr).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.UserIdStr, &session.CreatedAt)
+// 	return
+// }
 
 // Update the user
 func (user *User) Update() (err error) {
 	db := NewDB()
 	defer db.Close()
-	statement := `UPDATE users
-				  SET name=?, userIdStr=?, password=?, image_path=?
-				  WHERE id=?`
-	stmt, err := db.Prepare(statement)
-	defer stmt.Close()
-	_, err = stmt.Exec(user.Id, user.Name, user.UserIdStr, user.Password, user.ImgPass)
+	query := `UPDATE users
+		      SET name=?, user_id_str=?, email=?,password=?, img_path=?
+			  WHERE id=?`
+	_, err = db.Exec(query, user.Name, user.UserIdStr, user.Email, user.Password, user.ImgPass, user.Id)
 	return
 }
 

@@ -1,6 +1,7 @@
 package route
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/souhub/wecircles/pkg/data"
@@ -12,7 +13,7 @@ import (
 func Index(w http.ResponseWriter, r *http.Request) {
 	_, err := session(w, r)
 	if err != nil {
-		logging.Warn("Failed to find the session.")
+		log.Println(err)
 		return
 	}
 	posts, err := data.Posts()
@@ -31,7 +32,3 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
-
-func Smp(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "Hello World\n")
-

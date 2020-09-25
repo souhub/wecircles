@@ -1,16 +1,12 @@
 package data
 
-import (
-	"time"
-)
-
 type Session struct {
 	Id        int
 	Uuid      string
 	Email     string
 	UserId    int
 	UserIdStr string
-	CreatedAt time.Time
+	CreatedAt string
 }
 
 // Check the session for an existing user
@@ -19,7 +15,7 @@ func (session *Session) Check() (valid bool, err error) {
 	defer db.Close()
 	query := `SELECT * FROM sessions
 			  WHERE uuid=?`
-	err = db.QueryRow(query, session.Uuid).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
+	err = db.QueryRow(query, session.Uuid).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.UserIdStr, &session.CreatedAt)
 	if err != nil {
 		valid = false
 		return
@@ -34,9 +30,9 @@ func (session *Session) Check() (valid bool, err error) {
 func (session *Session) User() (user User, err error) {
 	db := NewDB()
 	defer db.Close()
-	query := `SELECT * FROM users
+	query := `SELECT id, name, user_id_str, password, created_at FROM users
 			  WHERE id=?`
-	err = db.QueryRow(query, session.UserId).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Password, &user.ImgPass, &user.CreatedAt)
+	err = db.QueryRow(query, session.UserId).Scan(&user.Id, &user.Name, &user.UserIdStr, &user.Password, &user.CreatedAt)
 	return
 }
 

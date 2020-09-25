@@ -3,10 +3,10 @@ package route
 import (
 	"errors"
 	"fmt"
+	"html/template"
 	"io"
 	"net/http"
 	"os"
-	"text/template"
 
 	"github.com/souhub/wecircles/pkg/data"
 	"github.com/souhub/wecircles/pkg/logging"
@@ -21,6 +21,7 @@ func session(w http.ResponseWriter, r *http.Request) (sess data.Session, err err
 			err = errors.New("Invalid Session")
 		}
 	}
+	fmt.Println("LOGIN IS SUCCESSED!!")
 	return
 }
 

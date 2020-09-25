@@ -7,8 +7,8 @@ deployment/aws/terraform.tfstate
 deployment/aws/.terraform.tfstate.lock.info
 deployment/aws/terraform.tfstate.backup
 
-# docker
-docker/mysql/data
+# web
+web/img
 
 # others
 tmp
