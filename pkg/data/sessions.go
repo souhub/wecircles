@@ -30,7 +30,8 @@ func (session *Session) Check() (valid bool, err error) {
 func (session *Session) User() (user User, err error) {
 	db := NewDB()
 	defer db.Close()
-	query := `SELECT id, name, user_id_str, password, created_at FROM users
+	query := `SELECT id, name, user_id_str, password, created_at
+			  FROM users
 			  WHERE id=?`
 	err = db.QueryRow(query, session.UserId).Scan(&user.Id, &user.Name, &user.UserIdStr, &user.Password, &user.CreatedAt)
 	return

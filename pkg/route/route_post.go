@@ -30,46 +30,54 @@ func NewPost(w http.ResponseWriter, r *http.Request) {
 func CreatePost(w http.ResponseWriter, r *http.Request) {
 	sess, err := session(w, r)
 	if err != nil {
+		logging.Warn("Failed to find the session.")
 		http.Redirect(w, r, "/login", 302)
-	} else {
-		err = r.ParseForm()
-		if err != nil {
-			logging.Warn("Failed to parse the post form")
-		}
-		user, err := sess.User()
-		if err != nil {
-			logging.Warn("Failed to find the user form the session")
-		}
-		//createdAtを作成
-		now := time.Now()
-		year := now.Year()
-		month := int(now.Month())
-		date := now.Day()
-		hour := now.Hour()
-		createdAt := fmt.Sprintf("%v年%v月%v日 %v時", year, month, date, hour)
-		//postを作成
-		post := data.Post{
-			Uuid:      r.PostFormValue("uuid"),
-			Title:     r.PostFormValue("title"),
-			Body:      r.PostFormValue("body"),
-			UserId:    user.Id,
-			UserIdStr: user.UserIdStr,
-			UserName:  user.Name,
-			CreatedAt: createdAt,
-		}
-		validate := validator.New()  //validatorインスタンス生成
-		err = validate.Struct(&post) //validator実行
-		if err != nil {
-			http.Redirect(w, r, "/post/new", 302)
-			return
-		}
-		uuid := r.PostFormValue("uuid")
-		if err = user.CreatePost(&post); err != nil {
-			log.Fatal(err)
-		}
-		url := fmt.Sprint("/post/show?id=", uuid)
-		http.Redirect(w, r, url, 302)
+		return
 	}
+	err = r.ParseForm()
+	if err != nil {
+		logging.Warn("Failed to parse the post form")
+		http.Redirect(w, r, "/post/new", 302)
+		return
+	}
+	user, err := sess.User()
+	if err != nil {
+		logging.Warn("Failed to find the user from the session")
+		http.Redirect(w, r, "/post/new", 302)
+		return
+	}
+	//createdAtを作成
+	now := time.Now()
+	year := now.Year()
+	month := int(now.Month())
+	date := now.Day()
+	hour := now.Hour()
+	createdAt := fmt.Sprintf("%v年%v月%v日%v時", year, month, date, hour)
+	//postを作成
+	post := data.Post{
+		Uuid:      r.PostFormValue("uuid"),
+		Title:     r.PostFormValue("title"),
+		Body:      r.PostFormValue("body"),
+		UserId:    user.Id,
+		UserIdStr: user.UserIdStr,
+		UserName:  user.Name,
+		CreatedAt: createdAt,
+	}
+	validate := validator.New()  //validatorインスタンス生成
+	err = validate.Struct(&post) //validator実行
+	if err != nil {
+		logging.Warn("Failed to pass the post validation.")
+		http.Redirect(w, r, "/post/new", 302)
+		return
+	}
+	// uuid := r.PostFormValue("uuid")
+	if err = post.Create(); err != nil {
+		log.Fatal(err)
+		http.Redirect(w, r, "/post/new", 302)
+		return
+	}
+	url := fmt.Sprint("/post/show?id=", post.Uuid)
+	http.Redirect(w, r, url, 302)
 }
 
 // GET /post/show
@@ -77,17 +85,20 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 func ShowPost(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
 	uuid := vals.Get("id")
-	post, _ := data.PostByUuid(uuid)
-	_, err := session(w, r)
+	post, err := data.PostByUuid(uuid)
+	if err != nil {
+		log.Fatal(err)
+	}
+	_, err = session(w, r)
 	if err != nil {
 		tmp := parseTemplateFiles("layout", "navbar.public", "post.show.public")
 		if err := tmp.Execute(w, post); err != nil {
-			log.Fatal(err)
+			logging.Warn("Failed to show the show page")
 		}
 	} else {
 		tmp := parseTemplateFiles("layout", "navbar.private", "post.show.private")
 		if err := tmp.Execute(w, post); err != nil {
-			log.Fatal(err)
+			logging.Warn("Failed to show the show page")
 		}
 	}
 }
@@ -104,7 +115,7 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 	} else {
 		tmp := parseTemplateFiles("layout", "navbar.private", "post.edit")
 		if err := tmp.Execute(w, post); err != nil {
-			log.Fatal(err)
+			logging.Warn("Failed to show the edit page")
 		}
 	}
 }

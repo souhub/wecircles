@@ -71,14 +71,14 @@ func UserByEmail(email string) (user User, err error) {
 func UserByUserIdStr(useridstr string) (user User, err error) {
 	db := NewDB()
 	defer db.Close()
-	query := `SELECT name, user_id_str, email, password FROM users
+	query := `SELECT id, name, user_id_str, email, password, created_at FROM users
 			  WHERE user_id_str=?`
 	stmt, err := db.Prepare(query)
 	if err != nil {
 		logging.Warn("Failed to prepare the statements;")
 	}
 	defer stmt.Close()
-	err = stmt.QueryRow(useridstr).Scan(&user.Name, &user.UserIdStr, &user.Email, &user.Password)
+	err = stmt.QueryRow(useridstr).Scan(&user.Id, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.CreatedAt)
 	return user, err
 }
 
@@ -87,7 +87,7 @@ func (user *User) Create() (err error) {
 	db := NewDB()
 	defer db.Close()
 	query := `INSERT INTO users (name, user_id_str, email, password)
-			VALUES (?,?,?,?)`
+			  VALUES (?,?,?,?)`
 	_, err = db.Exec(query, user.Name, user.UserIdStr, user.Email, user.Password)
 	return
 }

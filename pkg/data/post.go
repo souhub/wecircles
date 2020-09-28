@@ -1,7 +1,8 @@
 package data
 
 import (
-	"github.com/google/uuid"
+	"log"
+
 	"github.com/souhub/wecircles/pkg/logging"
 )
 
@@ -24,17 +25,21 @@ func Posts() (posts []Post, err error) {
 			  FROM posts`
 	rows, err := db.Query(query)
 	if err != nil {
+		log.Fatal(err)
 		logging.Warn("Failed to find posts.")
+		return
 	}
 	for rows.Next() {
 		var post Post
-		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.UserId, &post.UserIdStr, &post.UserName, &post.CreatedAt, &post.CreatedAt)
+		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.CreatedAt)
 		if err != nil {
+			log.Fatal(err)
 			logging.Warn("Failed to find a post.")
+			return
 		}
 		posts = append(posts, post)
 	}
-	rows.Close()
+	defer rows.Close()
 	return
 }
 
@@ -47,12 +52,14 @@ func (user *User) PostsByUser() (posts []Post, err error) {
 			  WHERE user_id=?`
 	rows, err := db.Query(query, user.Id)
 	if err != nil {
+		log.Fatal(err)
 		logging.Warn("Failed to find posts.")
 	}
 	for rows.Next() {
 		var post Post
-		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.UserId, &post.UserIdStr, &post.UserName, &post.CreatedAt, &post.CreatedAt)
+		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.CreatedAt)
 		if err != nil {
+			log.Fatal(err)
 			logging.Warn("Failed to find a post.")
 		}
 		posts = append(posts, post)
@@ -67,19 +74,19 @@ func PostByUuid(uuid string) (post Post, err error) {
 	defer db.Close()
 	post = Post{}
 	query := `SELECT *
-			  FROM users
+			  FROM posts
 			  WHERE uuid=?`
-	err = db.QueryRow(query, uuid).Scan(&post.Id, &post.Uuid, &post.Title, &post.UserId, &post.UserIdStr, &post.UserName, &post.CreatedAt, &post.CreatedAt)
+	err = db.QueryRow(query, uuid).Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.CreatedAt)
 	return
 }
 
 // Create a post
-func (user *User) CreatePost(post *Post) (err error) {
+func (post *Post) Create() (err error) {
 	db := NewDB()
 	defer db.Close()
-	query := `INSERT INTO posts (uuid,title,body,user_id,user_id_str,user_name)
-			  VALUES (?,?,?,?,?,?)`
-	_, err = db.Exec(query, uuid.New().String(), post.Title, post.Body, user.Id, user.UserIdStr, user.Name)
+	query := `INSERT INTO posts (uuid, title, body, user_id, user_id_str, user_name, created_at)
+			  VALUES (?,?,?,?,?,?,?)`
+	_, err = db.Exec(query, post.Uuid, post.Title, post.Body, post.UserId, post.UserIdStr, post.UserName, post.CreatedAt)
 	return
 }
 

@@ -47,11 +47,12 @@ func init() {
 	cmd = `CREATE TABLE IF NOT EXISTS posts(
 			id INT AUTO_INCREMENT PRIMARY KEY,
 			uuid VARCHAR(255),
-			title TEXT,
+			title VARCHAR(255),
+			body TEXT,
 			user_id INT,
 			user_id_str VARCHAR(255),
 			user_name VARCHAR(255),
-			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+			created_at  VARCHAR(255)
 			)`
 	_, err = db.Exec(cmd)
 	if err != nil {
