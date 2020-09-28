@@ -21,7 +21,6 @@ func session(w http.ResponseWriter, r *http.Request) (sess data.Session, err err
 			err = errors.New("Invalid Session")
 		}
 	}
-	fmt.Println("LOGIN IS SUCCESSED!!")
 	return
 }
 
