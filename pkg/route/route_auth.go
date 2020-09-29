@@ -36,6 +36,7 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 		UserIdStr: r.PostFormValue("user_id_str"),
 		Email:     r.PostFormValue("email"),
 		Password:  data.Encrypt(r.PostFormValue("password")),
+		ImagePath: "default.png",
 	}
 	validate := validator.New() //validatorインスタンス生成
 	//validator実行

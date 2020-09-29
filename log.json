@@ -1,8 +1,8 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find your post from the uuid of the post.","time":"2020-09-28T05:48:48Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find a post.","time":"2020-09-28T05:48:48Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find a post.","time":"2020-09-28T05:48:48Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find a post.","time":"2020-09-28T05:48:48Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to get all of the posts.","time":"2020-09-28T05:48:48Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"ファイルのアップロード失敗","time":"2020-09-29T09:59:57Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"ファイルのアップロード失敗","time":"2020-09-29T09:59:57Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"ファイルのアップロード失敗","time":"2020-09-29T09:59:57Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"ファイルのアップロード失敗","time":"2020-09-29T00:00:12Z"}
+rcles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to get all of the posts.","time":"2020-09-28T05:48:48Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find a post.","time":"2020-09-28T05:48:48Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find a post.","time":"2020-09-28T05:48:48Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/logging/logging.go","level":"warning","line":34,"msg":"Failed to find a post.","time":"2020-09-28T05:48:48Z"}

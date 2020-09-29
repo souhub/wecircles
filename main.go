@@ -8,8 +8,8 @@ import (
 )
 
 func main() {
-	// files := http.FileServer(http.Dir("web"))
-	// http.Handle("/static/", http.StripPrefix("/static/", files))
+	files := http.FileServer(http.Dir("web/img"))
+	http.Handle("/static/", http.StripPrefix("/static/", files))
 
 	http.HandleFunc("/", route.Index)
 	http.HandleFunc("/login", route.Login)

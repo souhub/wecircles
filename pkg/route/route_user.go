@@ -17,14 +17,17 @@ func MyPage(w http.ResponseWriter, r *http.Request) {
 	}
 	user, err := session.User()
 	name := user.Name
+	image := user.ImagePath
 	posts, err := user.PostsByUser()
 	type Data struct {
-		Name  string
-		Posts []data.Post
+		Name      string
+		ImagePath string
+		Posts     []data.Post
 	}
 	data := Data{
-		Name:  name,
-		Posts: posts,
+		Name:      name,
+		ImagePath: image,
+		Posts:     posts,
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "mypage")
 	err = tmp.Execute(w, data)
@@ -95,11 +98,12 @@ func EditUser(w http.ResponseWriter, r *http.Request) {
 	}
 	user, err := session.User()
 	if err != nil {
-		logging.Warn("User")
+		logging.Warn("Failed to find the user from the session.")
 	}
 	tmp := parseTemplateFiles("layout", "user.edit", "navbar.private")
 	if err := tmp.Execute(w, user); err != nil {
 		logging.Warn("Failed to execute templates.")
+		log.Fatal(err)
 	}
 }
 
@@ -110,60 +114,53 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 	user, err := session.User()
 	if err != nil {
-		logging.Warn("Failed to find your user account from the session.")
+		log.Fatal(err)
 	}
-	//メソッドをPOSTのみ許可
+	// Allow the "POST" method, only
 	if r.Method != "POST" {
-		log.Fatal("許可されていないメソッド")
+		logging.Warn("許可されていないメソッド")
 	}
 
-	//formから送信されたファイルを解析
+	// Parse the form
+	err = r.ParseForm()
+	if err != nil {
+		logging.Warn("Failed to parse the Form.")
+	}
+
+	// Get the file sent form the form
 	file, fileHeader, err := r.FormFile("image")
 	if err != nil {
 		logging.Warn("ファイルのアップロード失敗")
 	}
-	//アップロードされたファイル名を取得
+	// Get the uploaded file's name from the file.
 	uploadedFileName := fileHeader.Filename
-	//アップロードされたファイルを置くパスを設定
-	imagePath := "view/img/user/" + uploadedFileName
+	// Set the uploaded file's path
+	imagePath := "web/img/user/" + uploadedFileName
 
-	//imagePathにアップロードされたファイルを保存
+	// Save the uploaded file to "imagePath"
 	saveImage, err := os.Create(imagePath)
 	if err != nil {
 		logging.Warn("ファイルの確保失敗")
 	}
 
-	//保存用ファイルにアップロードされたファイルを書き込む
+	// Write the uploaded file to the file for saving.
 	_, err = io.Copy(saveImage, file)
 	if err != nil {
 		logging.Warn("アップロードしたファイルの書き込み失敗")
 	}
 
-	//saveImageとfileを最後に閉じる
+	// Close the "saveImage" and "file"
 	defer saveImage.Close()
 	defer file.Close()
-
-	err = r.ParseForm()
-	if err != nil {
-		logging.Warn("Failed to parse form")
-	}
-
-	db := data.NewDB()
-	query := `INSERT INTO users img_pass
-			  VALUES ?
-			  WHERE user_id_str=?`
-	_, err = db.Exec(query, uploadedFileName, user.UserIdStr)
-	db.Close()
 
 	// attr := map[string]interface{}{
 	// 	"Name":    r.PostFormValue("name"),
 	// 	"ImgPass": uploadedFileName,
 	// }
-
 	user.Name = r.PostFormValue("name")
-	// user.ImgPass = uploadedFileName
+	user.ImagePath = uploadedFileName
 	if err = user.Update(); err != nil {
-		logging.Warn("Failed to update your user account.")
+		log.Fatal(err)
 	}
 	http.Redirect(w, r, "/", 302)
 }

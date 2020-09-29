@@ -12,7 +12,7 @@ type User struct {
 	UserIdStr string `validate:"alphanumunicode"`
 	Email     string `validate:"required,email"`
 	Password  string `validate:"required"`
-	ImgPass   string
+	ImagePath string
 	CreatedAt string
 }
 
@@ -28,7 +28,7 @@ func Users() (users []User, err error) {
 	}
 	for rows.Next() {
 		var user User
-		err = rows.Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
+		err = rows.Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImagePath, &user.CreatedAt)
 		if err != nil {
 			logging.Warn("Failed to find a user.")
 		}
@@ -55,7 +55,7 @@ func UserByEmail(email string) (user User, err error) {
 	defer db.Close()
 	query := `SELECT * FROM users
 			  WHERE email=?`
-	err = db.QueryRow(query, email).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
+	err = db.QueryRow(query, email).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImagePath, &user.CreatedAt)
 	return
 }
 
@@ -86,9 +86,9 @@ func UserByUserIdStr(useridstr string) (user User, err error) {
 func (user *User) Create() (err error) {
 	db := NewDB()
 	defer db.Close()
-	query := `INSERT INTO users (name, user_id_str, email, password)
-			  VALUES (?,?,?,?)`
-	_, err = db.Exec(query, user.Name, user.UserIdStr, user.Email, user.Password)
+	query := `INSERT INTO users (name, user_id_str, email, password, image_path)
+			  VALUES (?,?,?,?,?)`
+	_, err = db.Exec(query, user.Name, user.UserIdStr, user.Email, user.Password, user.ImagePath)
 	return
 }
 
@@ -133,9 +133,9 @@ func (user *User) Update() (err error) {
 	db := NewDB()
 	defer db.Close()
 	query := `UPDATE users
-		      SET name=?, user_id_str=?, email=?,password=?, img_path=?
+		      SET name=?, image_path=?
 			  WHERE id=?`
-	_, err = db.Exec(query, user.Name, user.UserIdStr, user.Email, user.Password, user.ImgPass, user.Id)
+	_, err = db.Exec(query, user.Name, user.ImagePath, user.Id)
 	return
 }
 

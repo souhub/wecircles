@@ -22,7 +22,8 @@ func Posts() (posts []Post, err error) {
 	db := NewDB()
 	defer db.Close()
 	query := `SELECT *
-			  FROM posts`
+			  FROM posts
+			  ORDER BY id DESC`
 	rows, err := db.Query(query)
 	if err != nil {
 		log.Fatal(err)
@@ -49,7 +50,8 @@ func (user *User) PostsByUser() (posts []Post, err error) {
 	defer db.Close()
 	query := `SELECT *
 			  FROM posts
-			  WHERE user_id=?`
+			  WHERE user_id=?
+			  ORDER BY id DESC`
 	rows, err := db.Query(query, user.Id)
 	if err != nil {
 		log.Fatal(err)

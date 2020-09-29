@@ -1,30 +1,50 @@
 {{define "content"}}
-<form role="form" action="/user/update" method="post" enctype="multipart/form-data">
+<form
+  role="form"
+  action="/user/update"
+  method="post"
+  enctype="multipart/form-data"
+>
   <div class="form-group">
     <label for="image">プロフィール画像</label><br />
-    {{if .ImgPass}}
+    <!-- {{if .ImagePath}} -->
     <div>
       <p>現在のプロフィール画像</p>
-      <img src="/static/img/user/{{.ImgPass}}" alt="" style="max-width: 200px; max-height: 200px;">
+      <img
+        src="/static/user/{{.ImagePath}}"
+        alt="user_profile_image"
+        style="max-width: 200px; max-height: 200px"
+      />
       <p>
-        新しいプロフィール画像<br>
-        <img id="preview" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style="max-width:200px; max-height: 200px;">
-        </p>
+        新しいプロフィール画像<br />
+        <img
+          id="preview"
+          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+          style="max-width: 200px; max-height: 200px"
+        />
+      </p>
     </div>
-    {{else}}
+    <!-- {{else}}
     <div>
       <p>現在のプロフィール画像</p>
-      <img src="/static/img/user/default_profile.jpeg" alt="">
+      <img src="/static/user/default.png" alt="" />
       <p>
-        新しいプロフィール画像<br>
-        <img id="preview" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style="max-width:200px; max-height: 200px;">
-        </p>
+        新しいプロフィール画像<br />
+        <img
+          id="preview"
+          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+          style="max-width: 200px; max-height: 200px"
+        />
+      </p>
     </div>
-    {{end}}
+    {{end}} -->
 
-
-
-    <input type="file" name="image" multiple="multiple" onChange="previewImage(this);" />
+    <input
+      type="file"
+      name="image"
+      multiple="multiple"
+      onChange="previewImage(this);"
+    />
   </div>
   <div class="form-group">
     <label for="name">ユーザー名</label>
@@ -35,7 +55,13 @@
       value="{{.Name}}"
       required
     />
-  <input type="submit" class="btn btn-primary" style="width:100%" value="更新">
+    <input
+      type="submit"
+      class="btn btn-primary"
+      style="width: 100%"
+      value="更新"
+    />
+  </div>
 </form>
 
 {{end}}

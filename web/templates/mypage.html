@@ -2,12 +2,16 @@
 
 <div>
   {{.Name}}
-  <a href="/user/edit">ユーザー情報変更</a>
+  <p><a href="/user/edit">ユーザー情報変更</a></p>
+  <img
+    src="/static/user/{{.ImagePath}}"
+    alt="user_profile_image"
+    style="max-width: 200px; max-height: 200px"
+  />
 </div>
 
 {{range .Posts}}
-<img src="/static/img/user/default_profile.jpeg" />
-<div class="card mx-auto mb-5" style="width: 55%;">
+<div class="card mx-auto mb-5" style="width: 55%">
   <a href="/post/show?id={{.Uuid}}">
     <svg
       class="bd-placeholder-img card-img-top"
