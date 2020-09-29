@@ -42,6 +42,9 @@
   - SSM
   - Route53
   - Cloud Watch
+- JavaScript
+- CSS
+- HTML5
 
 ### インフラ構成図
 
