@@ -30,19 +30,19 @@ func NewPost(w http.ResponseWriter, r *http.Request) {
 func CreatePost(w http.ResponseWriter, r *http.Request) {
 	sess, err := session(w, r)
 	if err != nil {
-		logging.Warn("Failed to find the session.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
 	err = r.ParseForm()
 	if err != nil {
-		logging.Warn("Failed to parse the post form")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/post/new", 302)
 		return
 	}
 	user, err := sess.User()
 	if err != nil {
-		logging.Warn("Failed to find the user from the session")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/post/new", 302)
 		return
 	}
@@ -66,7 +66,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	validate := validator.New()  //validatorインスタンス生成
 	err = validate.Struct(&post) //validator実行
 	if err != nil {
-		logging.Warn("Failed to pass the post validation.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/post/new", 302)
 		return
 	}
@@ -93,12 +93,12 @@ func ShowPost(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		tmp := parseTemplateFiles("layout", "navbar.public", "post.show.public")
 		if err := tmp.Execute(w, post); err != nil {
-			logging.Warn("Failed to show the show page")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 	} else {
 		tmp := parseTemplateFiles("layout", "navbar.private", "post.show.private")
 		if err := tmp.Execute(w, post); err != nil {
-			logging.Warn("Failed to show the show page")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 	}
 }
@@ -115,7 +115,7 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 	} else {
 		tmp := parseTemplateFiles("layout", "navbar.private", "post.edit")
 		if err := tmp.Execute(w, post); err != nil {
-			logging.Warn("Failed to show the edit page")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 	}
 }
@@ -129,16 +129,16 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	} else {
 		err := r.ParseForm()
 		if err != nil {
-			logging.Warn("NoUuid")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 		user, err := sess.User()
 		if err != nil {
-			logging.Warn("NoUser")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 		uuid := r.FormValue("uuid")
 		post, err := data.PostByUuid(uuid)
 		if err != nil {
-			logging.Warn("NoUuid")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 		if user.Id != post.UserId {
 			http.Redirect(w, r, "/", 302)
@@ -152,12 +152,12 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			tmp := parseTemplateFiles("layout", "navbar.private", "post.edit")
 			if err := tmp.Execute(w, post); err != nil {
-				logging.Warn("Failed to exec templates.")
+				logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 			}
 		} else {
 			err := post.UpdatePost()
 			if err != nil {
-				logging.Warn("Failed to update your post.")
+				logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 			}
 			http.Redirect(w, r, "/", 302)
 		}
@@ -175,18 +175,18 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 	uuid := vals.Get("id")
 	user, err := sess.User()
 	if err != nil {
-		logging.Warn("Failed to find your user account from the session.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	post, err := data.PostByUuid(uuid)
 	if err != nil {
-		logging.Warn("Failed to find your post from the uuid of the post.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	if user.Id != post.UserId {
 		http.Redirect(w, r, "/", 302)
 	}
 	err = post.Delete()
 	if err != nil {
-		logging.Warn("Failed to delete your post.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	http.Redirect(w, r, "/", 302)
 }

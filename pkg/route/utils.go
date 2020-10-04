@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"log"
 	"net/http"
 	"os"
 
@@ -37,13 +38,13 @@ func parseTemplateFiles(filenames ...string) (t *template.Template) {
 func upload(w http.ResponseWriter, r *http.Request) {
 	//メソッドをPOSTのみ許可
 	if r.Method != "POST" {
-		logging.Warn("許可されていないメソッド")
+		log.Fatalln("Panic")
 	}
 
 	//formから送信されたファイルを解析
 	file, fileHeader, err := r.FormFile("image")
 	if err != nil {
-		logging.Warn("ファイルのアップロード失敗")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	//アップロードされたファイル名を取得
 	uploadedFileName := fileHeader.Filename
@@ -53,13 +54,13 @@ func upload(w http.ResponseWriter, r *http.Request) {
 	//imagePathにアップロードされたファイルを保存
 	saveImage, err := os.Create(imagePath)
 	if err != nil {
-		logging.Warn("ファイルの確保失敗")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
 	//保存用ファイルにアップロードされたファイルを書き込む
 	_, err = io.Copy(saveImage, file)
 	if err != nil {
-		logging.Warn("アップロードしたファイルの書き込み失敗")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
 	//saveImageとfileを最後に閉じる

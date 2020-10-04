@@ -3,7 +3,6 @@ package route
 import (
 	"net/http"
 
-	"github.com/labstack/gommon/log"
 	"github.com/souhub/wecircles/pkg/data"
 	"github.com/souhub/wecircles/pkg/logging"
 	"gopkg.in/go-playground/validator.v9"
@@ -13,7 +12,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	tmp := parseTemplateFiles("login.layout", "navbar.public", "login")
 	err := tmp.Execute(w, nil)
 	if err != nil {
-		logging.Warn("Failet to open Login page.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 }
 
@@ -21,13 +20,13 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	tmp := parseTemplateFiles("login.layout", "navbar.public", "signup")
 	err := tmp.Execute(w, nil)
 	if err != nil {
-		logging.Warn("Failet to open Signup page.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 }
 
 func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
-		logging.Warn("Failed to signup, because of parsing forms.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/signup", 302)
 		return
 	}
@@ -41,13 +40,13 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	validate := validator.New() //validatorインスタンス生成
 	//validator実行
 	if err := validate.Struct(&user); err != nil {
-		logging.Warn("Failed to create user and redirect to the Signup page, because of validation.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/signup", 302)
 		return
 	}
 	//DBに登録
 	if err := user.Create(); err != nil {
-		logging.Warn("Failed to signup and redirect to the Signup page.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/signup", 302)
 		return
 	}
@@ -55,7 +54,7 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	//そのまま認証終わらせてマイページに飛ばす
 	// session, err := user.CreateSession()
 	// if err != nil {
-	// 	logging.Warn("Failed to create the session and redirect to Signup page")
+	// logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	// 	http.Redirect(w, r, "/signup", 302)
 	// 	return
 	// }
@@ -72,7 +71,7 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 func Authenticate(w http.ResponseWriter, r *http.Request) {
 	//フォームの入力内容解析
 	if err := r.ParseForm(); err != nil {
-		logging.Warn("Failed to parse the form.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
@@ -80,7 +79,7 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 
 	user, err := data.UserByUserIdStr(r.FormValue("useridstr"))
 	if err != nil {
-		logging.Warn("Failed to find user by the User IDddddddddd.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
@@ -90,7 +89,7 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 		//SHA-1でuuid作ってクッキーを作ってブラウザに渡す。
 		session, err := user.CreateSession()
 		if err != nil {
-			log.Warn("Failed to create the new session")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 			http.Redirect(w, r, "/login", 302)
 			return
 		}

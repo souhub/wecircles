@@ -44,14 +44,14 @@ func ShowUser(w http.ResponseWriter, r *http.Request) {
 	// user_id_str := vals.Get(("id"))
 	user, err := data.UserByUserIdStr(vals.Get(("id")))
 	if err != nil {
-		logging.Warn("Failed to find user.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
 	if session.UserIdStr != user.UserIdStr {
 		name := user.Name
 		posts, err := user.PostsByUser()
 		if err != nil {
-			logging.Warn("Failed to find your posts.")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 		type Data struct {
 			Name  string
@@ -63,17 +63,17 @@ func ShowUser(w http.ResponseWriter, r *http.Request) {
 		}
 		tmp := parseTemplateFiles("layout", "navbar.private", "user.show")
 		if err := tmp.Execute(w, data); err != nil {
-			logging.Warn("Failed to execute templates.")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 	} else {
 		user, err := session.User()
 		if err != nil {
-			logging.Warn("Failed to find a user.")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 		name := user.Name
 		posts, err := user.PostsByUser()
 		if err != nil {
-			logging.Warn("Failed to find posts.")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 		type Data struct {
 			Name  string
@@ -85,7 +85,7 @@ func ShowUser(w http.ResponseWriter, r *http.Request) {
 		}
 		tmp := parseTemplateFiles("layout", "navbar.private", "mypage")
 		if err := tmp.Execute(w, data); err != nil {
-			logging.Warn("Failed to execute templates.")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 	}
 
@@ -98,11 +98,11 @@ func EditUser(w http.ResponseWriter, r *http.Request) {
 	}
 	user, err := session.User()
 	if err != nil {
-		logging.Warn("Failed to find the user from the session.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	tmp := parseTemplateFiles("layout", "user.edit", "navbar.private")
 	if err := tmp.Execute(w, user); err != nil {
-		logging.Warn("Failed to execute templates.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		log.Fatal(err)
 	}
 }
@@ -118,19 +118,19 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 	// Allow the "POST" method, only
 	if r.Method != "POST" {
-		logging.Warn("許可されていないメソッド")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
 	// Parse the form
 	err = r.ParseForm()
 	if err != nil {
-		logging.Warn("Failed to parse the Form.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
 	// Get the file sent form the form
 	file, fileHeader, err := r.FormFile("image")
 	if err != nil {
-		logging.Warn("ファイルのアップロード失敗")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	// Get the uploaded file's name from the file.
 	uploadedFileName := fileHeader.Filename
@@ -140,13 +140,13 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	// Save the uploaded file to "imagePath"
 	saveImage, err := os.Create(imagePath)
 	if err != nil {
-		logging.Warn("ファイルの確保失敗")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
 	// Write the uploaded file to the file for saving.
 	_, err = io.Copy(saveImage, file)
 	if err != nil {
-		logging.Warn("アップロードしたファイルの書き込み失敗")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
 	// Close the "saveImage" and "file"

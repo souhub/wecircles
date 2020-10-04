@@ -24,13 +24,13 @@ func Users() (users []User, err error) {
 			  FROM users`
 	rows, err := db.Query(query)
 	if err != nil {
-		logging.Warn("Failed to find users.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	for rows.Next() {
 		var user User
 		err = rows.Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImagePath, &user.CreatedAt)
 		if err != nil {
-			logging.Warn("Failed to find a user.")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 		users = append(users, user)
 	}
@@ -75,7 +75,7 @@ func UserByUserIdStr(useridstr string) (user User, err error) {
 			  WHERE user_id_str=?`
 	stmt, err := db.Prepare(query)
 	if err != nil {
-		logging.Warn("Failed to prepare the statements;")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	defer stmt.Close()
 	err = stmt.QueryRow(useridstr).Scan(&user.Id, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.CreatedAt)
@@ -100,7 +100,7 @@ func (user *User) CreateSession() (session Session, err error) {
 			  VALUES (?,?,?,?)`
 	_, err = db.Exec(query, uuid.New().String(), user.Email, user.Id, user.UserIdStr)
 	if err != nil {
-		logging.Warn("Failed to insert the new session")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	query = `SELECT * from sessions
 			 WHERE user_id=?`
@@ -118,7 +118,7 @@ func (user *User) CreateSession() (session Session, err error) {
 // 			  VALUES (?,?,?,?)`
 // 	_, err = db.Exec(query, uuid.New().String(), user.Email, user.Id, user.UserIdStr)
 // 	if err != nil {
-// 		logging.Warn("Failed to insert the new session")
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 // 	}
 // 	query = `SELECT * from sessions
 // 			 WHERE user_id_str=?`

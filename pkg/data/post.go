@@ -6,6 +6,8 @@ import (
 	"github.com/souhub/wecircles/pkg/logging"
 )
 
+var fileName = "/pkg/data/post.go"
+
 type Post struct {
 	Id        int
 	Uuid      string
@@ -27,7 +29,7 @@ func Posts() (posts []Post, err error) {
 	rows, err := db.Query(query)
 	if err != nil {
 		log.Fatal(err)
-		logging.Warn("Failed to find posts.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
 	for rows.Next() {
@@ -35,7 +37,7 @@ func Posts() (posts []Post, err error) {
 		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.CreatedAt)
 		if err != nil {
 			log.Fatal(err)
-			logging.Warn("Failed to find a post.")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 			return
 		}
 		posts = append(posts, post)
@@ -55,14 +57,14 @@ func (user *User) PostsByUser() (posts []Post, err error) {
 	rows, err := db.Query(query, user.Id)
 	if err != nil {
 		log.Fatal(err)
-		logging.Warn("Failed to find posts.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	for rows.Next() {
 		var post Post
 		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.CreatedAt)
 		if err != nil {
 			log.Fatal(err)
-			logging.Warn("Failed to find a post.")
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 		posts = append(posts, post)
 	}

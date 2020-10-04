@@ -21,23 +21,23 @@ func init() {
 	log.SetLevel(log.WarnLevel)
 }
 
-func Info(msg string) {
+func Info(err error, fileName string, line int) {
 	log.WithFields(log.Fields{
-		"file": GetCurrentFile(),
-		"line": GetCurrentFileLine(),
-	}).Info(msg)
+		"file": fileName,
+		"line": line,
+	}).Info(err)
 }
 
-func Warn(msg string) {
+func Warn(err error, fileName string, line int) {
 	log.WithFields(log.Fields{
-		"file": GetCurrentFile(),
-		"line": GetCurrentFileLine(),
-	}).Warn(msg)
+		"file": fileName,
+		"line": line,
+	}).Warn(err)
 }
 
-func Fatal(msg string) {
+func Fatal(err error, fileName string, line int) {
 	log.WithFields(log.Fields{
-		"file": GetCurrentFile(),
-		"line": GetCurrentFileLine(),
-	}).Fatal(msg)
+		"file": fileName,
+		"line": line,
+	}).Fatal(err)
 }

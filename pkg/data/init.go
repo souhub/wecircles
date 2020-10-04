@@ -26,7 +26,7 @@ func init() {
 		)`
 	_, err := db.Exec(cmd)
 	if err != nil {
-		logging.Warn("Failed to Create users table.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
 	// Create sessions table
@@ -40,7 +40,7 @@ func init() {
 		)`
 	_, err = db.Exec(cmd)
 	if err != nil {
-		logging.Warn("Failed to Create sessions table.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
 	// Create sessions table
@@ -56,7 +56,7 @@ func init() {
 			)`
 	_, err = db.Exec(cmd)
 	if err != nil {
-		logging.Warn("Failed to Create posts table.")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
 }
@@ -72,7 +72,7 @@ func NewDB() *sql.DB {
 	dsn := fmt.Sprintf("%s:%s@%s(%s)/%s", dBUser, dBPass, dbProtocol, dbEndpoint, dbName)
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
-		logging.Fatal("Failed to connect the database.")
+		logging.Fatal(err, fileName, 77)
 	}
 	return db
 }
