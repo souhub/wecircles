@@ -1,6 +1,7 @@
 package route
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -114,7 +115,55 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 	user, err := session.User()
 	if err != nil {
+		logging.Fatal(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+
+	// Allow the "POST" method, only
+	if r.Method != "POST" {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+
+	// Parse the form
+	err = r.ParseForm()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+
+	user.Name = r.PostFormValue("name")
+	user.UserIdStr = r.PostFormValue("user_id_str")
+
+	fmt.Println(user.UserIdStr)
+	if err = user.Update(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	fmt.Println(user.UserIdStr)
+	http.Redirect(w, r, "/", 302)
+}
+
+func EditUserImage(w http.ResponseWriter, r *http.Request) {
+	session, err := session(w, r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+	}
+	user, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	tmp := parseTemplateFiles("layout", "user.edit.image", "navbar.private")
+	if err := tmp.Execute(w, user); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		log.Fatal(err)
+	}
+}
+
+func UpdateUserImage(w http.ResponseWriter, r *http.Request) {
+	session, err := session(w, r)
+	user, err := session.User()
+	if err != nil {
+		logging.Fatal(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	// Allow the "POST" method, only
 	if r.Method != "POST" {
@@ -153,13 +202,9 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	defer saveImage.Close()
 	defer file.Close()
 
-	// attr := map[string]interface{}{
-	// 	"Name":    r.PostFormValue("name"),
-	// 	"ImgPass": uploadedFileName,
-	// }
-	user.Name = r.PostFormValue("name")
 	user.ImagePath = uploadedFileName
-	if err = user.Update(); err != nil {
+
+	if err = user.UpdateImage(); err != nil {
 		log.Fatal(err)
 	}
 	http.Redirect(w, r, "/", 302)

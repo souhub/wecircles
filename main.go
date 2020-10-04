@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	files := http.FileServer(http.Dir("web/img"))
+	files := http.FileServer(http.Dir("web/"))
 	http.Handle("/static/", http.StripPrefix("/static/", files))
 
 	http.HandleFunc("/", route.Index)
@@ -28,6 +28,8 @@ func main() {
 	http.HandleFunc("/mypage", route.MyPage)
 	http.HandleFunc("/user/edit", route.EditUser)
 	http.HandleFunc("/user/update", route.UpdateUser)
+	http.HandleFunc("/user/edit/image", route.EditUserImage)
+	http.HandleFunc("/user/update/image", route.UpdateUserImage)
 	http.HandleFunc("/user/show", route.ShowUser)
 	log.Fatal(http.ListenAndServe(":80", nil))
 }

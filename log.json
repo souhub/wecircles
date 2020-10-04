@@ -1,0 +1,4 @@
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":88,"msg":"template: mypage.html:8:32: executing \"content\" at \u003c.ImagePath\u003e: can't evaluate field ImagePath in type route.Data","time":"2020-10-04T07:04:17Z"}
+ttp: no such file","time":"2020-10-04T05:40:30Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":205,"msg":"http: no such file","time":"2020-10-04T05:40:30Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":205,"msg":"http: no such file","time":"2020-10-04T05:40:30Z"}

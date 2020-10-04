@@ -1,0 +1,44 @@
+{{define "content"}}
+<form
+  role="form"
+  action="/user/update/image"
+  method="post"
+  enctype="multipart/form-data"
+>
+  <div class="form-group">
+    <label for="image">プロフィール画像</label><br />
+    <div>
+      <p>現在のプロフィール画像</p>
+      <img
+        src="/static/img/user/{{.ImagePath}}"
+        alt="user_profile_image"
+        style="max-width: 200px; max-height: 200px"
+      />
+      <p>
+        新しいプロフィール画像<br />
+        <img
+          id="preview"
+          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+          style="max-width: 200px; max-height: 200px"
+        />
+      </p>
+    </div>
+    <input
+      type="file"
+      name="image"
+      multiple="multiple"
+      onChange="previewImage(this);"
+      accept="image/*"
+      required
+    />
+  </div>
+  <input
+    type="submit"
+    class="btn btn-success"
+    style="width: 100%"
+    value="更新"
+  />
+</form>
+<a href="/user/edit" class="btn btn-outline-secondary btn-block mt-3">戻る</a>
+
+{{end}}

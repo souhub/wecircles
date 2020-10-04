@@ -133,9 +133,20 @@ func (user *User) Update() (err error) {
 	db := NewDB()
 	defer db.Close()
 	query := `UPDATE users
-		      SET name=?, image_path=?
+		      SET name=?, user_id_str=?
 			  WHERE id=?`
-	_, err = db.Exec(query, user.Name, user.ImagePath, user.Id)
+	_, err = db.Exec(query, user.Name, user.UserIdStr, user.Id)
+	return
+}
+
+// Update the user image
+func (user *User) UpdateImage() (err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `UPDATE users
+		      SET image_path=?
+			  WHERE id=?`
+	_, err = db.Exec(query, user.ImagePath, user.Id)
 	return
 }
 

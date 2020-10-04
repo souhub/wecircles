@@ -2,12 +2,16 @@
 
 <div>
   {{.Name}}
-  <p><a href="/user/edit">ユーザー情報変更</a></p>
-  <img
-    src="/static/user/{{.ImagePath}}"
-    alt="user_profile_image"
-    style="max-width: 200px; max-height: 200px"
-  />
+  <p>
+    <a href="/user/edit">
+      <img
+        src="/static/img/user/{{.ImagePath}}"
+        alt="user_profile_image"
+        style="max-width: 200px; max-height: 200px"
+      />
+      <p>edit profile</p></a
+    >
+  </p>
 </div>
 
 {{range .Posts}}
