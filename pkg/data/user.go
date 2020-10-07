@@ -7,7 +7,6 @@ import (
 
 type User struct {
 	Id        int
-	Uuid      string
 	Name      string `validate:"required"`
 	UserIdStr string `validate:"alphanumunicode"`
 	Email     string `validate:"required,email"`
@@ -28,7 +27,7 @@ func Users() (users []User, err error) {
 	}
 	for rows.Next() {
 		var user User
-		err = rows.Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImagePath, &user.CreatedAt)
+		err = rows.Scan(&user.Id, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImagePath, &user.CreatedAt)
 		if err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
@@ -55,19 +54,11 @@ func UserByEmail(email string) (user User, err error) {
 	defer db.Close()
 	query := `SELECT * FROM users
 			  WHERE email=?`
-	err = db.QueryRow(query, email).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImagePath, &user.CreatedAt)
+	err = db.QueryRow(query, email).Scan(&user.Id, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImagePath, &user.CreatedAt)
 	return
 }
 
-// Get the user from his uuid
-// func UserByUserIdStr(user_id_str string) (user User, err error) {
-// 	db := NewDB()
-// 	defer db.Close()
-// 	query := `SELECT * FROM users
-// 			  WHERE user_id_str=?`
-// 	err = db.QueryRow(query, user_id_str).Scan(&user.Id, &user.Uuid, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImgPass, &user.CreatedAt)
-// 	return user, err
-// }
+// Get the user from user_id_str
 func UserByUserIdStr(useridstr string) (user User, err error) {
 	db := NewDB()
 	defer db.Close()

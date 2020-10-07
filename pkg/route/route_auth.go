@@ -53,7 +53,9 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	}
 	// http.Redirect(w, r, "/login", 302)
 	//そのまま認証終わらせてマイページに飛ばす
-	session, err := user.CreateSession()
+	signupedUserId := user.UserIdStr
+	signupedUser, err := data.UserByUserIdStr(signupedUserId)
+	session, err := signupedUser.CreateSession()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/signup", 302)

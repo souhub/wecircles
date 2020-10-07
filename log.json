@@ -1,4 +1,8 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":72,"msg":"sql: no rows in result set","time":"2020-10-07T01:03:17Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":89,"msg":"template: mypage.html:8:32: executing \"content\" at \u003c.ImagePath\u003e: can't evaluate field ImagePath in type route.Data","time":"2020-10-07T01:03:17Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":88,"msg":"template: mypage.html:8:32: executing \"content\" at \u003c.ImagePath\u003e: can't evaluate field ImagePath in type route.Data","time":"2020-10-07T10:24:22Z"}
+sg":"template: mypage.html:8:32: executing \"content\" at \u003c.ImagePath\u003e: can't evaluate field ImagePath in type route.Data","time":"2020-10-07T10:18:27Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":45,"msg":"sql: no rows in result set","time":"2020-10-07T01:04:21Z"}
-ile","time":"2020-10-04T05:40:30Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":72,"msg":"sql: no rows in result set","time":"2020-10-07T10:11:00Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":89,"msg":"template: mypage.html:8:32: executing \"content\" at \u003c.ImagePath\u003e: can't evaluate field ImagePath in type route.Data","time":"2020-10-07T10:11:00Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":72,"msg":"sql: no rows in result set","time":"2020-10-07T10:13:11Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":89,"msg":"template: mypage.html:8:32: executing \"content\" at \u003c.ImagePath\u003e: can't evaluate field ImagePath in type route.Data","time":"2020-10-07T10:13:11Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":45,"msg":"sql: no rows in result set","time":"2020-10-07T10:13:22Z"}

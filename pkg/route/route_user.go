@@ -42,7 +42,6 @@ func ShowUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	vals := r.URL.Query()
-	// user_id_str := vals.Get(("id"))
 	user, err := data.UserByUserIdStr(vals.Get(("id")))
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
