@@ -89,9 +89,9 @@ func ShowPost(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	_, err = session(w, r)
-	if err != nil {
-		tmp := parseTemplateFiles("layout", "navbar.public", "post.show.public")
+	session, err := session(w, r)
+	if session.UserId != post.UserId {
+		tmp := parseTemplateFiles("layout", "navbar.private", "post.show.public")
 		if err := tmp.Execute(w, post); err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
