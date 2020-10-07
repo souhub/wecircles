@@ -70,13 +70,14 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/post/new", 302)
 		return
 	}
-	// uuid := r.PostFormValue("uuid")
 	if err = post.Create(); err != nil {
 		log.Fatal(err)
 		http.Redirect(w, r, "/post/new", 302)
 		return
 	}
 	url := fmt.Sprint("/post/show?id=", post.Uuid)
+	http.Redirect(w, r, "/", 302)
+	// この投稿にこのurlを割り当てるためのダミー（エラー発生するが問題ない）
 	http.Redirect(w, r, url, 302)
 }
 

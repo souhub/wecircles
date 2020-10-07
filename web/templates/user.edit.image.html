@@ -12,14 +12,19 @@
       <img
         src="/static/img/user/{{.ImagePath}}"
         alt="user_profile_image"
-        style="max-width: 200px; max-height: 200px"
+        style="
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          object-fit: cover;
+        "
       />
       <p>
-        新しいプロフィール画像<br />
+        新しいプロフィール画像を選択するとこの下に表示されます。<br />
         <img
           id="preview"
           src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-          style="max-width: 200px; max-height: 200px"
+          style="width: 200px; height: 200px; border-radius: 50%"
         />
       </p>
     </div>

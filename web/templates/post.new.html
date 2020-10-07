@@ -1,12 +1,12 @@
 {{define "content"}}
-<form action="/post/create" method="post" class="mx-auto" style="width: 50%;">
+<form action="/post/create" method="post" class="mx-auto" style="width: 50%">
   <div class="form-group">
     <label for="title">タイトル</label>
     <h2>
       <textarea
         type="text"
         class="form-control font-weight-bold"
-        style="font-size: 30px;"
+        style="font-size: 30px"
         name="title"
         rows="1"
         placeholder="タイトル"
@@ -17,11 +17,10 @@
     <label for="body">本文</label>
     <textarea
       type="text"
-      class="form-control auto-resize"
-      style="line-height: 16px; white-space: prewrap;"
       name="body"
-      wrap="hard"
-      cols="10"
+      class="form-control auto-resize"
+      style="line-height: 16px; white-space: prewrap"
+      rows="30"
       placeholder="読んだ本の感想をnoteに書いてみませんか？"
     ></textarea>
   </div>

@@ -138,7 +138,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Println(user.UserIdStr)
-	http.Redirect(w, r, "/", 302)
+	http.Redirect(w, r, "/mypage", 302)
 }
 
 func EditUserImage(w http.ResponseWriter, r *http.Request) {
@@ -206,5 +206,5 @@ func UpdateUserImage(w http.ResponseWriter, r *http.Request) {
 	if err = user.UpdateImage(); err != nil {
 		log.Fatal(err)
 	}
-	http.Redirect(w, r, "/", 302)
+	http.Redirect(w, r, "/user/edit", 302)
 }

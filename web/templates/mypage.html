@@ -1,19 +1,25 @@
 {{define "content"}}
 
 <div>
-  {{.Name}}
+  <h2 class="text-center">{{.Name}}さんのマイページ</h2>
   <p>
     <a href="/user/edit">
       <img
         src="/static/img/user/{{.ImagePath}}"
         alt="user_profile_image"
-        style="max-width: 200px; max-height: 200px"
+        style="
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          object-fit: cover;
+        "
       />
-      <p>edit profile</p></a
+      <p>プロフィールを編集する</p></a
     >
   </p>
 </div>
 
+<h3 class="text-center">{{.Name}}さんの投稿</h3>
 {{range .Posts}}
 <div class="card mx-auto mb-5" style="width: 55%">
   <a href="/post/show?id={{.Uuid}}">
