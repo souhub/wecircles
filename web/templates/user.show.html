@@ -1,12 +1,28 @@
 {{define "content"}}
 
 <div>
-  {{.Name}}
+  <h2 class="text-center">{{.Name}}さんのマイページ</h2>
+  <p>
+    {{if eq .ImagePath "default.png"}}
+    <!-- if user.ImagePath=="default.png" -->
+    <img
+      src="/static/img/user/default.png"
+      alt="user_profile_image"
+      style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
+    />
+    {{else}}
+    <img
+      src="/static/img/user/user{{.ID}}/{{.ImagePath}}"
+      alt="user_profile_image"
+      style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
+    />
+    {{end}}
+  </p>
 </div>
 
+<h3 class="text-center">{{.Name}}さんの投稿</h3>
 {{range .Posts}}
-<img src="/static/img/user/default_profile.jpeg" />
-<div class="card mx-auto mb-5" style="width: 55%;">
+<div class="card mx-auto mb-5" style="width: 55%">
   <a href="/post/show?id={{.Uuid}}">
     <svg
       class="bd-placeholder-img card-img-top"
@@ -31,12 +47,13 @@
       <p class="card-text index-post-body">{{.Body}}</p>
       {{else}}
       <p class="card-text">本文がありません。</p>
+    </a>
       {{end}}
     </div>
+
     <div class="card-body">
-      <a href="#">{{.UserName}}</a>
+      <p>{{.UserName}}</p>
       <p>{{.CreatedAt}}</p>
     </div>
-  </a>
 </div>
 {{end}} {{end}}

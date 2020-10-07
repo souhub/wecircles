@@ -1,7 +1,7 @@
 {{define "content"}}
 <div class="mx-auto" style="width: 50%">
   <h1>{{.Title}}</h1>
-  <a href="/user/show?id={{.Id}}">{{.UserName}}</a>
+  <a href="/user/show?id={{.UserIdStr}}">{{.UserName}}</a>
   <p>{{.CreatedAt}}</p>
   <p style="white-space: pre">{{.Body}}</p>
 </div>

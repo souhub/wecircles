@@ -38,59 +38,49 @@ func MyPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func ShowUser(w http.ResponseWriter, r *http.Request) {
-	session, err := session(w, r)
-	if err != nil {
-		http.Redirect(w, r, "/login", 302)
-		return
-	}
 	vals := r.URL.Query()
 	user, err := data.UserByUserIdStr(vals.Get(("id")))
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	if session.UserIdStr != user.UserIdStr {
-		name := user.Name
-		posts, err := user.PostsByUser()
-		if err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-		type Data struct {
-			Name  string
-			Posts []data.Post
-		}
-		data := Data{
-			Name:  name,
-			Posts: posts,
-		}
-		tmp := parseTemplateFiles("layout", "navbar.private", "user.show")
-		if err := tmp.Execute(w, data); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-	} else {
-		user, err := session.User()
-		if err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-		name := user.Name
-		posts, err := user.PostsByUser()
-		if err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-		type Data struct {
-			Name  string
-			Posts []data.Post
-		}
-		data := Data{
-			Name:  name,
-			Posts: posts,
-		}
-		tmp := parseTemplateFiles("layout", "navbar.private", "mypage")
-		if err := tmp.Execute(w, data); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
+	posts, err := user.PostsByUser()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
-
+	type Data struct {
+		ID        int
+		Name      string
+		UserIdStr string
+		ImagePath string
+		Posts     []data.Post
+	}
+	data := Data{
+		ID:        user.Id,
+		Name:      user.Name,
+		UserIdStr: user.UserIdStr,
+		ImagePath: user.ImagePath,
+		Posts:     posts,
+	}
+	session, err := session(w, r)
+	// ログイン前にユーザー名クリックした場合
+	if err != nil {
+		tmp := parseTemplateFiles("layout", "navbar.public", "user.show")
+		if err := tmp.Execute(w, data); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+		return
+	}
+	// ログイン後に自分のユーザー名をクリックした場合
+	if session.UserId == user.Id {
+		http.Redirect(w, r, "/mypage", 302)
+		return
+	}
+	// ログイン後に他人のユーザー名をクリックした場合
+	tmp := parseTemplateFiles("layout", "navbar.private", "user.show")
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 }
 
 func EditUser(w http.ResponseWriter, r *http.Request) {

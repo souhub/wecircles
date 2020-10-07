@@ -1,12 +1,9 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":49,"msg":"sql: no rows in result set","time":"2020-10-07T13:23:15Z"}
-8/default.png: no such file or directory","time":"2020-10-07T13:16:01Z"}
-T13:07:31Z"}
-:"2020-10-07T12:55:10Z"}
-46:37Z"}
-e.html:8:32: executing \"content\" at \u003c.ImagePath\u003e: can't evaluate field ImagePath in type route.Data","time":"2020-10-07T10:18:27Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":45,"msg":"sql: no rows in result set","time":"2020-10-07T01:04:21Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":72,"msg":"sql: no rows in result set","time":"2020-10-07T10:11:00Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":89,"msg":"template: mypage.html:8:32: executing \"content\" at \u003c.ImagePath\u003e: can't evaluate field ImagePath in type route.Data","time":"2020-10-07T10:11:00Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":72,"msg":"sql: no rows in result set","time":"2020-10-07T10:13:11Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":89,"msg":"template: mypage.html:8:32: executing \"content\" at \u003c.ImagePath\u003e: can't evaluate field ImagePath in type route.Data","time":"2020-10-07T10:13:11Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":44,"msg":"sql: no rows in result set","time":"2020-10-07T17:19:56Z"}
+003c.Id\u003e: can't evaluate field Id in type route.Data","time":"2020-10-07T17:00:44Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":73,"msg":"template: user.show.html:15:34: executing \"content\" at \u003c.Id\u003e: can't evaluate field Id in type route.Data","time":"2020-10-07T17:00:45Z"}
+stat /go/src/github.com/souhub/wecircles/web/img/user/user26/default.png: no such file or directory","time":"2020-10-07T16:57:36Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":71,"msg":"template: user.show.html:15:34: executing \"content\" at \u003c.Id\u003e: can't evaluate field Id in type route.Data","time":"2020-10-07T16:58:15Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":71,"msg":"template: user.show.html:15:34: executing \"content\" at \u003c.Id\u003e: can't evaluate field Id in type route.Data","time":"2020-10-07T16:58:19Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":71,"msg":"template: user.show.html:15:34: executing \"content\" at \u003c.Id\u003e: can't evaluate field Id in type route.Data","time":"2020-10-07T16:58:59Z"}
+pe route.Data","time":"2020-10-07T10:13:11Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":45,"msg":"sql: no rows in result set","time":"2020-10-07T10:13:22Z"}
