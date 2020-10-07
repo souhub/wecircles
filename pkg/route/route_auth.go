@@ -1,6 +1,7 @@
 package route
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/souhub/wecircles/pkg/data"
@@ -50,22 +51,22 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/signup", 302)
 		return
 	}
-	http.Redirect(w, r, "/login", 302)
+	// http.Redirect(w, r, "/login", 302)
 	//そのまま認証終わらせてマイページに飛ばす
-	// session, err := user.CreateSession()
-	// if err != nil {
-	// logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	// 	http.Redirect(w, r, "/signup", 302)
-	// 	return
-	// }
-	// cookie := http.Cookie{
-	// 	Name:     "_cookie",
-	// 	Value:    session.Uuid,
-	// 	HttpOnly: true,
-	// }
-	// http.SetCookie(w, &cookie)
-	// url := fmt.Sprint("/user/show?id=", session.UserIdStr)
-	// http.Redirect(w, r, url, 302)
+	session, err := user.CreateSession()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/signup", 302)
+		return
+	}
+	cookie := http.Cookie{
+		Name:     "_cookie",
+		Value:    session.Uuid,
+		HttpOnly: true,
+	}
+	http.SetCookie(w, &cookie)
+	url := fmt.Sprint("/user/show?id=", session.UserIdStr)
+	http.Redirect(w, r, url, 302)
 }
 
 func Authenticate(w http.ResponseWriter, r *http.Request) {

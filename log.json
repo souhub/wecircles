@@ -1,4 +1,4 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/init.go","level":"warning","line":29,"msg":"dial tcp 172.18.0.2:3306: connect: connection refused","time":"2020-10-07T00:24:17Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/init.go","level":"warning","line":43,"msg":"dial tcp 172.18.0.2:3306: connect: connection refused","time":"2020-10-07T00:24:17Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/init.go","level":"warning","line":59,"msg":"dial tcp 172.18.0.2:3306: connect: connection refused","time":"2020-10-07T00:24:17Z"}
-rning","line":205,"msg":"http: no such file","time":"2020-10-04T05:40:30Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":72,"msg":"sql: no rows in result set","time":"2020-10-07T01:03:17Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":89,"msg":"template: mypage.html:8:32: executing \"content\" at \u003c.ImagePath\u003e: can't evaluate field ImagePath in type route.Data","time":"2020-10-07T01:03:17Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":45,"msg":"sql: no rows in result set","time":"2020-10-07T01:04:21Z"}
+ile","time":"2020-10-04T05:40:30Z"}
