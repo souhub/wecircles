@@ -9,8 +9,10 @@
     <label for="image">プロフィール画像</label><br />
     <div>
       <p>現在のプロフィール画像</p>
+      {{if eq .ImagePath "default.png"}}
+      <!-- if user.ImagePath=="default.png" -->
       <img
-        src="/static/img/user/{{.ImagePath}}"
+        src="/static/img/user/default.png"
         alt="user_profile_image"
         style="
           width: 200px;
@@ -19,6 +21,18 @@
           object-fit: cover;
         "
       />
+      {{else}}
+      <img
+        src="/static/img/user/user{{.Id}}/{{.ImagePath}}"
+        alt="user_profile_image"
+        style="
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          object-fit: cover;
+        "
+      />
+      {{end}}
       <p>
         新しいプロフィール画像を選択するとこの下に表示されます。<br />
         <img

@@ -1,10 +1,19 @@
 {{define "content"}}
 <a href="/user/edit/image">
+  {{if eq .ImagePath "default.png"}}
+  <!-- if user.ImagePath=="default.png" -->
   <img
-    src="/static/img/user/{{.ImagePath}}"
+    src="/static/img/user/default.png"
     alt="user_profile_image"
     style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
   />
+  {{else}}
+  <img
+    src="/static/img/user/user{{.Id}}/{{.ImagePath}}"
+    alt="user_profile_image"
+    style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
+  />
+  {{end}}
   <p>プロフィール画像を変更する</p>
 </a>
 <form action="/user/update" method="post">

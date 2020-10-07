@@ -2,7 +2,6 @@ package route
 
 import (
 	"fmt"
-	"io"
 	"log"
 	"net/http"
 	"os"
@@ -17,15 +16,18 @@ func MyPage(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 	}
 	user, err := session.User()
+	id := user.Id
 	name := user.Name
 	image := user.ImagePath
 	posts, err := user.PostsByUser()
 	type Data struct {
+		Id        int
 		Name      string
 		ImagePath string
 		Posts     []data.Post
 	}
 	data := Data{
+		Id:        id,
 		Name:      name,
 		ImagePath: image,
 		Posts:     posts,
@@ -163,46 +165,28 @@ func UpdateUserImage(w http.ResponseWriter, r *http.Request) {
 	user, err := session.User()
 	if err != nil {
 		logging.Fatal(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
-	// Allow the "POST" method, only
-	if r.Method != "POST" {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
 	}
 
-	// Parse the form
-	err = r.ParseForm()
+	currentDir, err := os.Getwd()
+	userImageDir := fmt.Sprintf("%s/web/img/user/user%d", currentDir, user.Id)
+	_, err = os.Stat(userImageDir)
+	if err != nil {
+		err = os.Mkdir(userImageDir, 0777)
+	}
+	// Delete the current user's image
+	err = user.DeleteUserImage()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
-	// Get the file sent form the form
-	file, fileHeader, err := r.FormFile("image")
-	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
-	// Get the uploaded file's name from the file.
-	uploadedFileName := fileHeader.Filename
-	// Set the uploaded file's path
-	imagePath := "web/img/user/" + uploadedFileName
-
-	// Save the uploaded file to "imagePath"
-	saveImage, err := os.Create(imagePath)
+	// Uplaod the new user's image.
+	user.ImagePath, err = user.Upload(r)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
-	// Write the uploaded file to the file for saving.
-	_, err = io.Copy(saveImage, file)
-	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
-
-	// Close the "saveImage" and "file"
-	defer saveImage.Close()
-	defer file.Close()
-
-	user.ImagePath = uploadedFileName
-
+	// Update the user's image path from old one to the new one in the DB.
 	if err = user.UpdateImage(); err != nil {
 		log.Fatal(err)
 	}

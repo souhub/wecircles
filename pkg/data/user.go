@@ -1,6 +1,12 @@
 package data
 
 import (
+	"errors"
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+
 	"github.com/google/uuid"
 	"github.com/souhub/wecircles/pkg/logging"
 )
@@ -101,24 +107,6 @@ func (user *User) CreateSession() (session Session, err error) {
 	return
 }
 
-// Create a new session for an existing user
-// func (user *User) CreateSession() (session Session, err error) {
-// 	db := NewDB()
-// 	defer db.Close()
-// 	query := `INSERT INTO sessions (uuid, email, user_id, user_id_str)
-// 			  VALUES (?,?,?,?)`
-// 	_, err = db.Exec(query, uuid.New().String(), user.Email, user.Id, user.UserIdStr)
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 	}
-// 	query = `SELECT * from sessions
-// 			 WHERE user_id_str=?`
-// 	stmt, err := db.Prepare(query)
-// 	defer stmt.Close()
-// 	err = stmt.QueryRow(user.UserIdStr).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.UserIdStr, &session.CreatedAt)
-// 	return
-// }
-
 // Update the user
 func (user *User) Update() (err error) {
 	db := NewDB()
@@ -141,6 +129,51 @@ func (user *User) UpdateImage() (err error) {
 	return
 }
 
+func (user *User) Upload(r *http.Request) (uploadedFileName string, err error) {
+	// Allow the "POST" method, only
+	if r.Method != "POST" {
+		err = errors.New("method error: POST only")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+
+	// Parse the form
+	err = r.ParseForm()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+
+	// Get the file sent form the form
+	file, fileHeader, err := r.FormFile("image")
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	// Get the uploaded file's name from the file.
+	uploadedFileName = fileHeader.Filename
+	// Set the uploaded file's path
+	imagePath := fmt.Sprintf("web/img/user/user%d/%s", user.Id, uploadedFileName)
+
+	// Save the uploaded file to "imagePath"
+	saveImage, err := os.Create(imagePath)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+
+	// Write the uploaded file to the file for saving.
+	_, err = io.Copy(saveImage, file)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+
+	// Close the "saveImage" and "file"
+	defer saveImage.Close()
+	defer file.Close()
+	return uploadedFileName, err
+}
+
 // Delete the user
 func (user *User) Delete() (err error) {
 	db := NewDB()
@@ -149,6 +182,18 @@ func (user *User) Delete() (err error) {
 			  WHERE id=?`
 	_, err = db.Exec(query, user.Id)
 	return
+}
+
+// Delete the user image to update the new one
+func (user *User) DeleteUserImage() error {
+	currentDir, err := os.Getwd()
+	fullPath := fmt.Sprintf("%s/web/img/user/user%d/%s", currentDir, user.Id, user.ImagePath)
+	_, err = os.Stat(fullPath)
+	if err != nil {
+		return err
+	}
+	err = os.Remove(fullPath)
+	return err
 }
 
 // Delete all of the users
