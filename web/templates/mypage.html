@@ -33,8 +33,7 @@
   </p>
 </div>
 
-<h3 class="text-center">{{.Name}}さんの投稿</h3>
-{{range .Posts}}
+{{if .Posts}} {{range .Posts}}
 <div class="card mx-auto mb-5" style="width: 55%">
   <a href="/post/show?id={{.Uuid}}">
     <svg
@@ -68,4 +67,11 @@
     </div>
   </a>
 </div>
+{{end}} {{else}}
+<p class="text-center">まだ投稿がありません。</p>
+<a href="/post/new" style="text-decoration: none"
+  ><button type="submit" class="btn btn-outline-success btn-block">
+    初めての投稿をしましょう！
+  </button></a
+>
 {{end}} {{end}}

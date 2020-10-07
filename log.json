@@ -1,5 +1,5 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":44,"msg":"sql: no rows in result set","time":"2020-10-07T17:19:56Z"}
-003c.Id\u003e: can't evaluate field Id in type route.Data","time":"2020-10-07T17:00:44Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":69,"msg":"Key: 'Post.Body' Error:Field validation for 'Body' failed on the 'required' tag","time":"2020-10-07T22:36:17Z"}
+Data","time":"2020-10-07T17:00:44Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":73,"msg":"template: user.show.html:15:34: executing \"content\" at \u003c.Id\u003e: can't evaluate field Id in type route.Data","time":"2020-10-07T17:00:45Z"}
 stat /go/src/github.com/souhub/wecircles/web/img/user/user26/default.png: no such file or directory","time":"2020-10-07T16:57:36Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":71,"msg":"template: user.show.html:15:34: executing \"content\" at \u003c.Id\u003e: can't evaluate field Id in type route.Data","time":"2020-10-07T16:58:15Z"}

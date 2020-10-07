@@ -16,7 +16,6 @@ func init() {
 	// Create users table
 	cmd := `CREATE TABLE IF NOT EXISTS users(
 		id INT AUTO_INCREMENT PRIMARY KEY,
-		uuid VARCHAR(255),
 		name VARCHAR(255),
 		user_id_str VARCHAR(255),
 		email VARCHAR(255),

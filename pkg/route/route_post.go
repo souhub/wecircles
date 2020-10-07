@@ -91,6 +91,14 @@ func ShowPost(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	session, err := session(w, r)
+	// ログイン前にユーザー名クリックした場合
+	if err != nil {
+		tmp := parseTemplateFiles("layout", "navbar.public", "post.show.public")
+		if err := tmp.Execute(w, post); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+		return
+	}
 	if session.UserId != post.UserId {
 		tmp := parseTemplateFiles("layout", "navbar.private", "post.show.public")
 		if err := tmp.Execute(w, post); err != nil {

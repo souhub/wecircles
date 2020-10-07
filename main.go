@@ -31,5 +31,6 @@ func main() {
 	http.HandleFunc("/user/edit/image", route.EditUserImage)
 	http.HandleFunc("/user/update/image", route.UpdateUserImage)
 	http.HandleFunc("/user/show", route.ShowUser)
+
 	log.Fatal(http.ListenAndServe(":80", nil))
 }
