@@ -42,13 +42,14 @@
       required
     />
   </div>
-  <input
-    type="submit"
-    class="btn btn-success"
-    style="width: 100%"
-    value="サムネイルを変更する"
-  />
+  <input type="text" name="uuid" value="{{.Uuid}}" />
+  <button type="submit" class="btn btn-success" style="width: 100%">
+    サムネイルを変更する
+  </button>
 </form>
-<a href="/post/edit" class="btn btn-outline-secondary btn-block mt-3">戻る</a>
-
+<a
+  href="javascript:history.back();"
+  class="btn btn-outline-secondary btn-block mt-3"
+  >戻る</a
+>
 {{end}}

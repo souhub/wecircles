@@ -156,20 +156,19 @@ func (user *User) UpdateImage() (err error) {
 	return
 }
 
+// Upload the user's image
 func (user *User) Upload(r *http.Request) (uploadedFileName string, err error) {
 	// Allow the "POST" method, only
 	if r.Method != "POST" {
 		err = errors.New("method error: POST only")
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
-
 	// Parse the form
 	err = r.ParseForm()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-
 	// Get the file sent form the form
 	file, fileHeader, err := r.FormFile("image")
 	if err != nil {
@@ -214,12 +213,12 @@ func (user *User) Delete() (err error) {
 // Delete the user image to update the new one
 func (user *User) DeleteUserImage() error {
 	currentDir, err := os.Getwd()
-	fullPath := fmt.Sprintf("%s/web/img/user%d/%s", currentDir, user.Id, user.ImagePath)
-	_, err = os.Stat(fullPath)
+	userImage := fmt.Sprintf("%s/web/img/user%d/%s", currentDir, user.Id, user.ImagePath)
+	_, err = os.Stat(userImage)
 	if err != nil {
 		return err
 	}
-	err = os.Remove(fullPath)
+	err = os.Remove(userImage)
 	return err
 }
 

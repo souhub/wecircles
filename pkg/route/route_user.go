@@ -156,14 +156,6 @@ func UpdateUserImage(w http.ResponseWriter, r *http.Request) {
 		logging.Fatal(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 	}
-
-	// currentDir, err := os.Getwd()
-	// userImageDir := fmt.Sprintf("%s/web/img/user/user%d", currentDir, user.Id)
-	// _, err = os.Stat(userImageDir)
-	// if err != nil {
-	// 	err = os.Mkdir(userImageDir, 0777)
-	// }
-	// Delete the current user's image
 	err = user.DeleteUserImage()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
