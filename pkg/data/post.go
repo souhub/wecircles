@@ -6,17 +6,16 @@ import (
 	"github.com/souhub/wecircles/pkg/logging"
 )
 
-var fileName = "/pkg/data/post.go"
-
 type Post struct {
-	Id        int
-	Uuid      string
-	Title     string `validate:"required"`
-	Body      string `validate:"required"`
-	UserId    int
-	UserIdStr string
-	UserName  string
-	CreatedAt string
+	Id            int
+	Uuid          string
+	Title         string `validate:"required"`
+	Body          string `validate:"required"`
+	UserId        int
+	UserIdStr     string
+	UserName      string
+	ThumbnailPath string
+	CreatedAt     string
 }
 
 // Get all of the posts
@@ -34,7 +33,7 @@ func Posts() (posts []Post, err error) {
 	}
 	for rows.Next() {
 		var post Post
-		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.CreatedAt)
+		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.ThumbnailPath, &post.CreatedAt)
 		if err != nil {
 			log.Fatal(err)
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -46,32 +45,6 @@ func Posts() (posts []Post, err error) {
 	return
 }
 
-// Get all of the posts by the user.
-func (user *User) PostsByUser() (posts []Post, err error) {
-	db := NewDB()
-	defer db.Close()
-	query := `SELECT *
-			  FROM posts
-			  WHERE user_id=?
-			  ORDER BY id DESC`
-	rows, err := db.Query(query, user.Id)
-	if err != nil {
-		log.Fatal(err)
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
-	for rows.Next() {
-		var post Post
-		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.CreatedAt)
-		if err != nil {
-			log.Fatal(err)
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-		posts = append(posts, post)
-	}
-	rows.Close()
-	return
-}
-
 // Get the post from uuid
 func PostByUuid(uuid string) (post Post, err error) {
 	db := NewDB()
@@ -80,7 +53,31 @@ func PostByUuid(uuid string) (post Post, err error) {
 	query := `SELECT *
 			  FROM posts
 			  WHERE uuid=?`
-	err = db.QueryRow(query, uuid).Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.CreatedAt)
+	err = db.QueryRow(query, uuid).Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.ThumbnailPath, &post.CreatedAt)
+	return
+}
+
+// Get the post from uuid
+func PostByID(id string) (post Post, err error) {
+	db := NewDB()
+	defer db.Close()
+	post = Post{}
+	query := `SELECT *
+			  FROM posts
+			  WHERE id=?`
+	err = db.QueryRow(query, id).Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.ThumbnailPath, &post.CreatedAt)
+	return
+}
+
+//Get the user from his post
+func (post *Post) UserByPost() (user User, err error) {
+	db := NewDB()
+	defer db.Close()
+	user = User{}
+	query := `SELECT id, name, user_id_str, email, created_at
+			  FROM users
+			  WHERE user_id=?`
+	err = db.QueryRow(query, post.UserId).Scan(&user.Id, &user.Name, &user.UserIdStr, &user.Email, &user.CreatedAt)
 	return
 }
 
@@ -88,9 +85,9 @@ func PostByUuid(uuid string) (post Post, err error) {
 func (post *Post) Create() (err error) {
 	db := NewDB()
 	defer db.Close()
-	query := `INSERT INTO posts (uuid, title, body, user_id, user_id_str, user_name, created_at)
-			  VALUES (?,?,?,?,?,?,?)`
-	_, err = db.Exec(query, post.Uuid, post.Title, post.Body, post.UserId, post.UserIdStr, post.UserName, post.CreatedAt)
+	query := `INSERT INTO posts (uuid, title, body, user_id, user_id_str, user_name, thumbnail_path ,created_at)
+			  VALUES (?,?,?,?,?,?,?,?)`
+	_, err = db.Exec(query, post.Uuid, post.Title, post.Body, post.UserId, post.UserIdStr, post.UserName, "default.png", post.CreatedAt)
 	return
 }
 
@@ -104,6 +101,62 @@ func (post *Post) UpdatePost() (err error) {
 	_, err = db.Exec(query, post.Title, post.Body, post.Id)
 	return
 }
+
+// Update the user image
+func (post *Post) UpdateThumbnail() (err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `UPDATE posts
+		      SET thumbnail_path=?
+			  WHERE id=?`
+	_, err = db.Exec(query, post.ThumbnailPath, post.Id)
+	return
+}
+
+// func (user *User) Upload(r *http.Request) (uploadedFileName string, err error) {
+// 	// Allow the "POST" method, only
+// 	if r.Method != "POST" {
+// 		err = errors.New("method error: POST only")
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 	}
+
+// 	// Parse the form
+// 	err = r.ParseForm()
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		return
+// 	}
+
+// 	// Get the file sent form the form
+// 	file, fileHeader, err := r.FormFile("image")
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		return
+// 	}
+// 	// Get the uploaded file's name from the file.
+// 	uploadedFileName = fileHeader.Filename
+// 	// Set the uploaded file's path
+// 	imagePath := fmt.Sprintf("web/img/user%d/%s", user.Id, uploadedFileName)
+
+// 	// Save the uploaded file to "imagePath"
+// 	saveImage, err := os.Create(imagePath)
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		return
+// 	}
+
+// 	// Write the uploaded file to the file for saving.
+// 	_, err = io.Copy(saveImage, file)
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		return
+// 	}
+
+// 	// Close the "saveImage" and "file"
+// 	defer saveImage.Close()
+// 	defer file.Close()
+// 	return uploadedFileName, err
+// }
 
 // Delete the post.
 func (post *Post) Delete() (err error) {

@@ -51,6 +51,7 @@ func init() {
 			user_id INT,
 			user_id_str VARCHAR(255),
 			user_name VARCHAR(255),
+			thumbnail_path VARCHAR(255),
 			created_at  VARCHAR(255)
 			)`
 	_, err = db.Exec(cmd)
@@ -71,7 +72,7 @@ func NewDB() *sql.DB {
 	dsn := fmt.Sprintf("%s:%s@%s(%s)/%s", dBUser, dBPass, dbProtocol, dbEndpoint, dbName)
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
-		logging.Fatal(err, fileName, 77)
+		logging.Fatal(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	return db
 }

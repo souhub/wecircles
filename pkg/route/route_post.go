@@ -129,6 +129,46 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// GET /post/edit/thumbnail
+// Show the post's thumbnail edit form
+func EditPostThumbnail(w http.ResponseWriter, r *http.Request) {
+	_, err := session(w, r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	vals := r.URL.Query()
+	id := vals.Get("id")
+	post, err := data.PostByID(id)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	// user, err := post.UserByPost()
+	// if err != nil {
+	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	// 	return
+	// }
+	// type Data struct {
+	// 	PostID        int
+	// 	UserID        int
+	// 	ThumbnailPath string
+	// }
+	// data := Data{
+	// 	PostID:        post.Id,
+	// 	UserID:        user.Id,
+	// 	ThumbnailPath: post.ThumbnailPath,
+	// }
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		tmp := parseTemplateFiles("layout", "navbar.private", "post.edit.thumbnail")
+		if err := tmp.Execute(w, post); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+	}
+}
+
 // POST /post/update
 // Update the post
 func UpdatePost(w http.ResponseWriter, r *http.Request) {
@@ -171,6 +211,39 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/", 302)
 		}
 	}
+}
+
+func UpdatePostThumbnail(w http.ResponseWriter, r *http.Request) {
+	session, err := session(w, r)
+	user, err := session.User()
+	if err != nil {
+		logging.Fatal(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+	}
+
+	// currentDir, err := os.Getwd()
+	// userImageDir := fmt.Sprintf("%s/web/img/user/user%d", currentDir, user.Id)
+	// _, err = os.Stat(userImageDir)
+	// if err != nil {
+	// 	err = os.Mkdir(userImageDir, 0777)
+	// }
+	// Delete the current user's image
+	err = user.DeleteUserImage()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+
+	// Uplaod the new user's image.
+	user.ImagePath, err = user.Upload(r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+
+	// Update the user's image path from old one to the new one in the DB.
+	if err = user.UpdateImage(); err != nil {
+		log.Fatal(err)
+	}
+	http.Redirect(w, r, "/user/edit", 302)
 }
 
 // DELETE /post/delete

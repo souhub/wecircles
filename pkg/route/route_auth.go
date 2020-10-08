@@ -3,6 +3,7 @@ package route
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/souhub/wecircles/pkg/data"
 	"github.com/souhub/wecircles/pkg/logging"
@@ -53,8 +54,16 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	}
 	// http.Redirect(w, r, "/login", 302)
 	//そのまま認証終わらせてマイページに飛ばす
-	signupedUserId := user.UserIdStr
-	signupedUser, err := data.UserByUserIdStr(signupedUserId)
+	signupedUserID := user.UserIdStr
+
+	signupedUser, err := data.UserByUserIdStr(signupedUserID)
+	// userごとの画像保存フォルダ作成
+	currentRootDir, err := os.Getwd()
+	userImageDir := fmt.Sprintf("%s/web/img/user%d", currentRootDir, signupedUser.Id)
+	_, err = os.Stat(userImageDir)
+	if err != nil {
+		err = os.Mkdir(userImageDir, 0777)
+	}
 	session, err := signupedUser.CreateSession()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())

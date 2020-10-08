@@ -22,7 +22,9 @@ func main() {
 	http.HandleFunc("/post/create", route.CreatePost)
 	http.HandleFunc("/post/show", route.ShowPost)
 	http.HandleFunc("/post/edit", route.EditPost)
+	http.HandleFunc("/post/edit/thumbnail", route.EditPostThumbnail)
 	http.HandleFunc("/post/update", route.UpdatePost)
+	http.HandleFunc("/post/update/thumbnail", route.UpdatePostThumbnail)
 	http.HandleFunc("/post/delete", route.DeletePost)
 
 	http.HandleFunc("/mypage", route.MyPage)

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 
@@ -38,6 +39,32 @@ func Users() (users []User, err error) {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 		users = append(users, user)
+	}
+	rows.Close()
+	return
+}
+
+// Get all of the posts by the user.
+func (user *User) PostsByUser() (posts []Post, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT *
+			  FROM posts
+			  WHERE user_id=?
+			  ORDER BY id DESC`
+	rows, err := db.Query(query, user.Id)
+	if err != nil {
+		log.Fatal(err)
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	for rows.Next() {
+		var post Post
+		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.ThumbnailPath, &post.CreatedAt)
+		if err != nil {
+			log.Fatal(err)
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+		posts = append(posts, post)
 	}
 	rows.Close()
 	return
@@ -152,7 +179,7 @@ func (user *User) Upload(r *http.Request) (uploadedFileName string, err error) {
 	// Get the uploaded file's name from the file.
 	uploadedFileName = fileHeader.Filename
 	// Set the uploaded file's path
-	imagePath := fmt.Sprintf("web/img/user/user%d/%s", user.Id, uploadedFileName)
+	imagePath := fmt.Sprintf("web/img/user%d/%s", user.Id, uploadedFileName)
 
 	// Save the uploaded file to "imagePath"
 	saveImage, err := os.Create(imagePath)
@@ -187,7 +214,7 @@ func (user *User) Delete() (err error) {
 // Delete the user image to update the new one
 func (user *User) DeleteUserImage() error {
 	currentDir, err := os.Getwd()
-	fullPath := fmt.Sprintf("%s/web/img/user/user%d/%s", currentDir, user.Id, user.ImagePath)
+	fullPath := fmt.Sprintf("%s/web/img/user%d/%s", currentDir, user.Id, user.ImagePath)
 	_, err = os.Stat(fullPath)
 	if err != nil {
 		return err

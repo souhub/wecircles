@@ -7,7 +7,7 @@
       {{if eq .ImagePath "default.png"}}
       <!-- if user.ImagePath=="default.png" -->
       <img
-        src="/static/img/user/default.png"
+        src="/static/img/default.png"
         alt="user_profile_image"
         style="
           width: 200px;
@@ -18,7 +18,7 @@
       />
       {{else}}
       <img
-        src="/static/img/user/user{{.Id}}/{{.ImagePath}}"
+        src="/static/img/user{{.Id}}/{{.ImagePath}}"
         alt="user_profile_image"
         style="
           width: 200px;

@@ -1,44 +1,35 @@
 {{define "content"}}
 <form
   role="form"
-  action="/user/update/image"
+  action="/post/update/thumbnail"
   method="post"
   enctype="multipart/form-data"
 >
   <div class="form-group">
-    <label for="image">プロフィール画像</label><br />
+    <label for="image">サムネイル変更</label><br />
     <div>
-      <p>現在のプロフィール画像</p>
-      {{if eq .ImagePath "default.png"}}
+      <p>現在のサムネイル</p>
+      {{if eq .ThumbnailPath "default.png"}}
       <!-- if user.ImagePath=="default.png" -->
       <img
         src="/static/img/default.png"
         alt="user_profile_image"
-        style="
-          width: 200px;
-          height: 200px;
-          border-radius: 50%;
-          object-fit: cover;
-        "
+        style="width: 300px; height: 200px; object-fit: cover"
       />
       {{else}}
       <img
-        src="/static/img/user{{.Id}}/{{.ImagePath}}"
+        src="/static/img/user{{.UserId}}/posts/post{{.Id}}/{{.ThumbnailPath}}"
         alt="user_profile_image"
-        style="
-          width: 200px;
-          height: 200px;
-          border-radius: 50%;
-          object-fit: cover;
-        "
+        style="width: 300px; height: 200px; object-fit: cover"
       />
       {{end}}
+      <br /><br /><br />
       <p>
-        新しいプロフィール画像を選択するとこの下に表示されます。<br />
+        新しいサムネイルを選択するとこの下にプレビュー表示されます。<br />
         <img
           id="preview"
           src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-          style="width: 200px; height: 200px; border-radius: 50%"
+          style="width: 300px; height: 200px; object-fit: cover"
         />
       </p>
     </div>
@@ -55,9 +46,9 @@
     type="submit"
     class="btn btn-success"
     style="width: 100%"
-    value="更新"
+    value="サムネイルを変更する"
   />
 </form>
-<a href="/user/edit" class="btn btn-outline-secondary btn-block mt-3">戻る</a>
+<a href="/post/edit" class="btn btn-outline-secondary btn-block mt-3">戻る</a>
 
 {{end}}

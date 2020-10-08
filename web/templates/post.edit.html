@@ -1,5 +1,5 @@
 {{define "content"}}
-<div class="mx-auto" style="width: 50%;">
+<div class="mx-auto" style="width: 50%">
   <form action="/post/update" method="post">
     <h1>
       <input
@@ -7,7 +7,7 @@
         name="title"
         value="{{.Title}}"
         class="form-control font-weight-bold"
-        style="font-size: 30px;"
+        style="font-size: 30px"
       />
     </h1>
     <a>{{.UserName}}</a>
@@ -17,12 +17,17 @@
         type="text"
         name="body"
         class="form-control auto-resize"
-        style="line-height: 16px; white-space: prewrap;"
+        style="line-height: 16px; white-space: prewrap"
         rows="50"
       >
 {{.Body}}</textarea
       >
     </p>
+    <div>
+      <a href="/post/edit/thumbnail?id={{.Id}}" style="text-decoration: none"
+        ><p class="btn btn-outline-info btn-block">サムネイルを選択する</p>
+      </a>
+    </div>
     <button type="submit" class="btn btn-outline-success btn-block">
       更新
     </button>
