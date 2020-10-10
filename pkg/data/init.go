@@ -10,10 +10,70 @@ import (
 	"github.com/souhub/wecircles/pkg/logging"
 )
 
-func init() {
-	db := NewDB()
-	defer db.Close()
-	// Create users table
+// func init() {
+// 	db := NewDB()
+// 	defer db.Close()
+// 	// Create users table
+// 	cmd := `CREATE TABLE IF NOT EXISTS users(
+// 		id INT AUTO_INCREMENT PRIMARY KEY,
+// 		name VARCHAR(255),
+// 		user_id_str VARCHAR(255),
+// 		email VARCHAR(255),
+// 		password VARCHAR(255),
+// 		image_path VARCHAR(255),
+// 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+// 		)`
+// 	_, err := db.Exec(cmd)
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 	}
+
+// 	// Create sessions table
+// 	cmd = `CREATE TABLE IF NOT EXISTS sessions(
+// 		id INT AUTO_INCREMENT PRIMARY KEY,
+// 		uuid VARCHAR(255),
+// 		email VARCHAR(255),
+// 		user_id INT,
+// 		user_id_str VARCHAR(255),
+// 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+// 		)`
+// 	_, err = db.Exec(cmd)
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 	}
+
+// 	// Create sessions table
+// 	cmd = `CREATE TABLE IF NOT EXISTS posts(
+// 			id INT AUTO_INCREMENT PRIMARY KEY,
+// 			uuid VARCHAR(255),
+// 			title VARCHAR(255),
+// 			body TEXT,
+// 			user_id INT,
+// 			user_id_str VARCHAR(255),
+// 			user_name VARCHAR(255),
+// 			thumbnail_path VARCHAR(255),
+// 			created_at  VARCHAR(255)
+// 			)`
+// 	_, err = db.Exec(cmd)
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 	}
+
+// }
+
+func NewDB() *sql.DB {
+	// Connect to DataBase
+	var db *sql.DB
+	dBUser := os.Getenv("DB_USER")
+	dBPass := os.Getenv("DB_PASS")
+	dbProtocol := os.Getenv("DB_PROTOCOL")
+	dbEndpoint := os.Getenv("DB_ENDPOINT")
+	dbName := os.Getenv("DB_NAME")
+	dsn := fmt.Sprintf("%s:%s@%s(%s)/%s", dBUser, dBPass, dbProtocol, dbEndpoint, dbName)
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		logging.Fatal(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 	cmd := `CREATE TABLE IF NOT EXISTS users(
 		id INT AUTO_INCREMENT PRIMARY KEY,
 		name VARCHAR(255),
@@ -23,7 +83,7 @@ func init() {
 		image_path VARCHAR(255),
 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 		)`
-	_, err := db.Exec(cmd)
+	_, err = db.Exec(cmd)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
@@ -57,22 +117,6 @@ func init() {
 	_, err = db.Exec(cmd)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
-
-}
-
-func NewDB() *sql.DB {
-	// Connect to DataBase
-	var db *sql.DB
-	dBUser := os.Getenv("DB_USER")
-	dBPass := os.Getenv("DB_PASS")
-	dbProtocol := os.Getenv("DB_PROTOCOL")
-	dbEndpoint := os.Getenv("DB_ENDPOINT")
-	dbName := os.Getenv("DB_NAME")
-	dsn := fmt.Sprintf("%s:%s@%s(%s)/%s", dBUser, dBPass, dbProtocol, dbEndpoint, dbName)
-	db, err := sql.Open("mysql", dsn)
-	if err != nil {
-		logging.Fatal(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	return db
 }

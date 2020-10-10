@@ -1,7 +1,5 @@
 FROM mysql:8.0.20
 
-COPY ./mysql.cnf /etc/mysql/conf.d
-
 ENV MYSQL_ROOT_PASSWORD devPass
 
 ENV MYSQL_DATABASE wecircles

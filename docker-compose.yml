@@ -1,18 +1,27 @@
 version: "3"
 services:
-  wecircles:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./:/go/src/github.com/souhub/wecircles
-    ports:
-      - "80:80"
-    depends_on:
-      - mysql
   mysql:
     build:
       context: ./test/mysql
       dockerfile: Dockerfile.dev
     ports:
       - "3306:3306"
+    tty: true
+
+  wecircles:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/go/src/github.com/souhub/wecircles
+    entrypoint:
+      - dockerize
+      - -timeout
+      - 60s
+      - -wait
+      - tcp://mysql:3306
+    command: fresh
+    ports:
+      - "80:80"
+    depends_on:
+      - mysql

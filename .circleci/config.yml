@@ -3,7 +3,7 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.12.2
   aws-ecs: circleci/aws-ecs@1.3.0
 jobs:
-  Test:
+  Build-and-Tests:
     machine:
       image: circleci/classic:edge
     steps:
@@ -21,13 +21,13 @@ jobs:
           name: docker-compose down
           command: docker-compose down
 workflows:
-  build_and_push_image:
+  Build_and_Push_images:
     jobs:
-      - Test
+      - Build-and-Tests
       - aws-ecr/build-and-push-image:
           name: ECR
           requires:
-            - Test
+            - Build-and-Tests
           filters:
             branches:
               only:
