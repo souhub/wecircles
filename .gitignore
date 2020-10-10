@@ -7,6 +7,9 @@ deployment/aws/terraform.tfstate
 deployment/aws/.terraform.tfstate.lock.info
 deployment/aws/terraform.tfstate.backup
 
+# test
+test/mysql/mysql.cnf
+
 # web
 web/img
 

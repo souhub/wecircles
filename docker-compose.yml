@@ -11,15 +11,8 @@ services:
     depends_on:
       - mysql
   mysql:
-    image: mysql:8.0.20
-    # volumes:
-    # - ./configs/mysql/conf.d:/etc/mysql/conf.d
-    # - ./configs/init:/docker-entrypoint-initdb.d
-    #   - ./docker/mysql/data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: devPass
-      MYSQL_DATABASE: wecircles
+    build:
+      context: ./test/mysql
+      dockerfile: Dockerfile.dev
     ports:
       - "3306:3306"
-    expose:
-      - "3306"
