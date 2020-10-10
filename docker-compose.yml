@@ -4,9 +4,12 @@ services:
     build:
       context: ./test/mysql
       dockerfile: Dockerfile.dev
+    # volumes:
+    # - ./configs/mysql/conf.d:/etc/mysql/conf.d
+    # - ./configs/init:/docker-entrypoint-initdb.d
+    #   - ./docker/mysql/data:/var/lib/mysql
     ports:
       - "3306:3306"
-    tty: true
 
   wecircles:
     build:
