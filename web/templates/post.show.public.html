@@ -4,5 +4,10 @@
   <a href="/user/show?id={{.UserIdStr}}">{{.UserName}}</a>
   <p>{{.CreatedAt}}</p>
   <p style="white-space: pre">{{.Body}}</p>
+  <a
+    href="javascript:history.back();"
+    class="btn btn-outline-secondary btn-block mt-3"
+    >戻る</a
+  >
 </div>
 {{end}}

@@ -5,14 +5,15 @@
   method="post"
   enctype="multipart/form-data"
 >
+  <input type="hidden" name="uuid" value="{{.Uuid}}" />
   <div class="form-group">
     <label for="image">サムネイル変更</label><br />
     <div>
       <p>現在のサムネイル</p>
-      {{if eq .ThumbnailPath "default.png"}}
+      {{if eq .ThumbnailPath "default_thumbnail.jpg"}}
       <!-- if user.ImagePath=="default.png" -->
       <img
-        src="/static/img/default.png"
+        src="/static/img/{{.ThumbnailPath}}"
         alt="user_profile_image"
         style="width: 300px; height: 200px; object-fit: cover"
       />
@@ -42,7 +43,6 @@
       required
     />
   </div>
-  <input type="text" name="uuid" value="{{.Uuid}}" />
   <button type="submit" class="btn btn-success" style="width: 100%">
     サムネイルを変更する
   </button>

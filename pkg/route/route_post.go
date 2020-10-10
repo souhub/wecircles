@@ -205,11 +205,12 @@ func UpdatePostThumbnail(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	err = r.ParseForm()
+	// 画像を multiple で送信しているため PaeseForm での解析不可
+	err = r.ParseMultipartForm(0)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
-	uuid := r.PostFormValue("uuid")
+	uuid := r.FormValue("uuid")
 	post, err := data.PostByUuid(uuid)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())

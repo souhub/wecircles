@@ -92,7 +92,7 @@ func (post *Post) Create() (err error) {
 	defer db.Close()
 	query := `INSERT INTO posts (uuid, title, body, user_id, user_id_str, user_name, thumbnail_path ,created_at)
 			  VALUES (?,?,?,?,?,?,?,?)`
-	_, err = db.Exec(query, post.Uuid, post.Title, post.Body, post.UserId, post.UserIdStr, post.UserName, "default.png", post.CreatedAt)
+	_, err = db.Exec(query, post.Uuid, post.Title, post.Body, post.UserId, post.UserIdStr, post.UserName, "default_thumbnail.jpg", post.CreatedAt)
 	return
 }
 

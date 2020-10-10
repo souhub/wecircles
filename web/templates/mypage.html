@@ -1,7 +1,7 @@
 {{define "content"}}
 
 <div>
-  <h2 class="text-center">{{.Name}}さんのマイページ</h2>
+  <h2 class="text-center">{{.Name}}</h2>
   <p>
     <a href="/user/edit">
       {{if eq .ImagePath "default.png"}}
@@ -36,20 +36,19 @@
 {{if .Posts}} {{range .Posts}}
 <div class="card mx-auto mb-5" style="width: 55%">
   <a href="/post/show?id={{.Uuid}}">
-    <svg
-      class="bd-placeholder-img card-img-top"
-      width="100%"
-      height="280"
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMidYMid slice"
-      focusable="false"
-      role="img"
-      aria-label="Placeholder: Image cap"
-    >
-      <title>Placeholder</title>
-      <rect width="100%" height="100%" fill="#868e96" />
-      <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-    </svg>
+    {{if eq .ThumbnailPath "default_thumbnail.jpg"}}
+    <img
+      src="/static/img/{{.ThumbnailPath}}"
+      style="width: 100%; height: 300px; object-fit: cover"
+      alt="default thumbnail"
+    />
+    {{else}}
+    <img
+      src="/static/img/user{{.UserId}}/posts/post{{.Id}}/{{.ThumbnailPath}}"
+      style="width: 100%; height: 300px; object-fit: cover"
+      alt="default thumbnail"
+    />
+    {{end}}
     <div class="card-body">
       {{if .Title}}
       <h5 class="card-title">{{.Title}}</h5>
@@ -62,7 +61,7 @@
       {{end}}
     </div>
     <div class="card-body">
-      <a href="#">{{.UserName}}</a>
+      <a href="/user/show?id={{.UserIdStr}}">{{.UserIdStr}}</a>
       <p>{{.CreatedAt}}</p>
     </div>
   </a>

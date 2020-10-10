@@ -1,10 +1,9 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":215,"msg":"sql: no rows in result set","time":"2020-10-08T13:38:07Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"warning","line":149,"msg":"open web/img/user0/posts/post0/1B8E9319-70B8-4890-945B-5A2002921511.jpeg: no such file or directory","time":"2020-10-08T13:38:07Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":232,"msg":"open web/img/user0/posts/post0/1B8E9319-70B8-4890-945B-5A2002921511.jpeg: no such file or directory","time":"2020-10-08T13:38:07Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":146,"msg":"sql: no rows in result set","time":"2020-10-08T12:39:03Z"}
-(EXTRA string=1AF659D5-C590-43A5-8AA6-948DE055D46F.jpeg): no such file or directory","time":"2020-10-08T11:49:58Z"}
-,"msg":"open web/img/user0/posts/post0/\u0026s%!(EXTRA string=18E230A0-4EC7-4A60-B820-A21FB5E24837.jpeg): no such file or directory","time":"2020-10-08T11:34:40Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":217,"msg":"sql: no rows in result set","time":"2020-10-08T11:38:53Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":222,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user0/posts/post0/: no such file or directory","time":"2020-10-08T11:38:53Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"warning","line":149,"msg":"open web/img/user0/posts/post0/\u0026s%!(EXTRA string=1AF659D5-C590-43A5-8AA6-948DE055D46F.jpeg): no such file or directory","time":"2020-10-08T11:38:53Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":228,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user4/posts/post5/default_thumbnail.jpg: no such file or directory","time":"2020-10-10T03:03:45Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":228,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user5/posts/post6/default_thumbnail.jpg: no such file or directory","time":"2020-10-10T03:07:52Z"}
+-10T02:23:57Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":26,"msg":"template: index.html:7:12: executing \"content\" at \u003c.Thumbnail\u003e: can't evaluate field Thumbnail in type data.Post","time":"2020-10-10T02:23:24Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":26,"msg":"template: index.html:7:12: executing \"content\" at \u003c.Thumbnail\u003e: can't evaluate field Thumbnail in type data.Post","time":"2020-10-10T02:23:24Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":26,"msg":"template: index.html:7:12: executing \"content\" at \u003c.Thumbnail\u003e: can't evaluate field Thumbnail in type data.Post","time":"2020-10-10T02:23:25Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":26,"msg":"template: index.html:7:12: executing \"content\" at \u003c.Thumbnail\u003e: can't evaluate field Thumbnail in type data.Post","time":"2020-10-10T02:23:25Z"}
+g":"open web/img/user0/posts/post0/\u0026s%!(EXTRA string=1AF659D5-C590-43A5-8AA6-948DE055D46F.jpeg): no such file or directory","time":"2020-10-08T11:38:53Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":227,"msg":"open web/img/user0/posts/post0/\u0026s%!(EXTRA string=1AF659D5-C590-43A5-8AA6-948DE055D46F.jpeg): no such file or directory","time":"2020-10-08T11:38:53Z"}
