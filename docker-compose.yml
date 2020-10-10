@@ -23,5 +23,3 @@ services:
     command: fresh
     ports:
       - "80:80"
-    depends_on:
-      - mysql
