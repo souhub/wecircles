@@ -1,7 +1,7 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":228,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user4/posts/post5/default_thumbnail.jpg: no such file or directory","time":"2020-10-10T03:03:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":228,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user5/posts/post6/default_thumbnail.jpg: no such file or directory","time":"2020-10-10T03:07:52Z"}
--10T02:23:57Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":26,"msg":"template: index.html:7:12: executing \"content\" at \u003c.Thumbnail\u003e: can't evaluate field Thumbnail in type data.Post","time":"2020-10-10T02:23:24Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/init.go","level":"warning","line":28,"msg":"dial tcp 172.23.0.2:3306: connect: connection refused","time":"2020-10-10T11:41:44Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/init.go","level":"warning","line":42,"msg":"dial tcp 172.23.0.2:3306: connect: connection refused","time":"2020-10-10T11:41:44Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/init.go","level":"warning","line":59,"msg":"dial tcp 172.23.0.2:3306: connect: connection refused","time":"2020-10-10T11:41:44Z"}
+souhub/wecircles/pkg/route/route_main.go","level":"warning","line":26,"msg":"template: index.html:7:12: executing \"content\" at \u003c.Thumbnail\u003e: can't evaluate field Thumbnail in type data.Post","time":"2020-10-10T02:23:24Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":26,"msg":"template: index.html:7:12: executing \"content\" at \u003c.Thumbnail\u003e: can't evaluate field Thumbnail in type data.Post","time":"2020-10-10T02:23:24Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":26,"msg":"template: index.html:7:12: executing \"content\" at \u003c.Thumbnail\u003e: can't evaluate field Thumbnail in type data.Post","time":"2020-10-10T02:23:25Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":26,"msg":"template: index.html:7:12: executing \"content\" at \u003c.Thumbnail\u003e: can't evaluate field Thumbnail in type data.Post","time":"2020-10-10T02:23:25Z"}
