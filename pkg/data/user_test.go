@@ -1,8 +1,21 @@
 package data
 
-import "testing"
+import (
+	"database/sql"
+	"testing"
+)
 
 func TestUser(t *testing.T) {
+
+	var user = User{
+		Name:      "Taro",
+		UserIdStr: "taroId",
+		Email:     "taro@gmail.com",
+		Password:  "taroPass",
+		ImagePath: "default.png",
+	}
+
+	// Test helpers
 	// Reset the all of the tables
 	reset := func(t *testing.T) {
 		t.Helper()
@@ -17,6 +30,15 @@ func TestUser(t *testing.T) {
 		err = ResetPosts()
 		if err != nil {
 			t.Fatal(err)
+		}
+	}
+
+	// Test helper
+	// Output the assertions
+	assertCorrectMessage := func(t *testing.T, got, want string) {
+		t.Helper()
+		if got != want {
+			t.Errorf("expected %s but got %s", want, got)
 		}
 	}
 
@@ -37,9 +59,7 @@ func TestUser(t *testing.T) {
 		}
 		got := gotSession.UserIdStr
 		want := user.UserIdStr
-		if got != want {
-			t.Errorf("expected %s but got %s", want, got)
-		}
+		assertCorrectMessage(t, want, got)
 	})
 
 	// UserbyUserIdStr test
@@ -64,9 +84,7 @@ func TestUser(t *testing.T) {
 		// Define "got" after saving the user
 		got := gotUser.UserIdStr
 
-		if got != want {
-			t.Errorf("expected %s but got %s", want, got)
-		}
+		assertCorrectMessage(t, want, got)
 	})
 
 	// UserbyEmail test
@@ -82,8 +100,44 @@ func TestUser(t *testing.T) {
 			t.Fatal(err)
 		}
 		got := gotUser.UserIdStr
-		if got != want {
-			t.Errorf("expected %s but got %s", want, got)
+		assertCorrectMessage(t, want, got)
+	})
+
+	// Update test
+	t.Run("Update", func(t *testing.T) {
+		reset(t)
+		if err := user.Create(); err != nil {
+			t.Fatal(err)
+		}
+		gotUser, err := UserByUserIdStr(user.UserIdStr)
+		if err != nil {
+			t.Fatal(err)
+		}
+		want := "UpdatedtaroId"
+		gotUser.UserIdStr = want
+		if err := gotUser.Update(); err != nil {
+			t.Error(err)
+		}
+		got := gotUser.UserIdStr
+		assertCorrectMessage(t, got, want)
+	})
+
+	// Delete test
+	t.Run("Delete", func(t *testing.T) {
+		reset(t)
+		if err := user.Create(); err != nil {
+			t.Fatal(err)
+		}
+		gotUser, err := UserByUserIdStr(user.UserIdStr)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := gotUser.Delete(); err != nil {
+			t.Error(err)
+		}
+		_, err = UserByUserIdStr(gotUser.UserIdStr)
+		if err != sql.ErrNoRows {
+			t.Error(err, "- Failed to delete the user.")
 		}
 	})
 
