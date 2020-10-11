@@ -16,7 +16,7 @@ jobs:
           command: docker-compose up -d
       - run:
           name: go test
-          command: docker-compose run wecircles go test ./...
+          command: docker-compose run wecircles go test ./... -v
       - run:
           name: docker-compose down
           command: docker-compose down

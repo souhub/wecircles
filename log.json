@@ -1,4 +1,4 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":94,"msg":"sql: no rows in result set","time":"2020-10-11T04:22:17Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":94,"msg":"sql: no rows in result set","time":"2020-10-11T08:16:36Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":94,"msg":"sql: no rows in result set","time":"2020-10-11T01:31:43Z"}
 28,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post1/default_thumbnail.jpg: no such file or directory","time":"2020-10-10T12:36:41Z"}
 3306: connect: connection refused","time":"2020-10-10T12:30:48Z"}
