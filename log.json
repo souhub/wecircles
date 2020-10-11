@@ -1,6 +1,6 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":94,"msg":"sql: no rows in result set","time":"2020-10-10T12:44:22Z"}
-ault.png: no such file or directory","time":"2020-10-10T12:36:26Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":228,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post1/default_thumbnail.jpg: no such file or directory","time":"2020-10-10T12:36:41Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":94,"msg":"sql: no rows in result set","time":"2020-10-11T04:22:17Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":94,"msg":"sql: no rows in result set","time":"2020-10-11T01:31:43Z"}
+28,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post1/default_thumbnail.jpg: no such file or directory","time":"2020-10-10T12:36:41Z"}
 3306: connect: connection refused","time":"2020-10-10T12:30:48Z"}
 souhub/wecircles/pkg/route/route_main.go","level":"warning","line":26,"msg":"template: index.html:7:12: executing \"content\" at \u003c.Thumbnail\u003e: can't evaluate field Thumbnail in type data.Post","time":"2020-10-10T02:23:24Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":26,"msg":"template: index.html:7:12: executing \"content\" at \u003c.Thumbnail\u003e: can't evaluate field Thumbnail in type data.Post","time":"2020-10-10T02:23:24Z"}

@@ -184,3 +184,12 @@ func (post *Post) Delete() (err error) {
 	_, err = db.Exec(query, post.Id)
 	return
 }
+
+// Delete all oh the posts
+func ResetPosts() (err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `DELETE from posts`
+	_, err = db.Exec(query)
+	return
+}
