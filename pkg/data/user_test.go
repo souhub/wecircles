@@ -106,4 +106,33 @@ func TestUser(t *testing.T) {
 		}
 	})
 
+	// ResetUsers test
+	t.Run("ResetUsers", func(t *testing.T) {
+		reset(t)
+		users := []User{
+			{
+				Name:      "Taro",
+				UserIdStr: "taroId",
+				Email:     "taro@gmail.com",
+				Password:  "taroPass",
+				ImagePath: "default.png",
+			},
+			{
+				Name:      "Hana",
+				UserIdStr: "hanaId",
+				Email:     "hana@gmail.com",
+				Password:  "hanaPass",
+				ImagePath: "default.png",
+			},
+		}
+		for _, user := range users {
+			if err := user.Create(); err != nil {
+				t.Fatal(err)
+			}
+		}
+		if err := ResetUsers(); err != nil {
+			t.Error(err, "- Failed to delete all of the users.")
+		}
+	})
+
 }
