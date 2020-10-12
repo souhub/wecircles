@@ -7,41 +7,6 @@ import (
 
 func TestUser(t *testing.T) {
 
-	var user = User{
-		Name:      "Taro",
-		UserIdStr: "taroId",
-		Email:     "taro@gmail.com",
-		Password:  "taroPass",
-		ImagePath: "default.png",
-	}
-
-	// Test helpers
-	// Reset the all of the tables
-	reset := func(t *testing.T) {
-		t.Helper()
-		err := ResetUsers()
-		if err != nil {
-			t.Fatal(err)
-		}
-		err = ResetSessions()
-		if err != nil {
-			t.Fatal(err)
-		}
-		err = ResetPosts()
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-
-	// Test helper
-	// Output the assertions
-	assertCorrectMessage := func(t *testing.T, got, want string) {
-		t.Helper()
-		if got != want {
-			t.Errorf("expected %s but got %s", want, got)
-		}
-	}
-
 	// "Create" test
 	t.Run("Create", func(t *testing.T) {
 		reset(t)
