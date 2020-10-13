@@ -131,7 +131,7 @@ func TestUser(t *testing.T) {
 			}
 		}
 		if err := ResetUsers(); err != nil {
-			t.Error(err, "- Failed to delete all of the users.")
+			t.Error(err, "- Failed to reset the users table.")
 		}
 	})
 
