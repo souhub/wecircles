@@ -136,7 +136,7 @@ func TestPost(t *testing.T) {
 			}
 		}
 		if err := ResetPosts(); err != nil {
-			t.Error(err, "- Failed to delete all of the posts.")
+			t.Error(err, "- Failed to reset the posts table.")
 		}
 	})
 
