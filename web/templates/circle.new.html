@@ -1,0 +1,69 @@
+{{define "content"}}
+<p>サークル画像</br>
+<a href="/circle/edit/image">
+  <!-- if user.ImagePath=="default.png" -->
+  <img
+    src="/static/img/default_thumbnail.jpg"
+    alt="circle_default_profile_image"
+    style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
+  />
+</a>
+</p>
+
+<form action="/circle/create" method="post">
+  <div class="form-group">
+    <label for="name"
+      >サークル名<span class="text-danger small"> 必須</span></label
+    >
+    <input
+      type="text"
+      name="name"
+      class="form-control"
+      placeholder="サークル名を入力してください。"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="overview"
+      >概要<span class="text-danger small"> 必須</span></label
+    >
+    <textarea
+      type="text"
+      name="overview"
+      class="form-control auto-resize"
+      style="line-height: 16px; white-space: prewrap"
+      rows="15"
+      required
+    >■なにをするサークルか
+    例：写真好きが自分の写真を見せ合ったり、アドバイスしたりするサークルです
+
+    ■活動方針や頻度
+    例：サークルの掲示板で写真を見せ合ったり、Slackを使ったりして話します。掲示板への投稿頻度は月に4回以上、メンバーで写真を撮る会を3ヶ月に1回程度開きます！
+
+    ■どんな人に来てほしいか
+    例：カメラが好きな人ならどんな方でも構いません！ 一眼レフを持っている人だとうれしいです！
+
+    ■どのように参加してほしいか
+    例：ポジティブな活動を心がけてほしいです！見ているだけでも大丈夫です。</textarea>
+  </div>
+  <div class="form-group">
+    <label for="category">カテゴリ</label></br>
+    <select name="category">
+        <option value="tennis">テニス</option>
+        <option value="soccer">サッカー</option>
+        <option value="volunteer">ボランティア</option>
+        <option value="photo">写真</option>
+        <option value="basketball">バスケットボール</option>
+        <option value="other">その他</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-outline-success btn-block">
+    作成する
+  </button>
+</form>
+<a
+  href="javascript:history.back();"
+  class="btn btn-outline-secondary btn-block mt-3"
+  >戻る</a
+>
+{{end}}
