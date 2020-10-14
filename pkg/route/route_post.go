@@ -14,7 +14,7 @@ import (
 )
 
 // GET /post/new
-// Show the form page to create the new post
+// Get the form page to create the new post
 func NewPost(w http.ResponseWriter, r *http.Request) {
 	_, err := session(w, r)
 	if err != nil {
@@ -83,7 +83,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 }
 
 // GET /post/show
-// Show the post
+// Get the post
 func ShowPost(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
 	uuid := vals.Get("id")
@@ -114,7 +114,7 @@ func ShowPost(w http.ResponseWriter, r *http.Request) {
 }
 
 // GET /post/edit
-// Show the post edit form
+// Get the post edit form
 func EditPost(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
 	uuid := vals.Get("id")
@@ -131,7 +131,7 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 }
 
 // GET /post/edit/thumbnail
-// Show the thumbnail edit form
+// Get the thumbnail edit form
 func EditPostThumbnail(w http.ResponseWriter, r *http.Request) {
 	_, err := session(w, r)
 	if err != nil {

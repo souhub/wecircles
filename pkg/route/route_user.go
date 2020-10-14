@@ -9,6 +9,8 @@ import (
 	"github.com/souhub/wecircles/pkg/logging"
 )
 
+// GET /mypage
+// Get the mypage
 func MyPage(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	if err != nil {
@@ -36,6 +38,8 @@ func MyPage(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+// GET /user/show
+// Get the users
 func ShowUser(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
 	user, err := data.UserByUserIdStr(vals.Get(("id")))
@@ -82,6 +86,8 @@ func ShowUser(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// GET /user/edit
+// Edit the user
 func EditUser(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	if err != nil {
@@ -98,6 +104,8 @@ func EditUser(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// POST /user/update
+// Update the user
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	if err != nil {
@@ -132,6 +140,8 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/mypage", 302)
 }
 
+// GET /user/edit/image
+// Get the user edit image page
 func EditUserImage(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	if err != nil {
@@ -149,6 +159,8 @@ func EditUserImage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// POST /user/update/image
+// Update the user image
 func UpdateUserImage(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	user, err := session.User()
