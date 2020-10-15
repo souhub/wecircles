@@ -112,6 +112,7 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 		}
 		http.SetCookie(w, &cookie)
 		http.Redirect(w, r, "/", 302)
+		return
 	} else {
 		//認証されなかったらログインファームにリダイレクトさせる
 		http.Redirect(w, r, "/login", 302)

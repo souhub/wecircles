@@ -266,4 +266,5 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	http.Redirect(w, r, "/", 302)
+
 }

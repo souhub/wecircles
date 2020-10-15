@@ -20,10 +20,10 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		if err := tmp.Execute(w, posts); err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
-	} else {
-		tmp := parseTemplateFiles("layout", "index", "navbar.private")
-		if err := tmp.Execute(w, posts); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
+		return
+	}
+	tmp := parseTemplateFiles("layout", "index", "navbar.private")
+	if err := tmp.Execute(w, posts); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 }

@@ -11,6 +11,7 @@ func NewCircle(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
+		return
 	}
 	tmp := parseTemplateFiles("layout", "circle.new", "navbar.private")
 	tmp.Execute(w, nil)

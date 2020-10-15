@@ -1,12 +1,7 @@
 {{define "navbar"}}
-<!-- <a href="/signup"><button class="btn btn-outline-success">新規登録</button></a>
-<a href="/"
-  ><button type="button" class="btn btn-outline-success">HOME</button></a
->
-<a href="/login"><button class="btn btn-outline-success">ログイン</button></a> -->
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">WeCircle</a>
+  <h1><a class="navbar-brand" href="/">WeCircle</a></h1>
+
   <button
     class="navbar-toggler"
     type="button"
@@ -18,30 +13,34 @@
   >
     <span class="navbar-toggler-icon"></span>
   </button>
+</nav>
 
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/">ホーム</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/signup">新規登録</a>
+        <a class="nav-link" href="/circle/new">サークル</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/login">ログイン</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/signup">サインアップ</a>
+      </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input
-        class="form-control mr-sm-2"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-        Search
-      </button>
-    </form>
+    <div id="wrap" class="ml-auto">
+      <form action="" autocomplete="on">
+        <input
+          id="search"
+          name="search"
+          type="text"
+          placeholder="キーワードやサークル名で検索"
+        /><input id="search_submit" value="Rechercher" type="submit" />
+      </form>
+    </div>
   </div>
 </nav>
 {{end}}
