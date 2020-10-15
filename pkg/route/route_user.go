@@ -185,3 +185,63 @@ func UpdateUserImage(w http.ResponseWriter, r *http.Request) {
 	}
 	http.Redirect(w, r, "/user/edit", 302)
 }
+
+// POST /user/delete
+// Delete the user
+func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	session, err := session(w, r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+	}
+	user, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	if err := session.Delete(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	if err := r.ParseForm(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	if user.Password == data.Encrypt(r.FormValue("password")) {
+		if err = user.DeleteUserImage(); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			return
+		}
+		if err = user.DeletePosts(); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			return
+		}
+		if err = user.Delete(); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			return
+		}
+		http.Redirect(w, r, "/signup", 302)
+		return
+	}
+	http.Redirect(w, r, "/user/delete/confirm", 302)
+}
+
+func DeleteUserConfirm(w http.ResponseWriter, r *http.Request) {
+	session, err := session(w, r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+	}
+	user, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	tmp := parseTemplateFiles("layout", "user.delete.confirm", "navbar.private")
+	if err := tmp.Execute(w, user); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+}

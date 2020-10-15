@@ -33,6 +33,8 @@ func main() {
 	http.HandleFunc("/user/edit/image", route.EditUserImage)
 	http.HandleFunc("/user/update/image", route.UpdateUserImage)
 	http.HandleFunc("/user/show", route.ShowUser)
+	http.HandleFunc("/user/delete/confirm", route.DeleteUserConfirm)
+	http.HandleFunc("/user/delete", route.DeleteUser)
 
 	http.HandleFunc("/circle/new", route.NewCircle)
 

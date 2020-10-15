@@ -1,0 +1,56 @@
+{{define "content"}}
+<div class="mx-auto" style="width: 50%">
+  <h1>退会手続き</h1>
+
+  <div class="text-center">
+    {{if eq .ImagePath "default.png"}}
+    <img
+      src="/static/img/default.png"
+      alt="user_profile_image"
+      style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
+    />
+    {{else}}
+    <img
+      src="/static/img/user{{.Id}}/{{.ImagePath}}"
+      alt="user_profile_image"
+      style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
+    />
+    {{end}}
+  </div>
+
+  <form role="form" action="/user/delete" method="post">
+    <div class="form-group">
+      <label for="password"
+        >退会するにはパスワードを入力してください。<span
+          class="text-danger small"
+        >
+          必須</span
+        ></label
+      >
+      <input
+        type="password"
+        name="password"
+        class="form-control"
+        placeholder="パスワード"
+        required
+      />
+      <small id="emailHelp" class="form-text text-muted"
+        >※退会すると{{.Name}}さんのデータはすべて削除されます。</small
+      >
+    </div>
+
+    <button
+      type="submit"
+      href="/user/delete"
+      class="btn btn-outline-danger btn-block mt-3"
+    >
+      退会する
+    </button>
+  </form>
+  <a
+    href="javascript:history.back();"
+    class="btn btn-outline-secondary btn-block mt-3"
+    >退会しない</a
+  >
+</div>
+{{end}}

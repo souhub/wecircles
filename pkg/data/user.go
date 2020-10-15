@@ -213,13 +213,23 @@ func (user *User) Delete() (err error) {
 // Delete the user image to update the new one
 func (user *User) DeleteUserImage() error {
 	currentDir, err := os.Getwd()
-	userImage := fmt.Sprintf("%s/web/img/user%d/%s", currentDir, user.Id, user.ImagePath)
+	userImage := fmt.Sprintf("%s/web/img/user%d", currentDir, user.Id)
 	_, err = os.Stat(userImage)
 	if err != nil {
 		return err
 	}
-	err = os.Remove(userImage)
+	err = os.RemoveAll(userImage)
 	return err
+}
+
+// Delete the user's posts
+func (user *User) DeletePosts() (err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `DELETE from posts
+			  WHERE user_id=?`
+	_, err = db.Exec(query, user.Id)
+	return
 }
 
 // Delete all of the users
