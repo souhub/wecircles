@@ -1,16 +1,46 @@
 {{define "content"}}
-<p>サークル画像</br>
+<!-- <p>サークル画像</br>
 <a href="/circle/edit/image">
-  <!-- if user.ImagePath=="default.png" -->
   <img
     src="/static/img/default_thumbnail.jpg"
     alt="circle_default_profile_image"
     style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
   />
 </a>
-</p>
-
+</p> -->
+<h1>新しくサークルを作る</h1>
 <form action="/circle/create" method="post">
+  <div class="form-group">
+    <label for="image"
+      >サークル画像</label
+    ><br/>
+    <small class="form-text text-muted"
+    >デフォルトサークル画像</small
+  >
+    <img
+    src="/static/img/default_thumbnail.jpg"
+    alt="circle_default_profile_image"
+    style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
+  />
+  <br /><br /><br />
+  <p>
+    <small class="form-text text-muted"
+    >新しいサークル画像</small
+  >
+    <img
+      id="preview"
+      src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+      style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
+    />
+  </p>
+  <input
+  type="file"
+  name="image"
+  onChange="previewImage(this);"
+  accept="image/*"
+  capture="camera"
+/>
+  </div>
   <div class="form-group">
     <label for="name"
       >サークル名<span class="text-danger small"> 必須</span></label

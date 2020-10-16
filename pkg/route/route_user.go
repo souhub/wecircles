@@ -130,7 +130,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	user.Name = r.PostFormValue("name")
 	user.UserIdStr = r.PostFormValue("user_id_str")
 
-	fmt.Println(user.UserIdStr)
 	if err = user.Update(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)

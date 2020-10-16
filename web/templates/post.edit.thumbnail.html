@@ -9,7 +9,7 @@
   <div class="form-group">
     <label for="image">サムネイル変更</label><br />
     <div>
-      <p>現在のサムネイル</p>
+      <small class="form-text text-muted">現在のサムネイル</small>
       {{if eq .ThumbnailPath "default_thumbnail.jpg"}}
       <!-- if user.ImagePath=="default.png" -->
       <img
@@ -26,7 +26,7 @@
       {{end}}
       <br /><br /><br />
       <p>
-        新しいサムネイルを選択するとこの下にプレビュー表示されます。<br />
+        <small class="form-text text-muted">新しいサムネイル</small>
         <img
           id="preview"
           src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="

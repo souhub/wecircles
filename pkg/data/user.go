@@ -200,6 +200,50 @@ func (user *User) Upload(r *http.Request) (uploadedFileName string, err error) {
 	return uploadedFileName, err
 }
 
+// Upload the circle's image
+func (user *User) UploadCircleImage(r *http.Request) (uploadedFileName string, err error) {
+	// Allow the "POST" method, only
+	if r.Method != "POST" {
+		err = errors.New("method error: POST only")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	// Parse the form
+	err = r.ParseForm()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	// Get the file sent form the form
+	file, fileHeader, err := r.FormFile("image")
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	// Get the uploaded file's name from the file.
+	uploadedFileName = fileHeader.Filename
+	// Set the uploaded file's path
+	imagePath := fmt.Sprintf("web/img/user%d/circle/%s", user.Id, uploadedFileName)
+
+	// Save the uploaded file to "imagePath"
+	saveImage, err := os.Create(imagePath)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+
+	// Write the uploaded file to the file for saving.
+	_, err = io.Copy(saveImage, file)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+
+	// Close the "saveImage" and "file"
+	defer saveImage.Close()
+	defer file.Close()
+	return uploadedFileName, err
+}
+
 // Delete the user
 func (user *User) Delete() (err error) {
 	db := NewDB()

@@ -42,7 +42,7 @@ func init() {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
-	// Create sessions table
+	// Create posts table
 	cmd = `CREATE TABLE IF NOT EXISTS posts(
 			id INT AUTO_INCREMENT PRIMARY KEY,
 			uuid VARCHAR(255),
@@ -53,6 +53,20 @@ func init() {
 			user_name VARCHAR(255),
 			thumbnail_path VARCHAR(255),
 			created_at  VARCHAR(255)
+			)`
+	_, err = db.Exec(cmd)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+
+	// Create  circles table
+	cmd = `CREATE TABLE IF NOT EXISTS circles(
+			id INT AUTO_INCREMENT PRIMARY KEY,
+			Name VARCHAR(50) NOT NULL,
+			image_path VARCHAR(255) NOT NULL,
+			overview TEXT NOT NULL,
+			owner_id INT NOT NULL,
+			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 			)`
 	_, err = db.Exec(cmd)
 	if err != nil {

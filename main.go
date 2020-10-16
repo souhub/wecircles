@@ -37,6 +37,10 @@ func main() {
 	http.HandleFunc("/user/delete", route.DeleteUser)
 
 	http.HandleFunc("/circle/new", route.NewCircle)
+	http.HandleFunc("/circle/crete", route.CreateCircle)
+	http.HandleFunc("/circle/edit", route.EditCircle)
+	http.HandleFunc("/circle/update", route.UpdateCircle)
+	http.HandleFunc("/circle/delete", route.DeleteCircle)
 
 	log.Fatal(http.ListenAndServe(":80", nil))
 }
