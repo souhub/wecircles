@@ -1,0 +1,52 @@
+{{define "content"}}
+<!-- <p>サークル画像</br>
+<a href="/circle/edit/image">
+  <img
+    src="/static/img/default_thumbnail.jpg"
+    alt="circle_default_profile_image"
+    style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
+  />
+</a>
+</p> -->
+<h1>サークル管理</h1>
+<div>
+  <h2 class="text-center">{{.Name}}</h2>
+  <p>
+    {{if eq .ImagePath "default.png"}}
+    <!-- if user.ImagePath=="default.png" -->
+    <img
+      src="/static/img/default.png"
+      alt="circle_default_image"
+      style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
+    />
+    {{else}}
+    <img
+      src="/static/img/user{{.Owner.Id}}/circle/{{.ImagePath}}"
+      alt="circle_image"
+      style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
+    />
+    {{end}}
+  </p>
+</div>
+
+<div>
+  <h2>サークル名</h2>
+  <p>{{.Name}}</p>
+</div>
+
+<div>
+  <h2>概要</h2>
+  <p>{{.Overview}}</p>
+</div>
+
+<!-- <div class="form-group">
+  <h2>カテゴリ</h2>
+  <p>{{.Category}}</p>
+</div> -->
+
+<a
+  href="javascript:history.back();"
+  class="btn btn-outline-secondary btn-block mt-3"
+  >戻る</a
+>
+{{end}}

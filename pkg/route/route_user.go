@@ -176,11 +176,13 @@ func UpdateUserImage(w http.ResponseWriter, r *http.Request) {
 	user.ImagePath, err = user.Upload(r)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
 	}
 
 	// Update the user's image path from old one to the new one in the DB.
 	if err = user.UpdateImage(); err != nil {
 		log.Fatal(err)
+		return
 	}
 	http.Redirect(w, r, "/user/edit", 302)
 }
@@ -207,8 +209,9 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if user.Password == data.Encrypt(r.FormValue("password")) {
-		if err = user.DeleteUserImage(); err != nil {
+		if err = user.DeleteUserImageDir(); err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			http.Redirect(w, r, "/user/delete/confirm", 302)
 			return
 		}
 		if err = user.DeletePosts(); err != nil {

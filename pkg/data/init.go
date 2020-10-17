@@ -65,6 +65,7 @@ func init() {
 			Name VARCHAR(50) NOT NULL,
 			image_path VARCHAR(255) NOT NULL,
 			overview TEXT NOT NULL,
+			category VARCHAR(30),
 			owner_id INT NOT NULL,
 			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 			)`

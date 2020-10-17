@@ -38,6 +38,7 @@ func main() {
 
 	http.HandleFunc("/circle/new", route.NewCircle)
 	http.HandleFunc("/circle/crete", route.CreateCircle)
+	http.HandleFunc("/circle/owner/show", route.ShowOwnerCircle)
 	http.HandleFunc("/circle/edit", route.EditCircle)
 	http.HandleFunc("/circle/update", route.UpdateCircle)
 	http.HandleFunc("/circle/delete", route.DeleteCircle)

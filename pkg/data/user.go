@@ -54,8 +54,8 @@ func (user *User) PostsByUser() (posts []Post, err error) {
 			  ORDER BY id DESC`
 	rows, err := db.Query(query, user.Id)
 	if err != nil {
-		log.Fatal(err)
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
 	}
 	for rows.Next() {
 		var post Post
@@ -100,10 +100,27 @@ func UserByUserIdStr(useridstr string) (user User, err error) {
 	stmt, err := db.Prepare(query)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
 	}
 	defer stmt.Close()
 	err = stmt.QueryRow(useridstr).Scan(&user.Id, &user.Name, &user.UserIdStr, &user.Password, &user.ImagePath, &user.CreatedAt)
 	return user, err
+}
+
+// Get the owner's circle
+func (user *User) GetCircle() (circle Circle, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT * FROM circles
+			  WHERE owner_id=?`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	defer stmt.Close()
+	err = stmt.QueryRow(user.Id).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.Owner.Id, &circle.CreatedAt)
+	return circle, err
 }
 
 // Create a new user
@@ -223,19 +240,16 @@ func (user *User) UploadCircleImage(r *http.Request) (uploadedFileName string, e
 	uploadedFileName = fileHeader.Filename
 	// Set the uploaded file's path
 	imagePath := fmt.Sprintf("web/img/user%d/circle/%s", user.Id, uploadedFileName)
-
 	// Save the uploaded file to "imagePath"
 	saveImage, err := os.Create(imagePath)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		return
 	}
 
 	// Write the uploaded file to the file for saving.
 	_, err = io.Copy(saveImage, file)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		return
 	}
 
 	// Close the "saveImage" and "file"
@@ -256,6 +270,18 @@ func (user *User) Delete() (err error) {
 
 // Delete the user image to update the new one
 func (user *User) DeleteUserImage() error {
+	currentDir, err := os.Getwd()
+	userImage := fmt.Sprintf("%s/web/img/user%d/%s", currentDir, user.Id, user.ImagePath)
+	_, err = os.Stat(userImage)
+	if err != nil {
+		return err
+	}
+	err = os.Remove(userImage)
+	return err
+}
+
+// Delete the user image to update the new one
+func (user *User) DeleteUserImageDir() error {
 	currentDir, err := os.Getwd()
 	userImage := fmt.Sprintf("%s/web/img/user%d", currentDir, user.Id)
 	_, err = os.Stat(userImage)
@@ -284,3 +310,22 @@ func ResetUsers() (err error) {
 	_, err = db.Exec(query)
 	return
 }
+
+// func ResetUserImageDir() (err error) {
+// 	db := NewDB()
+// 	defer db.Close()
+// 	query := `SELECT id FROM users`
+// 	rows, err := db.Query(query)
+// 	if err != nil {
+// 		return
+// 	}
+// 	var users []User
+// 	if err = rows.Scan(users); err != nil {
+// 		return
+// 	}
+// 	for _, user := range users {
+// 		user.DeleteUserImageDir()
+// 		return
+// 	}
+// 	return
+// }

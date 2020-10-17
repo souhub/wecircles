@@ -1,8 +1,11 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/init.go","level":"warning","line":73,"msg":"Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT_NULL,\n\t\t\timage_path VARCHAR(255),\n\t\t\toverview TEXT,\n\t\t\towner_id INT,\n\t\t\tcrea' at line 3","time":"2020-10-16T02:40:15Z"}
-go","level":"warning","line":94,"msg":"sql: no rows in result set","time":"2020-10-15T12:21:23Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":208,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user27/default.png: no such file or directory","time":"2020-10-15T12:23:03Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":208,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user27/default.png: no such file or directory","time":"2020-10-15T12:24:55Z"}
-"level":"warning","line":27,"msg":"template: navbar.private.html:46:11: executing \"navbar\" at \u003ceq .ImagePath \"default.png\"\u003e: error calling eq: incompatible types for comparison","time":"2020-10-14T11:52:17Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":172,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user242/default.png: no such file or directory","time":"2020-10-16T22:42:17Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":234,"msg":"Invalid Session","time":"2020-10-16T22:42:44Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":239,"msg":"sql: no rows in result set","time":"2020-10-16T22:42:44Z"}
+:"warning","line":203,"msg":"open web/img/user229/C10F9159-C087-4F73-8767-8CB78E246C67_1_201_a.jpeg: no such file or directory","time":"2020-10-16T22:37:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":179,"msg":"open web/img/user229/C10F9159-C087-4F73-8767-8CB78E246C67_1_201_a.jpeg: no such file or directory","time":"2020-10-16T22:37:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"fatal","line":167,"msg":"sql: no rows in result set","time":"2020-10-16T22:38:34Z"}
+irectory","time":"2020-10-16T22:26:24Z"}
+0-10-14T11:52:17Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":27,"msg":"template: navbar.private.html:46:11: executing \"navbar\" at \u003ceq .ImagePath \"default.png\"\u003e: error calling eq: incompatible types for comparison","time":"2020-10-14T11:52:18Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":27,"msg":"template: navbar.private.html:46:11: executing \"navbar\" at \u003ceq .ImagePath \"default.png\"\u003e: error calling eq: incompatible types for comparison","time":"2020-10-14T11:52:18Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":27,"msg":"template: navbar.private.html:46:11: executing \"navbar\" at \u003ceq .ImagePath \"default.png\"\u003e: error calling eq: incompatible types for comparison","time":"2020-10-14T11:52:21Z"}

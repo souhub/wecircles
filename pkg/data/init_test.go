@@ -28,19 +28,24 @@ var post = Post{
 // Test helpers
 // Reset the all of the tables
 func reset(t *testing.T) {
+
 	t.Helper()
-	err := ResetUsers()
-	if err != nil {
+	// if err := ResetUserImageDir(); err != nil {
+	// 	t.Fatal(err)
+	// }
+	if err := ResetUsers(); err != nil {
 		t.Fatal(err)
 	}
-	err = ResetSessions()
-	if err != nil {
+	if err := ResetSessions(); err != nil {
 		t.Fatal(err)
 	}
-	err = ResetPosts()
-	if err != nil {
+	if err := ResetPosts(); err != nil {
 		t.Fatal(err)
 	}
+	if err := ResetCircles(); err != nil {
+		t.Fatal(err)
+	}
+
 }
 
 // Test helper
