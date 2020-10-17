@@ -62,11 +62,11 @@ func init() {
 	// Create  circles table
 	cmd = `CREATE TABLE IF NOT EXISTS circles(
 			id INT AUTO_INCREMENT PRIMARY KEY,
-			Name VARCHAR(50) NOT NULL,
-			image_path VARCHAR(255) NOT NULL,
-			overview TEXT NOT NULL,
+			Name VARCHAR(50),
+			image_path VARCHAR(255),
+			overview TEXT,
 			category VARCHAR(30),
-			owner_id INT NOT NULL,
+			owner_id INT,
 			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 			)`
 	_, err = db.Exec(cmd)

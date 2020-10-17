@@ -37,6 +37,11 @@ func CreateCircle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	circleImage, err := user.UploadCircleImage(r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/circle/new", 302)
+		return
+	}
 	circle := data.Circle{
 		Name:      r.PostFormValue("name"),
 		ImagePath: circleImage,
