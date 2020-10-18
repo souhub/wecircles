@@ -1,15 +1,7 @@
 {{define "content"}}
-<!-- <p>サークル画像</br>
-<a href="/circle/edit/image">
-  <img
-    src="/static/img/default_thumbnail.jpg"
-    alt="circle_default_profile_image"
-    style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
-  />
-</a>
-</p> -->
+
 <h1>新しくサークルを作る</h1>
-<form action="/circle/create" method="post">
+<form action="/circle/create" method="post" enctype="multipart/form-data">
   <div class="form-group">
     <label for="image">サークル画像</label><br />
     <small class="form-text text-muted">デフォルトサークル画像</small>

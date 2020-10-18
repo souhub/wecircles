@@ -239,7 +239,7 @@ func (user *User) UploadCircleImage(r *http.Request) (uploadedFileName string, e
 	// Get the uploaded file's name from the file.
 	uploadedFileName = fileHeader.Filename
 	// Set the uploaded file's path
-	imagePath := fmt.Sprintf("web/img/user%d/circle/%s", user.Id, uploadedFileName)
+	imagePath := fmt.Sprintf("web/img/user%d/circles/mycircle/%s", user.Id, uploadedFileName)
 	// Save the uploaded file to "imagePath"
 	saveImage, err := os.Create(imagePath)
 	if err != nil {

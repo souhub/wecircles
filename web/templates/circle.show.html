@@ -1,27 +1,18 @@
 {{define "content"}}
-<!-- <p>サークル画像</br>
-<a href="/circle/edit/image">
-  <img
-    src="/static/img/default_thumbnail.jpg"
-    alt="circle_default_profile_image"
-    style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
-  />
-</a>
-</p> -->
 <h1>サークル管理</h1>
 <div>
   <h2 class="text-center">{{.Name}}</h2>
   <p>
-    {{if eq .ImagePath "default.png"}}
+    {{if eq .ImagePath "default_thumbnail.png"}}
     <!-- if user.ImagePath=="default.png" -->
     <img
-      src="/static/img/default.png"
+      src="/static/img/default_thumbnail.png"
       alt="circle_default_image"
       style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
     />
     {{else}}
     <img
-      src="/static/img/user{{.Owner.Id}}/circle/{{.ImagePath}}"
+      src="/static/img/user{{.Owner.Id}}/circles/mycircle/{{.ImagePath}}"
       alt="circle_image"
       style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
     />

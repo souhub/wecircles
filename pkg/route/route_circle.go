@@ -1,7 +1,9 @@
 package route
 
 import (
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/souhub/wecircles/pkg/data"
 	"github.com/souhub/wecircles/pkg/logging"
@@ -31,13 +33,19 @@ func CreateCircle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	if err := r.ParseForm(); err != nil {
+	currentRootDir, err := os.Getwd()
+	circleImageDir := fmt.Sprintf("%s/web/img/user%d/circles/mycircle", currentRootDir, user.Id)
+	_, err = os.Stat(circleImageDir)
+	if err != nil {
+		err = os.MkdirAll(circleImageDir, 0777)
+	}
+	circleImage, err := user.UploadCircleImage(r)
+	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/circle/new", 302)
 		return
 	}
-	circleImage, err := user.UploadCircleImage(r)
-	if err != nil {
+	if err := r.ParseForm(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/circle/new", 302)
 		return
@@ -57,7 +65,7 @@ func CreateCircle(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/mypage", 302)
 }
 
-func ShowOwnerCircle(w http.ResponseWriter, r *http.Request) {
+func ShowCircle(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -75,7 +83,7 @@ func ShowOwnerCircle(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	tmp := parseTemplateFiles("layout", "circle.owner.show", "navbar.private")
+	tmp := parseTemplateFiles("layout", "circle.show", "navbar.private")
 	tmp.Execute(w, circle)
 }
 

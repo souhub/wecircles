@@ -1,8 +1,8 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":172,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user242/default.png: no such file or directory","time":"2020-10-16T22:42:17Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":234,"msg":"Invalid Session","time":"2020-10-16T22:42:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":239,"msg":"sql: no rows in result set","time":"2020-10-16T22:42:44Z"}
-:"warning","line":203,"msg":"open web/img/user229/C10F9159-C087-4F73-8767-8CB78E246C67_1_201_a.jpeg: no such file or directory","time":"2020-10-16T22:37:43Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":179,"msg":"open web/img/user229/C10F9159-C087-4F73-8767-8CB78E246C67_1_201_a.jpeg: no such file or directory","time":"2020-10-16T22:37:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"warning","line":246,"msg":"open web/img/user1/circle/C3112BC1-8AC4-4D94-8992-EAC0F7510C02_1_201_a.jpeg: no such file or directory","time":"2020-10-18T11:37:09Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"warning","line":252,"msg":"invalid argument","time":"2020-10-18T11:37:09Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":44,"msg":"invalid argument","time":"2020-10-18T11:37:09Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":228,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post1/default_thumbnail.jpg: no such file or directory","time":"2020-10-18T11:16:47Z"}
+arning","line":179,"msg":"open web/img/user229/C10F9159-C087-4F73-8767-8CB78E246C67_1_201_a.jpeg: no such file or directory","time":"2020-10-16T22:37:43Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"fatal","line":167,"msg":"sql: no rows in result set","time":"2020-10-16T22:38:34Z"}
 irectory","time":"2020-10-16T22:26:24Z"}
 0-10-14T11:52:17Z"}
