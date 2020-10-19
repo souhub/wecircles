@@ -1,5 +1,5 @@
 {{define "content"}}
-<div class="mx-auto" style="width: 50%">
+<div class="mx-auto">
   <div>
     <a href="/post/edit/thumbnail?id={{.Uuid}}" style="text-decoration: none"
       ><p class="btn btn-outline-info btn-block">サムネイルを選択する</p>
@@ -30,7 +30,7 @@
       >
     </p>
     <button type="submit" class="btn btn-outline-success btn-block">
-      更新
+      更新する
     </button>
     <input type="hidden" name="uuid" value="{{.Uuid}}" />
   </form>

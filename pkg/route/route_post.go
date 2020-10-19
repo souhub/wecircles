@@ -13,6 +13,31 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
+// GET /post
+func Posts(w http.ResponseWriter, r *http.Request) {
+	session, err := session(w, r)
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	user, err := session.User()
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	posts, err := user.PostsByUser()
+	type Data struct {
+		User  data.User
+		Posts []data.Post
+	}
+	data := Data{
+		User:  user,
+		Posts: posts,
+	}
+	tmp := parseTemplateFiles("layout", "index", "navbar.private")
+	tmp.Execute(w, data)
+}
+
 // GET /post/new
 // Get the form page to create the new post
 func NewPost(w http.ResponseWriter, r *http.Request) {

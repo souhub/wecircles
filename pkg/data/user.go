@@ -119,7 +119,7 @@ func (user *User) GetCircle() (circle Circle, err error) {
 		return
 	}
 	defer stmt.Close()
-	err = stmt.QueryRow(user.Id).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.Owner.Id, &circle.CreatedAt)
+	err = stmt.QueryRow(user.Id).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.CreatedAt)
 	return circle, err
 }
 

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/souhub/wecircles/pkg/route"
@@ -20,6 +19,7 @@ func main() {
 
 	http.HandleFunc("/post/new", route.NewPost)
 	http.HandleFunc("/post/create", route.CreatePost)
+	http.HandleFunc("/posts", route.Posts)
 	http.HandleFunc("/post/show", route.ShowPost)
 	http.HandleFunc("/post/edit", route.EditPost)
 	http.HandleFunc("/post/edit/thumbnail", route.EditPostThumbnail)
@@ -28,20 +28,23 @@ func main() {
 	http.HandleFunc("/post/delete", route.DeletePost)
 
 	http.HandleFunc("/mypage", route.MyPage)
+
 	http.HandleFunc("/user/edit", route.EditUser)
 	http.HandleFunc("/user/update", route.UpdateUser)
 	http.HandleFunc("/user/edit/image", route.EditUserImage)
 	http.HandleFunc("/user/update/image", route.UpdateUserImage)
-	http.HandleFunc("/user/show", route.ShowUser)
+	http.HandleFunc("/user", route.ShowUser)
 	http.HandleFunc("/user/delete/confirm", route.DeleteUserConfirm)
 	http.HandleFunc("/user/delete", route.DeleteUser)
 
+	http.HandleFunc("/circle", route.Circle)
+	http.HandleFunc("/circles", route.Circles)
+	http.HandleFunc("/circle/memberships", route.MembershipsCircle)
 	http.HandleFunc("/circle/new", route.NewCircle)
 	http.HandleFunc("/circle/create", route.CreateCircle)
-	http.HandleFunc("/circle/show", route.ShowCircle)
 	http.HandleFunc("/circle/edit", route.EditCircle)
 	http.HandleFunc("/circle/update", route.UpdateCircle)
 	http.HandleFunc("/circle/delete", route.DeleteCircle)
 
-	log.Fatal(http.ListenAndServe(":80", nil))
+	http.ListenAndServe(":80", nil)
 }

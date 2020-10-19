@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 
@@ -32,7 +31,6 @@ func Posts() (posts []Post, err error) {
 			  ORDER BY id DESC`
 	rows, err := db.Query(query)
 	if err != nil {
-		log.Fatal(err)
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
@@ -40,7 +38,6 @@ func Posts() (posts []Post, err error) {
 		var post Post
 		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.ThumbnailPath, &post.CreatedAt)
 		if err != nil {
-			log.Fatal(err)
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 			return
 		}

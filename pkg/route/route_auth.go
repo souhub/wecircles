@@ -76,7 +76,7 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 	}
 	http.SetCookie(w, &cookie)
-	url := fmt.Sprint("/user/show?id=", session.UserIdStr)
+	url := fmt.Sprintf("/user?id=%s", session.UserIdStr)
 	http.Redirect(w, r, url, 302)
 }
 

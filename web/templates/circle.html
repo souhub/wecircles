@@ -1,0 +1,100 @@
+{{define "content"}}
+<div style="position: absolute; top: 13px; right: 100px">
+  <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    role="button"
+    id="dropdownMenuLink"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    {{if eq .User.ImagePath "default.png"}}
+    <img
+      src="/static/img/default.png"
+      alt="user_profile_image"
+      style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover"
+    />
+    {{else}}
+    <img
+      src="/static/img/user{{.User.Id}}/{{.User.ImagePath}}"
+      alt="user_profile_image"
+      style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover"
+    />
+    {{end}}
+  </a>
+  <!-- ドロップメニューの設定 -->
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="/mypage">{{.User.Name}}</a>
+    <a class="dropdown-item" href="/posts">記事</a>
+    <a class="dropdown-item" href="/circle">サークル</a>
+    <a class="dropdown-item" href="/user/edit">プロフィール設定</a>
+    <a class="dropdown-item" href="/logout">ログアウト</a>
+  </div>
+</div>
+
+<h2>サークル</h2>
+<nav class="navbar navbar-expand navbar-light">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="/circle">自分</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/circle/memberships">参加中</a>
+    </li>
+  </ul>
+</nav>
+
+<h3>管理</h3>
+<div>
+  <h4>サークル画像</h4>
+  <p>
+    {{if eq .Circle.ImagePath ""}}
+    <img
+      src="/static/img/default_thumbnail.jpg"
+      alt="circle_default_image"
+      style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
+    />
+    {{else}}
+    <img
+      src="/static/img/user{{.Circle.OwnerID}}/circles/mycircle/{{.Circle.ImagePath}}"
+      alt="circle_image"
+      style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
+    />
+    {{end}}
+  </p>
+</div>
+
+<div>
+  <h4>サークル名</h4>
+  <p>{{.Circle.Name}}</p>
+</div>
+
+<div>
+  <h4>概要</h4>
+  <p>{{.Circle.Overview}}</p>
+</div>
+
+<div class="form-group">
+  <h4>カテゴリ</h4>
+  {{if eq .Circle.Category "tennis"}}
+  <p>テニス</p>
+  {{else if eq .Circle.Category "soccer"}}
+  <p>サッカー</p>
+  {{else if eq .Circle.Category "volunteer"}}
+  <p>ボランティア</p>
+  {{else if eq .Circle.Category "photo"}}
+  <p>写真</p>
+  {{else if eq .Circle.Category "basketball"}}
+  <p>バスケットボール</p>
+  {{else}}
+  <p>その他</p>
+  {{end}}
+</div>
+<a
+  href="javascript:history.back();"
+  class="btn btn-outline-secondary btn-block mt-3"
+  >戻る</a
+>
+
+{{end}}

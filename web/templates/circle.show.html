@@ -3,10 +3,10 @@
 <div>
   <h2 class="text-center">{{.Name}}</h2>
   <p>
-    {{if eq .ImagePath "default_thumbnail.png"}}
+    {{if eq .ImagePath ""}}
     <!-- if user.ImagePath=="default.png" -->
     <img
-      src="/static/img/default_thumbnail.png"
+      src="/static/img/default_thumbnail.jpg"
       alt="circle_default_image"
       style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
     />
@@ -30,10 +30,10 @@
   <p>{{.Overview}}</p>
 </div>
 
-<!-- <div class="form-group">
+<div class="form-group">
   <h2>カテゴリ</h2>
   <p>{{.Category}}</p>
-</div> -->
+</div>
 
 <a
   href="javascript:history.back();"
