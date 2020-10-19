@@ -27,13 +27,12 @@
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
     <a class="dropdown-item" href="/mypage">{{.User.Name}}</a>
     <a class="dropdown-item" href="/posts">記事</a>
-    <a class="dropdown-item" href="/circle">サークル</a>
+    <a class="dropdown-item" href="/circle?id={{.User.UserIdStr}}">サークル</a>
     <a class="dropdown-item" href="/user/edit">プロフィール設定</a>
-    <a class="dropdown-item" href="/user/edit/image">プロフィール画像変更</a>
     <a class="dropdown-item" href="/logout">ログアウト</a>
   </div>
 </div>
-{{end}} {{range .Posts}}
+{{end}} {{if .Posts}} {{range .Posts}}
 <div class="card mx-auto mb-5">
   <a href="/post/show?id={{.Uuid}}">
     {{if eq .ThumbnailPath "default_thumbnail.jpg"}}
@@ -77,5 +76,11 @@
     </div>
   </a>
 </div>
-
+{{end}} {{else}}
+<p class="text-center">まだ投稿がありません。</p>
+<a href="/post/new" style="text-decoration: none"
+  ><button type="submit" class="btn btn-outline-success btn-block">
+    初めての投稿をしましょう！
+  </button></a
+>
 {{end}} {{end}}

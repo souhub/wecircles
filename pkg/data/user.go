@@ -107,22 +107,6 @@ func UserByUserIdStr(useridstr string) (user User, err error) {
 	return user, err
 }
 
-// Get the owner's circle
-func (user *User) GetCircle() (circle Circle, err error) {
-	db := NewDB()
-	defer db.Close()
-	query := `SELECT * FROM circles
-			  WHERE owner_id=?`
-	stmt, err := db.Prepare(query)
-	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		return
-	}
-	defer stmt.Close()
-	err = stmt.QueryRow(user.Id).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.CreatedAt)
-	return circle, err
-}
-
 // Create a new user
 func (user *User) Create() (err error) {
 	db := NewDB()

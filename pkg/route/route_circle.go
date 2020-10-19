@@ -10,35 +10,120 @@ import (
 )
 
 func Circle(w http.ResponseWriter, r *http.Request) {
-	session, err := session(w, r)
+	vals := r.URL.Query()
+	UserIdStr := vals.Get("id")
+	user, err := session(w, r)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
-	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		http.Redirect(w, r, "/login", 302)
-		return
+	if user.UserIdStr == UserIdStr {
+		user, err := data.UserByUserIdStr(UserIdStr)
+		if err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			http.Redirect(w, r, "/login", 302)
+			return
+		}
+		circle, err := data.GetCirclebyUser(UserIdStr)
+		if err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			http.Redirect(w, r, "/circle/new", 302)
+			return
+		}
+		type Data struct {
+			User   data.User
+			Circle data.Circle
+		}
+		data := Data{
+			User:   user,
+			Circle: circle,
+		}
+		tmp := parseTemplateFiles("layout", "navbar.private", "circle")
+		if err := tmp.Execute(w, data); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+	} else {
+		user, err := data.UserByUserIdStr(UserIdStr)
+		if err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			http.Redirect(w, r, "/circle/new", 302)
+			return
+		}
+		circle, err := data.GetCirclebyUser(UserIdStr)
+		if err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			http.Redirect(w, r, "/circle/new", 302)
+			return
+		}
+		type Data struct {
+			User   data.User
+			Circle data.Circle
+		}
+		data := Data{
+			User:   user,
+			Circle: circle,
+		}
+		tmp := parseTemplateFiles("layout", "navbar.private", "circle.public")
+		if err := tmp.Execute(w, data); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
 	}
-	circle, err := user.GetCircle()
-	type Data struct {
-		User   data.User
-		Circle data.Circle
-	}
-	data := Data{
-		Circle: circle,
-		User:   user,
-	}
-	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		http.Redirect(w, r, "/circle/new", 302)
-		return
-	}
-	tmp := parseTemplateFiles("layout", "circle", "navbar.private")
-	tmp.Execute(w, data)
 }
+
+// func Circle(w http.ResponseWriter, r *http.Request) {
+// 	vals := r.URL.Query()
+// 	UserIdStr := vals.Get("id")
+// 	circle, err := data.GetCirclebyUser(UserIdStr)
+// 	if err != nil {
+// 		_, err := session(w, r)
+// 		if err != nil {
+// 			tmp := parseTemplateFiles("layout", "navbar.public", "circle.public")
+// 			if err := tmp.Execute(w, circle); err != nil {
+// 				logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 			}
+// 			return
+// 		}
+// 		http.Redirect(w, r, "/circle/new", 302)
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		return
+// 	} else {
+// 		session, err := session(w, r)
+// 		if err != nil {
+// 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 			http.Redirect(w, r, "/login", 302)
+// 			return
+// 		}
+// 		user, err := session.User()
+// 		if err != nil {
+// 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 			http.Redirect(w, r, "/login", 302)
+// 			return
+// 		}
+// 		type Data struct {
+// 			User   data.User
+// 			Circle data.Circle
+// 		}
+// 		data := Data{
+// 			User:   user,
+// 			Circle: circle,
+// 		}
+// 		if user.UserIdStr == UserIdStr {
+// 			tmp := parseTemplateFiles("layout", "navbar.private", "circle")
+// 			if err := tmp.Execute(w, data); err != nil {
+// 				logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 			}
+// 			return
+// 		} else {
+
+// 			tmp := parseTemplateFiles("layout", "navbar.private", "circle.public")
+// 			if err := tmp.Execute(w, circle); err != nil {
+// 				logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 			}
+// 		}
+
+// 	}
+// }
 
 func Circles(w http.ResponseWriter, r *http.Request) {
 	circles, err := data.Circles()
@@ -125,45 +210,21 @@ func CreateCircle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	circle := data.Circle{
-		Name:      r.PostFormValue("name"),
-		ImagePath: circleImage,
-		Overview:  r.PostFormValue("overview"),
-		Category:  r.PostFormValue("category"),
-		Owner:     user,
+		Name:       r.PostFormValue("name"),
+		ImagePath:  circleImage,
+		Overview:   r.PostFormValue("overview"),
+		Category:   r.PostFormValue("category"),
+		OwnerID:    user.Id,
+		OwnerIDStr: user.UserIdStr,
 	}
 	if err = circle.Create(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/circle/new", 302)
 		return
 	}
-	http.Redirect(w, r, "/mypage", 302)
+	url := fmt.Sprintf("/circle?id=%s", user.UserIdStr)
+	http.Redirect(w, r, url, 302)
 }
-
-// func ShowCircle(w http.ResponseWriter, r *http.Request) {
-// 	session, err := session(w, r)
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 		http.Redirect(w, r, "/login", 302)
-// 		return
-// 	}
-// 	user, err := session.User()
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 		http.Redirect(w, r, "/login", 302)
-// 		return
-// 	}
-// 	circle, err := user.GetCircle()
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 		return
-// 	}
-// 	if circle.OwnerID == user.Id {
-// 		http.Redirect(w, r, "/circle", 302)
-// 		return
-// 	}
-// 	tmp := parseTemplateFiles("layout", "circle.show", "navbar.private")
-// 	tmp.Execute(w, circle)
-// }
 
 func EditCircle(w http.ResponseWriter, r *http.Request) {
 	return

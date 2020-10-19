@@ -1,16 +1,14 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":85,"msg":"Invalid Session","time":"2020-10-19T08:15:15Z"}
-7:40:17Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":35,"msg":"sql: no rows in result set","time":"2020-10-19T07:40:29Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"warning","line":236,"msg":"http: no such file","time":"2020-10-19T07:40:51Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":120,"msg":"http: no such file","time":"2020-10-19T07:40:51Z"}
-:51Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":104,"msg":"http: no such file","time":"2020-10-19T06:41:51Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":119,"msg":"Error 1136: Column count doesn't match value count at row 1","time":"2020-10-19T06:41:51Z"}
-0Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":27,"msg":"template: index.html:1:26: executing \"content\" at \u003c.User\u003e: can't evaluate field User in type route.Data","time":"2020-10-19T04:15:31Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":27,"msg":"template: index.html:1:26: executing \"content\" at \u003c.User\u003e: can't evaluate field User in type route.Data","time":"2020-10-19T04:15:31Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":27,"msg":"template: index.html:1:26: executing \"content\" at \u003c.User\u003e: can't evaluate field User in type route.Data","time":"2020-10-19T04:15:31Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":27,"msg":"template: index.html:1:26: executing \"content\" at \u003c.User\u003e: can't evaluate field User in type route.Data","time":"2020-10-19T04:15:32Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":43,"msg":"template: index.html:30:48: executing \"content\" at \u003c.UserIdStr\u003e: can't evaluate field UserIdStr in type route.Data","time":"2020-10-19T12:14:00Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":43,"msg":"template: index.html:30:48: executing \"content\" at \u003c.UserIdStr\u003e: can't evaluate field UserIdStr in type route.Data","time":"2020-10-19T12:14:00Z"}
+uhub/wecircles/pkg/route/route_circle.go","level":"warning","line":30,"msg":"sql: no rows in result set","time":"2020-10-19T12:12:07Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":30,"msg":"sql: no rows in result set","time":"2020-10-19T12:12:30Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":30,"msg":"sql: no rows in result set","time":"2020-10-19T12:13:06Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":49,"msg":"sql: no rows in result set","time":"2020-10-19T12:13:29Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":17,"msg":"sql: no rows in result set","time":"2020-10-19T10:36:16Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":17,"msg":"sql: no rows in result set","time":"2020-10-19T10:36:37Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":17,"msg":"sql: no rows in result set","time":"2020-10-19T10:36:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":17,"msg":"sql: no rows in result set","time":"2020-10-19T10:36:48Z"}
+route_main.go","level":"warning","line":27,"msg":"template: index.html:1:26: executing \"content\" at \u003c.User\u003e: can't evaluate field User in type route.Data","time":"2020-10-19T04:15:32Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":27,"msg":"template: index.html:1:26: executing \"content\" at \u003c.User\u003e: can't evaluate field User in type route.Data","time":"2020-10-19T04:15:32Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":27,"msg":"template: index.html:1:26: executing \"content\" at \u003c.User\u003e: can't evaluate field User in type route.Data","time":"2020-10-19T04:15:32Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":27,"msg":"template: index.html:1:26: executing \"content\" at \u003c.User\u003e: can't evaluate field User in type route.Data","time":"2020-10-19T04:15:33Z"}

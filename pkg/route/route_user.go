@@ -17,25 +17,26 @@ func MyPage(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 	}
 	user, err := session.User()
-	id := user.Id
-	name := user.Name
-	image := user.ImagePath
 	posts, err := user.PostsByUser()
 	type Data struct {
 		Id        int
 		Name      string
 		ImagePath string
+		UserIdStr string
 		Posts     []data.Post
 	}
 	data := Data{
-		Id:        id,
-		Name:      name,
-		ImagePath: image,
+		Id:        user.Id,
+		Name:      user.Name,
+		ImagePath: user.ImagePath,
+		UserIdStr: user.UserIdStr,
 		Posts:     posts,
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "mypage")
-	err = tmp.Execute(w, data)
-	return
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
 }
 
 // GET /user/show

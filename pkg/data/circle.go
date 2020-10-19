@@ -15,9 +15,25 @@ type Circle struct {
 	OwnerID        int
 	OwnerIDStr     string
 	OwnerImagePath string
-	Owner          User
 	CreatedAt      string
+	Owner          User
 	Members        []User
+}
+
+// Get the owner's circle
+func GetCirclebyUser(userIdStr string) (circle Circle, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT * FROM circles
+			  WHERE owner_id_str=?`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	defer stmt.Close()
+	err = stmt.QueryRow(userIdStr).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.CreatedAt)
+	return circle, err
 }
 
 // Get all of the circles
@@ -61,7 +77,7 @@ func (circle *Circle) Create() (err error) {
 	defer db.Close()
 	query := `INSERT INTO circles (name, image_path, overview, category, owner_id, owner_id_str)
 			  VALUES (?,?,?,?,?,?)`
-	_, err = db.Exec(query, circle.Name, circle.ImagePath, circle.Overview, circle.Category, circle.Owner.Id, circle.Owner.UserIdStr)
+	_, err = db.Exec(query, circle.Name, circle.ImagePath, circle.Overview, circle.Category, circle.OwnerID, circle.OwnerIDStr)
 	return
 }
 
