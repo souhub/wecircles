@@ -1,10 +1,9 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"warning","line":129,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post6/: no such file or directory","time":"2020-10-21T10:30:33Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":136,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post6: no such file or directory","time":"2020-10-21T10:30:33Z"}
-0:29:45Z"}
-:25:34Z"}
-/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":242,"msg":"open web/img/user1/posts/post6/A1C85719-D416-423B-8EB6-115415B89940.jpeg: no such file or directory","time":"2020-10-21T10:24:26Z"}
-"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":291,"msg":"request Content-Type isn't multipart/form-data","time":"2020-10-21T09:43:27Z"}
-evel":"warning","line":117,"msg":"html/template:layout.html:16:37: no such template \"mynav\"","time":"2020-10-20T09:15:14Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":63,"msg":"template: post.new.html:47:40: executing \"post.new.html\" at \u003c.Post.ThumbnailPath\u003e: can't evaluate field Post in type route.Data","time":"2020-10-21T15:28:51Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":63,"msg":"template: post.new.html:47:40: executing \"post.new.html\" at \u003c.Post.ThumbnailPath\u003e: can't evaluate field Post in type route.Data","time":"2020-10-21T15:28:52Z"}
+Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":152,"msg":"http: no such file","time":"2020-10-21T10:45:41Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":128,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post6/A2A1E6C0-87CE-4E69-9F5C-ADFD842D9E40.jpeg: no such file or directory","time":"2020-10-21T10:47:05Z"}
+:"2020-10-20T09:15:14Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":43,"msg":"html/template:layout.html:16:37: no such template \"mynav\"","time":"2020-10-20T09:15:14Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":117,"msg":"html/template:layout.html:16:37: no such template \"mynav\"","time":"2020-10-20T09:15:14Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":43,"msg":"html/template:layout.html:16:37: no such template \"mynav\"","time":"2020-10-20T09:15:14Z"}

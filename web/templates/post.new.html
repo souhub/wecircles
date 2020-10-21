@@ -1,42 +1,115 @@
-{{define "content"}}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/static/css/navbar-search.css" />
+    <title>Document</title>
+  </head>
+  <body class="bg-white">
+      <form action="/post/create" method="post" class="mx-auto">
+        <nav
+          class="navbar navbar-expand-lg navbar-light bg-white position-fixed"
+          style="
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: 70px;
+          "
+        >
+          <h1 class="box"><a class="navbar-brand" href="/">WeCircle</a></h1>
 
-<form action="/post/create" method="post" class="mx-auto">
-  <div class="form-group">
-    <label for="title"
-      >タイトル<span class="text-danger small"> 必須</span></label
-    >
-    <h2>
-      <textarea
-        type="text"
-        class="form-control font-weight-bold"
-        style="font-size: 30px"
-        name="title"
-        rows="1"
-        placeholder="タイトル"
-        required
-      ></textarea>
-    </h2>
-  </div>
-  <div class="form-group">
-    <label for="body">本文<span class="text-danger small"> 必須</span></label>
-    <textarea
-      type="text"
-      name="body"
-      class="form-control auto-resize"
-      style="line-height: 16px; white-space: prewrap"
-      rows="30"
-      placeholder="今日のサークルでの出来事ををWeCircleに書いてみませんか？"
-      required
-    ></textarea>
-  </div>
-  <button type="submit" class="btn btn-outline-success btn-block">
-    投稿する
-  </button>
-  <a
-    href="javascript:history.back();"
-    class="btn btn-outline-secondary btn-block mt-3"
-    >戻る</a
-  >
-  <input type="hidden" name="uuid" value="{{.UUID}}" />
-</form>
-{{end}}
+
+          <div class="box">
+            <label for="image"
+              ><i class="far fa-image fa-4x mt-4">
+                <input
+                  style="display: none"
+                  id="image"
+                  type="file"
+                  name="image"
+                  onChange="previewImage(this);"
+                  accept="image/*"
+                />
+              </i>
+            </label>
+          </div>
+
+          <div class="box" style="display: flex">
+            <button
+              type="button"
+              onclick="javascript:history.back();"
+              class="btn btn-outline-secondary"
+            >
+              戻る
+            </button>
+
+            <button type="submit" class="btn btn-outline-success ml-2">
+              投稿
+            </button>
+          </div>
+
+        </nav>
+        <div class="mx-auto" style="max-width: 540px">
+
+        <p class="text-center">
+          <img
+            id="preview"
+            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+            style="width: auto; height: 250px; object-fit: cover"
+          />
+        </p>
+
+        <div>
+          <label for="title"
+            >タイトル<span class="text-danger small"> 必須</span></label
+          >
+          <h2>
+            <textarea
+              type="text"
+              class="form-control font-weight-bold"
+              style="font-size: 30px; border: none"
+              name="title"
+              rows="1"
+              placeholder="タイトル"
+              required
+            ></textarea>
+          </h2>
+          <label for="body"
+            >本文<span class="text-danger small"> 必須</span></label
+          >
+          <textarea
+            type="text"
+            name="body"
+            class="form-control auto-resize"
+            style="line-height: 16px; white-space: prewrap; border: none"
+            rows="30"
+            placeholder="今日のサークルでの出来事ををWeCircleに書いてみませんか？"
+            required
+          ></textarea>
+        </div>
+        <input type="hidden" name="uuid" value="{{.UUID}}" />
+      </form>
+
+      <!-- jQuery読み込み -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <!-- PopperのJS読み込み -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+      <!-- BootstrapのJS読み込み -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <!-- fontawssomeの読み込み -->
+      <script
+        src="https://kit.fontawesome.com/dab6f66964.js"
+        crossorigin="anonymous"
+      ></script>
+      <script type="text/javascript" src="/static/js/preview.js"></script>
+      <script type="text/javascript" src="/static/js/navbar-search.js"></script>
+    </div>
+  </body>
+</html>

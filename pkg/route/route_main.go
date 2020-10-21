@@ -23,7 +23,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		data := Data{
 			Posts: posts,
 		}
-		tmp := parseTemplateFiles("layout", "index", "navbar.public")
+		tmp := parseTemplateFiles("layout", "index", "navbar.public", "posts")
 		if err := tmp.Execute(w, data); err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
@@ -38,7 +38,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		Posts: posts,
 		User:  user,
 	}
-	tmp := parseTemplateFiles("layout", "index", "navbar.private")
+	tmp := parseTemplateFiles("layout", "index", "navbar.private", "posts")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}

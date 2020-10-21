@@ -33,7 +33,7 @@ func Posts(w http.ResponseWriter, r *http.Request) {
 		User:  user,
 		Posts: posts,
 	}
-	tmp := parseTemplateFiles("layout", "index", "navbar.private")
+	tmp := parseTemplateFiles("layout", "index", "navbar.private", "posts")
 	tmp.Execute(w, data)
 }
 
@@ -58,7 +58,7 @@ func NewPost(w http.ResponseWriter, r *http.Request) {
 		User: user,
 		UUID: uuid.New(),
 	}
-	tmp := parseTemplateFiles("layout", "post.new", "navbar.private")
+	tmp := parseTemplateFiles("post.new")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
@@ -185,7 +185,7 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 		User: user,
 		Post: post,
 	}
-	tmp := parseTemplateFiles("layout", "navbar.private", "post.edit")
+	tmp := parseTemplateFiles("post.edit")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
@@ -235,23 +235,19 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	post.Title = r.PostFormValue("title")
-	post.Body = r.PostFormValue("body")
-	thumbnailPath, err := post.UploadThumbnail(r)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
+	thumbnailPath, err := post.UploadThumbnail(r)
 	post.ThumbnailPath = thumbnailPath
 	if session.UserId != post.UserId {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/post/edit", 302)
 		return
 	}
-	if err != nil {
-		http.Redirect(w, r, "/post/edit", 302)
-		return
-	}
+	post.Title = r.PostFormValue("title")
+	post.Body = r.PostFormValue("body")
 	if err := post.UpdatePost(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}

@@ -22,7 +22,7 @@ func MyPage(w http.ResponseWriter, r *http.Request) {
 		User:  user,
 		Posts: posts,
 	}
-	tmp := parseTemplateFiles("layout", "navbar.private", "mypage")
+	tmp := parseTemplateFiles("layout", "navbar.private", "mypage", "posts")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return

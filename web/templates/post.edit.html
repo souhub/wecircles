@@ -1,83 +1,114 @@
-{{define "content"}}
-<div class="mx-auto">
-  <div>
-    <a
-      href="/post/edit/thumbnail?id={{.Post.Uuid}}"
-      style="text-decoration: none"
-      ><p class="btn btn-outline-info btn-block">サムネイルを選択する</p>
-    </a>
-  </div>
-
-  <form
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/static/css/navbar-search.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form
     action="/post/update?id={{.Post.Uuid}}"
     method="post"
     enctype="multipart/form-data"
   >
-    <div class="form-group">
-      <label for="image">サムネイル変更</label><br />
-      <div>
-        <small class="form-text text-muted">現在のサムネイル</small>
-        {{if eq .Post.ThumbnailPath "default_thumbnail.jpg"}}
-        <img
-          src="/static/img/{{.Post.ThumbnailPath}}"
-          alt="user_profile_image"
-          style="width: 300px; height: 200px; object-fit: cover"
-        />
-        {{else}}
-        <img
-          src="/static/img/user{{.Post.UserId}}/posts/post{{.Post.Id}}/{{.Post.ThumbnailPath}}"
-          alt="user_profile_image"
-          style="width: 300px; height: 200px; object-fit: cover"
-        />
-        {{end}}
-
-        <p>
-          <small class="form-text text-muted">新しいサムネイル</small>
-          <img
-            id="preview"
-            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-            style="width: 300px; height: 200px; object-fit: cover"
-          />
-        </p>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-light position-fixed"
+      style="
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 70px;
+      "
+    >
+      <h1 class="box"><a class="navbar-brand" href="/">WeCircle</a></h1>
+      <div class="box" style="display: flex">
+        <button
+          type="button"
+          onclick="javascript:history.back();"
+          class="btn btn-outline-secondary"
+        >
+          戻る
+        </button>
+        <button type="submit" class="btn btn-outline-success ml-2">
+          投稿
+        </button>
       </div>
-      <input
-        type="file"
-        name="image"
-        onChange="previewImage(this);"
-        accept="image/*"
-      />
+    </nav>
+
+    <div class="mx-auto" style="padding-top: 80px">
+        <div class="form-group">
+          <div style="display: flex;">
+            <div class="img mx-5">
+              <small class="form-text text-muted">現在のサムネイル</small>
+              {{if eq .Post.ThumbnailPath "default_thumbnail.jpg"}}
+              <img
+                src="/static/img/{{.Post.ThumbnailPath}}"
+                alt="user_profile_image"
+                style="width: 250px; height: 200px; object-fit: cover"
+              />
+              {{else}}
+              <img
+                src="/static/img/user{{.Post.UserId}}/posts/post{{.Post.Id}}/{{.Post.ThumbnailPath}}"
+                alt="user_profile_image"
+                style="width: auto; height: 250px; object-fit: cover"
+              />
+              {{end}}
+            </div>
+            <div class="img">
+              <small class="form-text text-muted">新しいサムネイル</small>
+              <img
+                id="preview"
+                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                style="width: auto; height: 250px; object-fit: cover"
+              />
+              <input
+                type="file"
+                name="image"
+                onChange="previewImage(this);"
+                accept="image/*"
+              />
+            </div>
+          </div>
+        </div>
+          <textarea
+            type="text"
+            name="title"
+            class="form-control font-weight-bold"
+            style="font-size: 30px; white-space: prewrap"
+          >
+{{.Post.Title}}</textarea
+          >
+          <textarea
+            type="text"
+            name="body"
+            class="form-control auto-resize"
+            style="line-height: 16px; white-space: prewrap"
+            rows="50"
+          >
+{{.Post.Body}}</textarea
+          >
+      </form>
     </div>
 
-    <h1>
-      <input
-        type="text"
-        name="title"
-        value="{{.Post.Title}}"
-        class="form-control font-weight-bold"
-        style="font-size: 30px"
-      />
-    </h1>
-    <a>{{.Post.UserName}}</a>
-    <p>{{.Post.CreatedAt}}</p>
-    <p>
-      <textarea
-        type="text"
-        name="body"
-        class="form-control auto-resize"
-        style="line-height: 16px; white-space: prewrap"
-        rows="50"
-      >
-{{.Post.Body}}</textarea
-      >
-    </p>
-    <button type="submit" class="btn btn-outline-success btn-block">
-      更新する
-    </button>
-  </form>
-  <a
-    href="javascript:history.back();"
-    class="btn btn-outline-secondary btn-block mt-3"
-    >戻る</a
-  >
-</div>
-{{end}}
+    <!-- jQuery読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- PopperのJS読み込み -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <!-- BootstrapのJS読み込み -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- fontawssomeの読み込み -->
+    <script
+      src="https://kit.fontawesome.com/dab6f66964.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="/static/js/preview.js"></script>
+    <script type="text/javascript" src="/static/js/navbar-search.js"></script>
+  </body>
+</html>

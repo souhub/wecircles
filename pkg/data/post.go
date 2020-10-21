@@ -123,10 +123,10 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 		return
 	}
 
-	// Delete the current thumbnail.
-	if err = post.DeleteThembnail(); err != nil {
-		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
+	// // Delete the current thumbnail.
+	// if err = post.DeleteThembnail(); err != nil {
+	// 	logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	// }
 
 	// Make thumbnail dir.
 	currentRootDir, err := os.Getwd()
@@ -147,12 +147,18 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 	// }
 	// Get the file sent form the form
 	file, fileHeader, err := r.FormFile("image")
+	// Get the uploaded file's name from the file.
 	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		uploadedFileName = post.ThumbnailPath
 		return
 	}
-	// Get the uploaded file's name from the file.
+	// Delete the current thumbnail.
+	if err = post.DeleteThembnail(); err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 	uploadedFileName = fileHeader.Filename
+
 	// Set the uploaded file's path
 	imagePath := fmt.Sprintf("web/img/user%d/posts/post%d/%s", post.UserId, post.Id, uploadedFileName)
 
