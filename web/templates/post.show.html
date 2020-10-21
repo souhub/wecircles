@@ -6,6 +6,7 @@
   <p style="white-space: pre; width: 200px; word-wrap: break-all">
     {{.Post.Body}}
   </p>
+  {{if eq .User.Id .Post.UserId}}
   <a
     class="btn btn-outline-success btn-block"
     href="/post/edit?id={{.Post.Uuid}}"
@@ -16,6 +17,7 @@
     href="/post/delete?id={{.Post.Uuid}}"
     >削除
   </a>
+  {{end}}
   <a
     href="javascript:history.back();"
     class="btn btn-outline-secondary btn-block mt-3"

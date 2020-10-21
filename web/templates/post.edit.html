@@ -8,7 +8,7 @@
     </a>
   </div>
 
-  <form action="/post/update" method="post">
+  <form action="/post/update?id={{.Post.Uuid}}" method="post">
     <h1>
       <input
         type="text"
@@ -34,7 +34,6 @@
     <button type="submit" class="btn btn-outline-success btn-block">
       更新する
     </button>
-    <input type="hidden" name="uuid" value="{{.Post.Uuid}}" />
   </form>
   <a
     href="javascript:history.back();"

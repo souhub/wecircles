@@ -60,9 +60,10 @@ func NewPost(w http.ResponseWriter, r *http.Request) {
 		UUID: uuid.New(),
 	}
 	tmp := parseTemplateFiles("layout", "post.new", "navbar.private")
-	// uuid := uuid.New()
-	tmp.Execute(w, data)
-
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
 }
 
 // POST /post/create
@@ -125,40 +126,37 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 // Get the post
 func ShowPost(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
-	uuid := vals.Get("id")
-	post, err := data.PostByUuid(uuid)
+	id := vals.Get("id")
+	post, err := data.PostByUuid(id)
 	if err != nil {
 		log.Fatal(err)
 	}
 	session, err := session(w, r)
-	// ログイン前にユーザー名クリックした場合
-	if err != nil {
-		tmp := parseTemplateFiles("layout", "navbar.public", "post.show.public")
-		if err := tmp.Execute(w, post); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-		return
-	}
-	user, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	user, err := session.User()
+	// ログイン判定
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		tmp := parseTemplateFiles("layout", "navbar.public", "post.show")
+		if err := tmp.Execute(w, post); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			return
+		}
 		return
 	}
 	data := Data{
 		User: user,
 		Post: post,
 	}
-	if user.Id != post.UserId {
-		tmp := parseTemplateFiles("layout", "navbar.private", "post.show.public")
-		if err := tmp.Execute(w, data); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-	} else {
-		tmp := parseTemplateFiles("layout", "navbar.private", "post.show.private")
-		if err := tmp.Execute(w, data); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
+	// 投稿者判定はテンプレートで行う
+	tmp := parseTemplateFiles("layout", "navbar.private", "post.show")
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
 	}
 }
 
@@ -167,7 +165,11 @@ func ShowPost(w http.ResponseWriter, r *http.Request) {
 func EditPost(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
 	uuid := vals.Get("id")
-	post, _ := data.PostByUuid(uuid)
+	post, err := data.PostByUuid(uuid)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
 	session, err := session(w, r)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -187,8 +189,8 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 	tmp := parseTemplateFiles("layout", "navbar.private", "post.edit")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
 	}
-
 }
 
 // GET /post/edit/thumbnail
@@ -216,45 +218,38 @@ func EditPostThumbnail(w http.ResponseWriter, r *http.Request) {
 // POST /post/update
 // Update the post
 func UpdatePost(w http.ResponseWriter, r *http.Request) {
-	sess, err := session(w, r)
+	session, err := session(w, r)
 	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
-	} else {
-		err := r.ParseForm()
-		if err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-		user, err := sess.User()
-		if err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-		uuid := r.FormValue("uuid")
-		post, err := data.PostByUuid(uuid)
-		if err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-		if user.Id != post.UserId {
-			http.Redirect(w, r, "/", 302)
-		}
-		// attr := map[string]interface{}{
-		// 	"Title": r.PostFormValue("title"),
-		// 	"Body":  r.PostFormValue("body"),
-		// }
-		post.Title = r.PostFormValue("title")
-		post.Body = r.PostFormValue("body")
-		if err != nil {
-			tmp := parseTemplateFiles("layout", "navbar.private", "post.edit")
-			if err := tmp.Execute(w, post); err != nil {
-				logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-			}
-		} else {
-			err := post.UpdatePost()
-			if err != nil {
-				logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-			}
-			http.Redirect(w, r, "/", 302)
-		}
+		return
 	}
+	if err := r.ParseForm(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	vals := r.URL.Query()
+	id := vals.Get("id")
+	post, err := data.PostByUuid(id)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	post.Title = r.PostFormValue("title")
+	post.Body = r.PostFormValue("body")
+	if session.UserId != post.UserId {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/", 302)
+		return
+	}
+	if err != nil {
+		http.Redirect(w, r, "/post/edit", 302)
+		return
+	}
+	if err := post.UpdatePost(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	http.Redirect(w, r, "/", 302)
 }
 
 // POST /post/update/thumbnail

@@ -1,6 +1,7 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":226,"msg":"sql: no rows in result set","time":"2020-10-21T08:07:33Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":240,"msg":"template: navbar.private.html:18:21: executing \"navbar\" at \u003c.User.ImagePath\u003e: can't evaluate field User in type data.Post","time":"2020-10-21T08:07:33Z"}
-t \u003c.User.ImagePath\u003e: can't evaluate field User in type data.Post","time":"2020-10-21T04:36:21Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":214,"msg":"template: navbar.private.html:18:21: executing \"navbar\" at \u003c.User.ImagePath\u003e: can't evaluate field User in type data.Post","time":"2020-10-21T09:07:03Z"}
+show.public.html:3:13: executing \"content\" at \u003c.Post.Title\u003e: can't evaluate field Post in type data.Post","time":"2020-10-21T08:51:28Z"}
+ing \"content\" at \u003c.User.Title\u003e: can't evaluate field Title in type data.User","time":"2020-10-21T08:46:41Z"}
+}
 route_circle.go","level":"info","line":29,"msg":"sql: no rows in result set","time":"2020-10-21T04:17:49Z"}
 plate: navbar.private.html:12:17: executing \"navbar\" at \u003c.User.ImagePath\u003e: can't evaluate field User in type route.Data","time":"2020-10-20T09:20:48Z"}
 b.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":117,"msg":"html/template:layout.html:16:37: no such template \"mynav\"","time":"2020-10-20T09:15:14Z"}
