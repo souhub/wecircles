@@ -168,15 +168,27 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
 	uuid := vals.Get("id")
 	post, _ := data.PostByUuid(uuid)
-	_, err := session(w, r)
+	session, err := session(w, r)
 	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
-	} else {
-		tmp := parseTemplateFiles("layout", "navbar.private", "post.edit")
-		if err := tmp.Execute(w, post); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
+		return
 	}
+	user, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	data := Data{
+		User: user,
+		Post: post,
+	}
+	tmp := parseTemplateFiles("layout", "navbar.private", "post.edit")
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+
 }
 
 // GET /post/edit/thumbnail
