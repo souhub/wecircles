@@ -32,7 +32,8 @@
     <a class="dropdown-item" href="/logout">ログアウト</a>
   </div>
 </div>
-{{end}} {{range .Circles}}
+
+{{end}} {{if .Circles}} {{range .Circles}}
 <div class="card mx-auto mb-5">
   <a href="/circle?id={{.OwnerIDStr}}">
     {{if eq .ImagePath ""}}
@@ -68,5 +69,11 @@
     </div>
   </a>
 </div>
-
+{{end}} {{else}}
+<p class="text-center">まだサークルがありません。</p>
+<a href="/circle?id={{.User.UserIdStr}}" style="text-decoration: none"
+  ><button type="submit" class="btn btn-outline-success btn-block">
+    初めてのサークルを作りましょう！
+  </button></a
+>
 {{end}} {{end}}

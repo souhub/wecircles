@@ -9,130 +9,85 @@ import (
 	"github.com/souhub/wecircles/pkg/logging"
 )
 
-func Circle(w http.ResponseWriter, r *http.Request) {
-	vals := r.URL.Query()
-	UserIdStr := vals.Get("id")
-	user, err := session(w, r)
+func MyCircle(w http.ResponseWriter, r *http.Request) {
+	session, err := session(w, r)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	if user.UserIdStr == UserIdStr {
-		user, err := data.UserByUserIdStr(UserIdStr)
-		if err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-			http.Redirect(w, r, "/login", 302)
-			return
-		}
-		circle, err := data.GetCirclebyUser(UserIdStr)
-		if err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-			http.Redirect(w, r, "/circle/new", 302)
-			return
-		}
-		type Data struct {
-			User   data.User
-			Circle data.Circle
-		}
-		data := Data{
-			User:   user,
-			Circle: circle,
-		}
-		tmp := parseTemplateFiles("layout", "navbar.private", "circle")
-		if err := tmp.Execute(w, data); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-	} else {
-		user, err := data.UserByUserIdStr(UserIdStr)
-		if err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-			http.Redirect(w, r, "/circle/new", 302)
-			return
-		}
-		circle, err := data.GetCirclebyUser(UserIdStr)
-		if err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-			http.Redirect(w, r, "/circle/new", 302)
-			return
-		}
-		type Data struct {
-			User   data.User
-			Circle data.Circle
-		}
-		data := Data{
-			User:   user,
-			Circle: circle,
-		}
-		tmp := parseTemplateFiles("layout", "navbar.private", "circle.public")
-		if err := tmp.Execute(w, data); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
+	user, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	// ここでサークルを作成済みかチェックする
+	circle, err := data.GetCirclebyUser(user.UserIdStr)
+	// サークルを持っていなければエラー発生し、/circle/newに飛ばされる
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/circle/new", 302)
+		return
+	}
+	data := Data{
+		User:   user,
+		Circle: circle,
+	}
+	tmp := parseTemplateFiles("layout", "navbar.private", "circle.private")
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 }
 
-// func Circle(w http.ResponseWriter, r *http.Request) {
-// 	vals := r.URL.Query()
-// 	UserIdStr := vals.Get("id")
-// 	circle, err := data.GetCirclebyUser(UserIdStr)
-// 	if err != nil {
-// 		_, err := session(w, r)
-// 		if err != nil {
-// 			tmp := parseTemplateFiles("layout", "navbar.public", "circle.public")
-// 			if err := tmp.Execute(w, circle); err != nil {
-// 				logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 			}
-// 			return
-// 		}
-// 		http.Redirect(w, r, "/circle/new", 302)
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 		return
-// 	} else {
-// 		session, err := session(w, r)
-// 		if err != nil {
-// 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 			http.Redirect(w, r, "/login", 302)
-// 			return
-// 		}
-// 		user, err := session.User()
-// 		if err != nil {
-// 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 			http.Redirect(w, r, "/login", 302)
-// 			return
-// 		}
-// 		type Data struct {
-// 			User   data.User
-// 			Circle data.Circle
-// 		}
-// 		data := Data{
-// 			User:   user,
-// 			Circle: circle,
-// 		}
-// 		if user.UserIdStr == UserIdStr {
-// 			tmp := parseTemplateFiles("layout", "navbar.private", "circle")
-// 			if err := tmp.Execute(w, data); err != nil {
-// 				logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 			}
-// 			return
-// 		} else {
-
-// 			tmp := parseTemplateFiles("layout", "navbar.private", "circle.public")
-// 			if err := tmp.Execute(w, circle); err != nil {
-// 				logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 			}
-// 		}
-
-// 	}
-// }
+func Circle(w http.ResponseWriter, r *http.Request) {
+	vals := r.URL.Query()
+	id := vals.Get("id")
+	session, err := session(w, r)
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	user, err := session.User()
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	// ログイン済かつかつidが自分のものの場合
+	if user.UserIdStr == id {
+		// サークル持っているかどうかはMyCircleハンドラで振り分ける
+		http.Redirect(w, r, "/mycircle", 302)
+		return
+	}
+	// ログイン済かつidが他人のもの場合
+	// user, err := data.UserByUserIdStr(id)
+	// if err != nil {
+	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	// 	http.Redirect(w, r, "/circle/new", 302)
+	// 	return
+	// }
+	circle, err := data.GetCirclebyUser(id)
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/circle/new", 302)
+		return
+	}
+	data := Data{
+		User:   user,
+		Circle: circle,
+	}
+	tmp := parseTemplateFiles("layout", "navbar.private", "circle.public")
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+}
 
 func Circles(w http.ResponseWriter, r *http.Request) {
 	circles, err := data.Circles()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
-	type Data struct {
-		Circles []data.Circle
-		User    data.User
 	}
 	session, err := session(w, r)
 	if err != nil {
@@ -151,10 +106,10 @@ func Circles(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	data := Data{
-		Circles: circles,
 		User:    user,
+		Circles: circles,
 	}
-	tmp := parseTemplateFiles("layout", "circles", "navbar.private")
+	tmp := parseTemplateFiles("layout", "navbar.private", "circles")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
@@ -177,8 +132,11 @@ func NewCircle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	tmp := parseTemplateFiles("layout", "circle.new", "navbar.private")
-	tmp.Execute(w, user)
+	data := Data{
+		User: user,
+	}
+	tmp := parseTemplateFiles("layout", "navbar.private", "circle.new")
+	tmp.Execute(w, data)
 }
 
 func CreateCircle(w http.ResponseWriter, r *http.Request) {

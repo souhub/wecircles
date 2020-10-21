@@ -29,3 +29,12 @@ func parseTemplateFiles(filenames ...string) (t *template.Template) {
 	t = template.Must(t.ParseFiles(files...))
 	return
 }
+
+type Data struct {
+	User    data.User
+	Users   []data.User
+	Post    data.Post
+	Posts   []data.Post
+	Circle  data.Circle
+	Circles []data.Circle
+}

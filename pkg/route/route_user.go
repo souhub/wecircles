@@ -18,19 +18,9 @@ func MyPage(w http.ResponseWriter, r *http.Request) {
 	}
 	user, err := session.User()
 	posts, err := user.PostsByUser()
-	type Data struct {
-		Id        int
-		Name      string
-		ImagePath string
-		UserIdStr string
-		Posts     []data.Post
-	}
 	data := Data{
-		Id:        user.Id,
-		Name:      user.Name,
-		ImagePath: user.ImagePath,
-		UserIdStr: user.UserIdStr,
-		Posts:     posts,
+		User:  user,
+		Posts: posts,
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "mypage")
 	if err := tmp.Execute(w, data); err != nil {
@@ -53,18 +43,12 @@ func ShowUser(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	type Data struct {
-		ID        int
-		Name      string
-		UserIdStr string
-		ImagePath string
-		Posts     []data.Post
+		User  data.User
+		Posts []data.Post
 	}
 	data := Data{
-		ID:        user.Id,
-		Name:      user.Name,
-		UserIdStr: user.UserIdStr,
-		ImagePath: user.ImagePath,
-		Posts:     posts,
+		User:  user,
+		Posts: posts,
 	}
 	session, err := session(w, r)
 	// ログイン前にユーザー名クリックした場合
@@ -98,8 +82,14 @@ func EditUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
+	type Data struct {
+		User data.User
+	}
+	data := Data{
+		User: user,
+	}
 	tmp := parseTemplateFiles("layout", "user.edit", "navbar.private")
-	if err := tmp.Execute(w, user); err != nil {
+	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		log.Fatal(err)
 	}

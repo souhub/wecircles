@@ -18,7 +18,7 @@ func init() {
 	log.SetOutput(io.MultiWriter(logFile, os.Stdout))
 
 	// Only log the info severity or above.
-	log.SetLevel(log.WarnLevel)
+	log.SetLevel(log.InfoLevel)
 }
 
 func Info(err error, fileName string, line int) {

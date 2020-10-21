@@ -52,25 +52,25 @@ func TestUser(t *testing.T) {
 		assertCorrectMessage(t, want, got)
 	})
 
-	t.Run("Get the owner circle", func(t *testing.T) {
-		reset(t)
-		circle := Circle{
-			Name:      "testCircle",
-			ImagePath: "default.jpg",
-			Overview:  "たくさんのイベントを行うテニスサークルです。",
-			Owner:     user,
-		}
-		if err := circle.Create(); err != nil {
-			t.Fatal(err)
-		}
-		gotCircle, err := user.GetCircle()
-		if err != nil {
-			t.Error(err, "- Failed to get the owner circle from user.")
-		}
-		want := circle.Name
-		got := gotCircle.Name
-		assertCorrectMessage(t, want, got)
-	})
+	// t.Run("Get the owner circle", func(t *testing.T) {
+	// 	reset(t)
+	// 	circle := Circle{
+	// 		Name:      "testCircle",
+	// 		ImagePath: "default.jpg",
+	// 		Overview:  "たくさんのイベントを行うテニスサークルです。",
+	// 		Owner:     user,
+	// 	}
+	// 	if err := circle.Create(); err != nil {
+	// 		t.Fatal(err)
+	// 	}
+	// 	gotCircle, err := GetCircleByUserId(user.UserIdStr)
+	// 	if err != nil {
+	// 		t.Error(err, "- Failed to get the owner circle from user.")
+	// 	}
+	// 	want := circle.Name
+	// 	got := gotCircle.Name
+	// 	assertCorrectMessage(t, want, got)
+	// })
 
 	// UserbyEmail test
 	// Just like the test of "UserbyUserIdStr"

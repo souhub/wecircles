@@ -1,0 +1,35 @@
+{{define "mynav"}}
+<div style="position: absolute; top: 13px; right: 100px">
+  <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    role="button"
+    id="dropdownMenuLink"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    {{if eq .User.ImagePath "default.png"}}
+    <img
+      src="/static/img/default.png"
+      alt="user_profile_image"
+      style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover"
+    />
+    {{else}}
+    <img
+      src="/static/img/user{{.User.Id}}/{{.User.ImagePath}}"
+      alt="user_profile_image"
+      style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover"
+    />
+    {{end}}
+  </a>
+  <!-- ドロップメニューの設定 -->
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="/mypage">{{.User.Name}}</a>
+    <a class="dropdown-item" href="/posts">記事</a>
+    <a class="dropdown-item" href="/circle?id={{.User.UserIdStr}}">サークル</a>
+    <a class="dropdown-item" href="/user/edit">プロフィール設定</a>
+    <a class="dropdown-item" href="/logout">ログアウト</a>
+  </div>
+</div>
+{{end}}

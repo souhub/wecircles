@@ -41,14 +41,28 @@ func Posts(w http.ResponseWriter, r *http.Request) {
 // GET /post/new
 // Get the form page to create the new post
 func NewPost(w http.ResponseWriter, r *http.Request) {
-	_, err := session(w, r)
+	session, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
-	} else {
-		tmp := parseTemplateFiles("layout", "post.new", "navbar.private")
-		uuid := uuid.New()
-		tmp.Execute(w, uuid)
+		return
 	}
+	user, err := session.User()
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	type Data struct {
+		User data.User
+		UUID uuid.UUID
+	}
+	data := Data{
+		User: user,
+		UUID: uuid.New(),
+	}
+	tmp := parseTemplateFiles("layout", "post.new", "navbar.private")
+	// uuid := uuid.New()
+	tmp.Execute(w, data)
+
 }
 
 // POST /post/create
@@ -125,14 +139,24 @@ func ShowPost(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	if session.UserId != post.UserId {
+	user, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	data := Data{
+		User: user,
+		Post: post,
+	}
+	if user.Id != post.UserId {
 		tmp := parseTemplateFiles("layout", "navbar.private", "post.show.public")
-		if err := tmp.Execute(w, post); err != nil {
+		if err := tmp.Execute(w, data); err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 	} else {
 		tmp := parseTemplateFiles("layout", "navbar.private", "post.show.private")
-		if err := tmp.Execute(w, post); err != nil {
+		if err := tmp.Execute(w, data); err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 	}

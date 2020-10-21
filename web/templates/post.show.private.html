@@ -1,13 +1,19 @@
 {{define "content"}}
 <div class="mx-auto">
-  <h1>{{.Title}}</h1>
-  <a href="/user/show?id={{.UserIdStr}}">{{.UserName}}</a>
-  <p>{{.CreatedAt}}</p>
-  <p style="white-space: pre; width: 200px; word-wrap: break-all">{{.Body}}</p>
-  <a class="btn btn-outline-success btn-block" href="/post/edit?id={{.Uuid}}"
+  <h1>{{.Post.Title}}</h1>
+  <a href="/user/show?id={{.Post.UserIdStr}}">{{.Post.UserName}}</a>
+  <p>{{.Post.CreatedAt}}</p>
+  <p style="white-space: pre; width: 200px; word-wrap: break-all">
+    {{.Post.Body}}
+  </p>
+  <a
+    class="btn btn-outline-success btn-block"
+    href="/post/edit?id={{.Post.Uuid}}"
     >編集</a
   >
-  <a class="btn btn-outline-danger btn-block" href="/post/delete?id={{.Uuid}}"
+  <a
+    class="btn btn-outline-danger btn-block"
+    href="/post/delete?id={{.Post.Uuid}}"
     >削除
   </a>
   <a

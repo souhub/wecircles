@@ -1,4 +1,35 @@
 {{define "content"}}
+<div>
+  <h2 class="text-center">{{.User.Name}}</h2>
+  <p>
+    <a href="/user/edit">
+      {{if eq .User.ImagePath "default.png"}}
+      <img
+        src="/static/img/default.png"
+        alt="user_profile_image"
+        style="
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          object-fit: cover;
+        "
+      />
+      {{else}}
+      <img
+        src="/static/img/user{{.User.Id}}/{{.User.ImagePath}}"
+        alt="user_profile_image"
+        style="
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          object-fit: cover;
+        "
+      />
+      {{end}}
+      <p>プロフィールを編集する</p>
+    </a>
+  </p>
+</div>
 
 <nav class="navbar navbar-expand navbar-light">
   <div class="collapse navbar-collapse" id="navbarSupportedContent">

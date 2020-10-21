@@ -28,6 +28,7 @@ func main() {
 	http.HandleFunc("/post/delete", route.DeletePost)
 
 	http.HandleFunc("/mypage", route.MyPage)
+	http.HandleFunc("/mycircle", route.MyCircle)
 
 	http.HandleFunc("/user/edit", route.EditUser)
 	http.HandleFunc("/user/update", route.UpdateUser)
