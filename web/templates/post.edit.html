@@ -8,7 +8,46 @@
     </a>
   </div>
 
-  <form action="/post/update?id={{.Post.Uuid}}" method="post">
+  <form
+    action="/post/update?id={{.Post.Uuid}}"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <div class="form-group">
+      <label for="image">サムネイル変更</label><br />
+      <div>
+        <small class="form-text text-muted">現在のサムネイル</small>
+        {{if eq .Post.ThumbnailPath "default_thumbnail.jpg"}}
+        <img
+          src="/static/img/{{.Post.ThumbnailPath}}"
+          alt="user_profile_image"
+          style="width: 300px; height: 200px; object-fit: cover"
+        />
+        {{else}}
+        <img
+          src="/static/img/user{{.Post.UserId}}/posts/post{{.Post.Id}}/{{.Post.ThumbnailPath}}"
+          alt="user_profile_image"
+          style="width: 300px; height: 200px; object-fit: cover"
+        />
+        {{end}}
+
+        <p>
+          <small class="form-text text-muted">新しいサムネイル</small>
+          <img
+            id="preview"
+            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+            style="width: 300px; height: 200px; object-fit: cover"
+          />
+        </p>
+      </div>
+      <input
+        type="file"
+        name="image"
+        onChange="previewImage(this);"
+        accept="image/*"
+      />
+    </div>
+
     <h1>
       <input
         type="text"

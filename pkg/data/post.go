@@ -13,8 +13,8 @@ import (
 type Post struct {
 	Id            int
 	Uuid          string
-	Title         string `validate:"required"`
-	Body          string `validate:"required"`
+	Title         string
+	Body          string
 	UserId        int
 	UserIdStr     string
 	UserName      string
@@ -98,9 +98,9 @@ func (post *Post) UpdatePost() (err error) {
 	db := NewDB()
 	defer db.Close()
 	query := `UPDATE posts
-			  SET title=?,body=?
+			  SET title=?,body=?, thumbnail_path=?
 			  WHERE id=?`
-	_, err = db.Exec(query, post.Title, post.Body, post.Id)
+	_, err = db.Exec(query, post.Title, post.Body, post.ThumbnailPath, post.Id)
 	return
 }
 
@@ -120,15 +120,31 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 	if r.Method != "POST" {
 		err = errors.New("method error: POST only")
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
-
-	// Parse the form
-	err = r.ParseForm()
-	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
 
+	// Delete the current thumbnail.
+	if err = post.DeleteThembnail(); err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+
+	// Make thumbnail dir.
+	currentRootDir, err := os.Getwd()
+	thumbnailImageDir := fmt.Sprintf("%s/web/img/user%d/posts/post%d", currentRootDir, post.UserId, post.Id)
+	_, err = os.Stat(thumbnailImageDir)
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		if err = os.MkdirAll(thumbnailImageDir, 0777); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			return
+		}
+	}
+	// Parse the form
+	// err = r.ParseForm()
+	// if err != nil {
+	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	// 	return
+	// }
 	// Get the file sent form the form
 	file, fileHeader, err := r.FormFile("image")
 	if err != nil {
@@ -153,7 +169,6 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-
 	// Close the "saveImage" and "file"
 	defer saveImage.Close()
 	defer file.Close()
