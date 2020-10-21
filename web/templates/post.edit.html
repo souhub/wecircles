@@ -1,7 +1,9 @@
 {{define "content"}}
 <div class="mx-auto">
   <div>
-    <a href="/post/edit/thumbnail?id={{.Uuid}}" style="text-decoration: none"
+    <a
+      href="/post/edit/thumbnail?id={{.Post.Uuid}}"
+      style="text-decoration: none"
       ><p class="btn btn-outline-info btn-block">サムネイルを選択する</p>
     </a>
   </div>
@@ -11,13 +13,13 @@
       <input
         type="text"
         name="title"
-        value="{{.Title}}"
+        value="{{.Post.Title}}"
         class="form-control font-weight-bold"
         style="font-size: 30px"
       />
     </h1>
-    <a>{{.UserName}}</a>
-    <p>{{.CreatedAt}}</p>
+    <a>{{.Post.UserName}}</a>
+    <p>{{.Post.CreatedAt}}</p>
     <p>
       <textarea
         type="text"
@@ -32,7 +34,7 @@
     <button type="submit" class="btn btn-outline-success btn-block">
       更新する
     </button>
-    <input type="hidden" name="uuid" value="{{.Uuid}}" />
+    <input type="hidden" name="uuid" value="{{.Post.Uuid}}" />
   </form>
   <a
     href="javascript:history.back();"
