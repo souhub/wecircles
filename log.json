@@ -1,5 +1,6 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":63,"msg":"template: post.new.html:47:40: executing \"post.new.html\" at \u003c.Post.ThumbnailPath\u003e: can't evaluate field Post in type route.Data","time":"2020-10-21T15:28:51Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":63,"msg":"template: post.new.html:47:40: executing \"post.new.html\" at \u003c.Post.ThumbnailPath\u003e: can't evaluate field Post in type route.Data","time":"2020-10-21T15:28:52Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":29,"msg":"sql: no rows in result set","time":"2020-10-23T12:55:32Z"}
+/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":29,"msg":"sql: no rows in result set","time":"2020-10-22T01:08:42Z"}
+b/wecircles/pkg/route/route_post.go","level":"warning","line":63,"msg":"template: post.new.html:47:40: executing \"post.new.html\" at \u003c.Post.ThumbnailPath\u003e: can't evaluate field Post in type route.Data","time":"2020-10-21T15:28:52Z"}
 Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":152,"msg":"http: no such file","time":"2020-10-21T10:45:41Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":128,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post6/A2A1E6C0-87CE-4E69-9F5C-ADFD842D9E40.jpeg: no such file or directory","time":"2020-10-21T10:47:05Z"}
