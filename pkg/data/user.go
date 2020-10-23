@@ -140,9 +140,9 @@ func (user *User) Update() (err error) {
 	db := NewDB()
 	defer db.Close()
 	query := `UPDATE users
-		      SET name=?, user_id_str=?
+		      SET name=?, user_id_str=?, image_path=?
 			  WHERE id=?`
-	_, err = db.Exec(query, user.Name, user.UserIdStr, user.Id)
+	_, err = db.Exec(query, user.Name, user.UserIdStr, user.ImagePath, user.Id)
 	return
 }
 
@@ -165,16 +165,21 @@ func (user *User) Upload(r *http.Request) (uploadedFileName string, err error) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	// Parse the form
-	err = r.ParseForm()
-	if err != nil {
+	if err = r.ParseForm(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
 	// Get the file sent form the form
 	file, fileHeader, err := r.FormFile("image")
+	// If the image of the form is empty, the process ends with the existing image path
 	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		uploadedFileName = user.ImagePath
 		return
+	}
+	// Delete the existed file
+	if err = user.DeleteUserImage(); err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	// Get the uploaded file's name from the file.
 	uploadedFileName = fileHeader.Filename

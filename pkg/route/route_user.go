@@ -108,16 +108,20 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Allow the "POST" method, only
-	if r.Method != "POST" {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
+	// if r.Method != "POST" {
+	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	// }
 
 	// Parse the form
-	err = r.ParseForm()
-	if err != nil {
+	if err = r.ParseForm(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
+	userImagePath, err := user.Upload(r)
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	user.ImagePath = userImagePath
 	user.Name = r.PostFormValue("name")
 	user.UserIdStr = r.PostFormValue("user_id_str")
 
