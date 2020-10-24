@@ -12,6 +12,8 @@ import (
 	"github.com/souhub/wecircles/pkg/logging"
 )
 
+// gitgitgit
+
 // GET /post
 func Posts(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
