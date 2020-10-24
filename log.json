@@ -1,9 +1,7 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":29,"msg":"sql: no rows in result set","time":"2020-10-24T01:21:01Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":29,"msg":"sql: no rows in result set","time":"2020-10-24T01:15:14Z"}
-"warning","line":63,"msg":"html/template:post.new.html: \"\\\"\" in attribute name: \"text-center\\\"\u003e\\n          \u003cimg\\n   \"","time":"2020-10-23T16:48:38Z"}
-/route/route_user.go","level":"info","line":122,"msg":"http: no such file","time":"2020-10-23T15:01:15Z"}
-g","line":241,"msg":"template: navbar.private.html:18:21: executing \"navbar\" at \u003c.User.ImagePath\u003e: can't evaluate field User in type data.User","time":"2020-10-23T14:25:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":175,"msg":"http: no such file","time":"2020-10-23T14:32:56Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":145,"msg":"html/template:layout.html: \"\\\"\" in attribute name: \" pt-5\\\"\u003e\\n      \u003ch4\u003eメンバー一覧\u003c/h4\u003e\\n  \"","time":"2020-10-24T03:20:09Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":145,"msg":"html/template:layout.html: \"\\\"\" in attribute name: \" pt-5\\\"\u003e\\n      \u003ch4\u003eメンバー一覧\u003c/h4\u003e\\n  \"","time":"2020-10-24T03:20:11Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":145,"msg":"html/template:layout.html: \"\\\"\" in attribute name: \" pt-5\\\"\u003e\\n      \u003ch4\u003eメンバー一覧\u003c/h4\u003e\\n  \"","time":"2020-10-24T03:20:18Z"}
+rcles/pkg/data/user.go","level":"info","line":175,"msg":"http: no such file","time":"2020-10-23T14:32:56Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":122,"msg":"http: no such file","time":"2020-10-23T14:32:56Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":175,"msg":"http: no such file","time":"2020-10-23T14:33:03Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":122,"msg":"http: no such file","time":"2020-10-23T14:33:03Z"}

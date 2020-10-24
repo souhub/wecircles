@@ -30,8 +30,6 @@ func main() {
 
 	http.HandleFunc("/user/edit", route.EditUser)
 	http.HandleFunc("/user/update", route.UpdateUser)
-	http.HandleFunc("/user/edit/image", route.EditUserImage)
-	http.HandleFunc("/user/update/image", route.UpdateUserImage)
 	http.HandleFunc("/user", route.ShowUser)
 	http.HandleFunc("/user/delete/confirm", route.DeleteUserConfirm)
 	http.HandleFunc("/user/delete", route.DeleteUser)
@@ -39,6 +37,7 @@ func main() {
 	http.HandleFunc("/circle", route.Circle)
 	http.HandleFunc("/circles", route.Circles)
 	http.HandleFunc("/circle/memberships", route.MembershipsCircle)
+	http.HandleFunc("/circle/manage", route.CircleManage)
 	http.HandleFunc("/circle/new", route.NewCircle)
 	http.HandleFunc("/circle/create", route.CreateCircle)
 	http.HandleFunc("/circle/edit", route.EditCircle)

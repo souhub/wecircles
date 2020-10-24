@@ -119,6 +119,34 @@ func MembershipsCircle(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func CircleManage(w http.ResponseWriter, r *http.Request) {
+	session, err := session(w, r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	user, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	circle, err := data.GetCirclebyUser(user.UserIdStr)
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	data := Data{
+		User:   user,
+		Circle: circle,
+	}
+	tmp := parseTemplateFiles("layout", "navbar.private", "circle.manage")
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+}
+
 func NewCircle(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	if err != nil {

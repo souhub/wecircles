@@ -1,0 +1,87 @@
+{{define "content"}}
+<div style="display: flex">
+  <div class="box" style="width: 30%">
+    <h2>サークル</h2>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/circle/manage">自分</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/circle/memberships">参加中</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="box" style="width: 70%">
+    <h3 class="mb-5">管理</h3>
+    <a
+      class="btn btn-outline-success"
+      href="/circle?id={{.User.UserIdStr}}"
+      style="float: right"
+      >サークルを見る</a
+    >
+    <div>
+      <h4>サークル画像</h4>
+      <p>
+        {{if eq .Circle.ImagePath ""}}
+        <img
+          src="/static/img/default_thumbnail.jpg"
+          alt="circle_default_image"
+          style="
+            width: 350px;
+            height: 200px;
+            border-radius: 5%;
+            object-fit: cover;
+          "
+        />
+        {{else}}
+        <img
+          src="/static/img/user{{.Circle.OwnerID}}/circles/mycircle/{{.Circle.ImagePath}}"
+          alt="circle_image"
+          style="
+            width: 350px;
+            height: 200px;
+            border-radius: 5%;
+            object-fit: cover;
+          "
+        />
+        {{end}}
+      </p>
+    </div>
+
+    <div>
+      <h4>サークル名</h4>
+      <p>{{.Circle.Name}}</p>
+    </div>
+
+    <div>
+      <h4>概要</h4>
+      <p>{{.Circle.Overview}}</p>
+    </div>
+
+    <div class="form-group">
+      <h4>カテゴリ</h4>
+      {{if eq .Circle.Category "tennis"}}
+      <p>テニス</p>
+      {{else if eq .Circle.Category "soccer"}}
+      <p>サッカー</p>
+      {{else if eq .Circle.Category "volunteer"}}
+      <p>ボランティア</p>
+      {{else if eq .Circle.Category "photo"}}
+      <p>写真</p>
+      {{else if eq .Circle.Category "basketball"}}
+      <p>バスケットボール</p>
+      {{else}}
+      <p>その他</p>
+      {{end}}
+    </div>
+    <a href="/circle/edit" class="btn btn-success mb-5 float-right">編集する</a>
+    <div class="pt-5 border-top border-secondary" style="margin-top: 70px">
+      <h4>メンバー一覧</h4>
+      <a href="/circle/manage/members" class="btn btn-outline-success"
+        >メンバーを見る</a
+      >
+    </div>
+  </div>
+</div>
+{{end}}
