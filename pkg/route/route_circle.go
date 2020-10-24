@@ -213,7 +213,32 @@ func CreateCircle(w http.ResponseWriter, r *http.Request) {
 }
 
 func EditCircle(w http.ResponseWriter, r *http.Request) {
-	return
+	session, err := session(w, r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	user, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	circle, err := data.GetCirclebyUser(user.UserIdStr)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	data := Data{
+		User:   user,
+		Circle: circle,
+	}
+	tmp := parseTemplateFiles("layout", "navbar.private", "circle.edit")
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
 }
 
 func UpdateCircle(w http.ResponseWriter, r *http.Request) {

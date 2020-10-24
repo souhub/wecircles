@@ -13,7 +13,7 @@
   </div>
 
   <div class="box" style="width: 70%">
-    <h3 class="mb-5">管理</h3>
+    <h3 class="mb-5 font-weight-bold">管理</h3>
     <a
       class="btn btn-outline-success"
       href="/circle?id={{.User.UserIdStr}}"
@@ -21,7 +21,7 @@
       >サークルを見る</a
     >
     <div>
-      <h4>サークル画像</h4>
+      <label class="font-weight-bold">サークル画像</label>
       <p>
         {{if eq .Circle.ImagePath ""}}
         <img
@@ -50,17 +50,17 @@
     </div>
 
     <div>
-      <h4>サークル名</h4>
+      <label class="font-weight-bold">サークル名</label>
       <p>{{.Circle.Name}}</p>
     </div>
 
     <div>
-      <h4>概要</h4>
+      <label class="font-weight-bold">概要</label>
       <p>{{.Circle.Overview}}</p>
     </div>
 
     <div class="form-group">
-      <h4>カテゴリ</h4>
+      <label class="font-weight-bold">カテゴリ</label>
       {{if eq .Circle.Category "tennis"}}
       <p>テニス</p>
       {{else if eq .Circle.Category "soccer"}}
@@ -77,7 +77,7 @@
     </div>
     <a href="/circle/edit" class="btn btn-success mb-5 float-right">編集する</a>
     <div class="pt-5 border-top border-secondary" style="margin-top: 70px">
-      <h4>メンバー一覧</h4>
+      <p class="font-weight-bold">メンバー一覧</p>
       <a href="/circle/manage/members" class="btn btn-outline-success"
         >メンバーを見る</a
       >
