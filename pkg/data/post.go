@@ -130,7 +130,7 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 
 	// Make thumbnail dir.
 	currentRootDir, err := os.Getwd()
-	thumbnailImageDir := fmt.Sprintf("%s/web/img/user%d/posts/post%s", currentRootDir, post.UserId, post.Uuid)
+	thumbnailImageDir := fmt.Sprintf("%s/web/img/user%d/posts/post%d", currentRootDir, post.UserId, post.Id)
 	_, err = os.Stat(thumbnailImageDir)
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -160,7 +160,7 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 	uploadedFileName = fileHeader.Filename
 
 	// Set the uploaded file's path
-	imagePath := fmt.Sprintf("web/img/user%d/posts/post%s/%s", post.UserId, post.Uuid, uploadedFileName)
+	imagePath := fmt.Sprintf("web/img/user%d/posts/post%d/%s", post.UserId, post.Id, uploadedFileName)
 
 	// Save the uploaded file to "imagePath"
 	saveImage, err := os.Create(imagePath)
@@ -188,7 +188,7 @@ func (post *Post) DeleteThembnail() (err error) {
 	_, err = os.Stat(thumbnail)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		return
+
 	}
 	err = os.Remove(thumbnail)
 	return

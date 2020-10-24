@@ -1,8 +1,10 @@
-<<<<<<< HEAD
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":136,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post: no such file or directory","time":"2020-10-24T08:50:19Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"warning","line":190,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post0/default_thumbnail.jpg: no such file or directory","time":"2020-10-24T08:50:19Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":158,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post0/default_thumbnail.jpg: no such file or directory","time":"2020-10-24T08:50:19Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"warning","line":190,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post0/default_thumbnail.jpg: no such file or directory","time":"2020-10-24T08:45:53Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":152,"msg":"http: no such file","time":"2020-10-24T10:04:13Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":219,"msg":"http: no such file","time":"2020-10-24T10:04:13Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":137,"msg":"sql: no rows in result set","time":"2020-10-24T10:05:08Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/circle.go","level":"info","line":121,"msg":"http: no such file","time":"2020-10-24T10:06:20Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":267,"msg":"http: no such file","time":"2020-10-24T10:06:20Z"}
+line":158,"msg":"remove /go/src/github.com/souhub/wecircles/web/img/user1/posts/post1/default_thumbnail.jpg: no such file or directory","time":"2020-10-24T10:02:30Z"}
+ry","time":"2020-10-24T08:45:53Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":158,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post0/default_thumbnail.jpg: no such file or directory","time":"2020-10-24T08:45:53Z"}
 route_circle.go","level":"info","line":137,"msg":"sql: no rows in result set","time":"2020-10-24T04:53:35Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":137,"msg":"sql: no rows in result set","time":"2020-10-24T04:53:35Z"}
