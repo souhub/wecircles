@@ -14,9 +14,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
-	type Data struct {
-		Posts []data.Post
-		User  data.User
+	data := Data{
+		Posts: posts,
 	}
 	session, err := session(w, r)
 	if err != nil {
@@ -34,7 +33,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	data := Data{
+	data = Data{
 		Posts: posts,
 		User:  user,
 	}

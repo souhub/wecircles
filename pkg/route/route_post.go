@@ -1,6 +1,7 @@
 package route
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,7 +10,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/souhub/wecircles/pkg/data"
 	"github.com/souhub/wecircles/pkg/logging"
-	"gopkg.in/go-playground/validator.v9"
 )
 
 // GET /post
@@ -74,8 +74,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	err = r.ParseForm()
-	if err != nil {
+	if err = r.ParseForm(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/post/new", 302)
 		return
@@ -93,23 +92,53 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	date := now.Day()
 	hour := now.Hour()
 	createdAt := fmt.Sprintf("%v年%v月%v日%v時", year, month, date, hour)
-	//postを作成
-	post := data.Post{
-		Uuid:      r.PostFormValue("uuid"),
-		Title:     r.PostFormValue("title"),
-		Body:      r.PostFormValue("body"),
-		UserId:    user.Id,
-		UserIdStr: user.UserIdStr,
-		UserName:  user.Name,
-		CreatedAt: createdAt,
-	}
-	validate := validator.New()  //validatorインスタンス生成
-	err = validate.Struct(&post) //validator実行
-	if err != nil {
+
+	// Allow the "POST" method, only
+	if r.Method != "POST" {
+		err = errors.New("method error: POST only")
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		http.Redirect(w, r, "/post/new", 302)
 		return
 	}
+
+	if err := r.ParseForm(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/circle/new", 302)
+		return
+	}
+	//postを作成
+	post := data.Post{
+		Uuid:          r.PostFormValue("uuid"),
+		Title:         r.PostFormValue("title"),
+		Body:          r.PostFormValue("body"),
+		UserId:        user.Id,
+		UserIdStr:     user.UserIdStr,
+		UserName:      user.Name,
+		ThumbnailPath: "default_thumbnail.jpg",
+		CreatedAt:     createdAt,
+	}
+	thumbnailImage, err := post.UploadThumbnail(r)
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	post.ThumbnailPath = thumbnailImage
+	// Make thumbnail dir.
+	// currentRootDir, err := os.Getwd()
+	// thumbnailImageDir := fmt.Sprintf("%s/web/img/user%d/posts/post%s", currentRootDir, user.Id, post.Uuid)
+	// _, err = os.Stat(thumbnailImageDir)
+	// if err != nil {
+	// 	logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	// 	if err = os.MkdirAll(thumbnailImageDir, 0777); err != nil {
+	// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	// 		return
+	// 	}
+	// }
+	// validate := validator.New()  //validatorインスタンス生成
+	// err = validate.Struct(&post) //validator実行
+	// if err != nil {
+	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	// 	http.Redirect(w, r, "/post/new", 302)
+	// 	return
+	// }
 	if err = post.Create(); err != nil {
 		log.Fatal(err)
 		http.Redirect(w, r, "/post/new", 302)
