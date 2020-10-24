@@ -12,6 +12,8 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
+// gitgitgit
+
 // GET /post
 func Posts(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
