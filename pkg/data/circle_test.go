@@ -29,6 +29,13 @@ func TestCircle(t *testing.T) {
 		}
 	})
 
+	t.Run("Update", func(t *testing.T) {
+		reset(t)
+		if err := circle.Update(); err != nil {
+			t.Error(err, "- Failed to update the circle.")
+		}
+	})
+
 	// ResetUsers test
 	t.Run("Reset", func(t *testing.T) {
 		reset(t)

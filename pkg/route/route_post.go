@@ -192,29 +192,6 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// GET /post/edit/thumbnail
-// Get the thumbnail edit form
-// func EditPostThumbnail(w http.ResponseWriter, r *http.Request) {
-// 	_, err := session(w, r)
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 		http.Redirect(w, r, "/login", 302)
-// 		return
-// 	}
-// 	vals := r.URL.Query()
-// 	uuid := vals.Get("id")
-// 	post, err := data.PostByUuid(uuid)
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 		return
-// 	}
-// 	tmp := parseTemplateFiles("layout", "navbar.private", "post.edit.thumbnail")
-// 	if err := tmp.Execute(w, post); err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 		return
-// 	}
-// }
-
 // POST /post/update
 // Update the post
 func UpdatePost(w http.ResponseWriter, r *http.Request) {
@@ -235,11 +212,10 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		return
-	}
 	thumbnailPath, err := post.UploadThumbnail(r)
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 	post.ThumbnailPath = thumbnailPath
 	if session.UserId != post.UserId {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())

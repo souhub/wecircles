@@ -228,7 +228,6 @@ func EditCircle(w http.ResponseWriter, r *http.Request) {
 	circle, err := data.GetCirclebyUser(user.UserIdStr)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		return
 	}
 	data := Data{
 		User:   user,
@@ -242,7 +241,39 @@ func EditCircle(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateCircle(w http.ResponseWriter, r *http.Request) {
-	return
+	session, err := session(w, r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	user, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	if err := r.ParseForm(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	circle, err := data.GetCirclebyUser(user.UserIdStr)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	circleImage, err := circle.Upload(r)
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	circle.ImagePath = circleImage
+	circle.Name = r.PostFormValue("name")
+	circle.Overview = r.PostFormValue("overview")
+	circle.Category = r.PostFormValue("category")
+	if err := circle.Update(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	http.Redirect(w, r, "/circle/manage", 302)
 }
 
 func DeleteCircle(w http.ResponseWriter, r *http.Request) {

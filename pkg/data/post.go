@@ -187,6 +187,7 @@ func (post *Post) DeleteThembnail() (err error) {
 	thumbnail := fmt.Sprintf("%s/web/img/user%d/posts/post%d/%s", currentRootDir, post.UserId, post.Id, post.ThumbnailPath)
 	_, err = os.Stat(thumbnail)
 	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
 	err = os.Remove(thumbnail)

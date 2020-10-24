@@ -1,7 +1,12 @@
 package data
 
 import (
+	"errors"
+	"fmt"
+	"io"
 	"log"
+	"net/http"
+	"os"
 
 	"github.com/souhub/wecircles/pkg/logging"
 )
@@ -82,10 +87,81 @@ func (circle *Circle) Create() (err error) {
 }
 
 func (circle *Circle) Update() (err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `UPDATE circles
+			  SET name=?,image_path=?, overview=?, category=?
+			  WHERE id=?`
+	_, err = db.Exec(query, circle.Name, circle.ImagePath, circle.Overview, circle.Category, circle.ID)
 	return
 }
 
+func (circle *Circle) Upload(r *http.Request) (uploadedFileName string, err error) {
+	// Allow the "POST" method, only
+	if r.Method != "POST" {
+		err = errors.New("method error: POST only")
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	// Make thumbnail dir.
+	currentRootDir, err := os.Getwd()
+	circleImageDir := fmt.Sprintf("%s/web/img/user%d/circles/mycircle", currentRootDir, circle.OwnerID)
+	_, err = os.Stat(circleImageDir)
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		if err = os.MkdirAll(circleImageDir, 0777); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			return
+		}
+	}
+	// Get the file sent form the form
+	file, fileHeader, err := r.FormFile("image")
+	// Get the uploaded file's name from the file.
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		uploadedFileName = circle.ImagePath
+		return
+	}
+	// Delete the current thumbnail.
+	if err = circle.DeleteCircleImage(); err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	uploadedFileName = fileHeader.Filename
+
+	// Set the uploaded file's path
+	imagePath := fmt.Sprintf("web/img/user%d/circles/mycircle/%s", circle.OwnerID, uploadedFileName)
+
+	// Save the uploaded file to "imagePath"
+	saveImage, err := os.Create(imagePath)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+
+	// Write the uploaded file to the file for saving.
+	_, err = io.Copy(saveImage, file)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	// Close the "saveImage" and "file"
+	defer saveImage.Close()
+	defer file.Close()
+	return uploadedFileName, err
+}
+
 func (circle *Circle) Delete() (err error) {
+	return
+}
+
+func (circle *Circle) DeleteCircleImage() (err error) {
+	currentRootDir, err := os.Getwd()
+	circleImage := fmt.Sprintf("%s/web/img/user%d/circles/mycircle/%s", currentRootDir, circle.OwnerID, circle.ImagePath)
+	_, err = os.Stat(circleImage)
+	if err != nil {
+		return
+	}
+	err = os.Remove(circleImage)
 	return
 }
 

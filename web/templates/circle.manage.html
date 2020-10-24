@@ -12,6 +12,13 @@
     </ul>
   </div>
 
+  {{if eq .Circle.Name ""}}
+  <div class="box">
+    <a href="/circle/new" class="btn btn-outline-success"
+      >サークルを新しく作る</a
+    >
+  </div>
+  {{else}}
   <div class="box" style="width: 70%">
     <h3 class="mb-5 font-weight-bold">管理</h3>
     <a
@@ -83,5 +90,6 @@
       >
     </div>
   </div>
+  {{end}}
 </div>
 {{end}}
