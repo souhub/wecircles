@@ -1,24 +1,21 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":152,"msg":"http: no such file","time":"2020-10-24T10:04:13Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":219,"msg":"http: no such file","time":"2020-10-24T10:04:13Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":137,"msg":"sql: no rows in result set","time":"2020-10-24T10:05:08Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/circle.go","level":"info","line":121,"msg":"http: no such file","time":"2020-10-24T10:06:20Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":267,"msg":"http: no such file","time":"2020-10-24T10:06:20Z"}
-line":158,"msg":"remove /go/src/github.com/souhub/wecircles/web/img/user1/posts/post1/default_thumbnail.jpg: no such file or directory","time":"2020-10-24T10:02:30Z"}
-ry","time":"2020-10-24T08:45:53Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":158,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post0/default_thumbnail.jpg: no such file or directory","time":"2020-10-24T08:45:53Z"}
-route_circle.go","level":"info","line":137,"msg":"sql: no rows in result set","time":"2020-10-24T04:53:35Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":137,"msg":"sql: no rows in result set","time":"2020-10-24T04:53:35Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":137,"msg":"sql: no rows in result set","time":"2020-10-24T04:50:32Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":137,"msg":"sql: no rows in result set","time":"2020-10-24T04:50:32Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":137,"msg":"sql: no rows in result set","time":"2020-10-24T04:50:32Z"}
-=======
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":136,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post12: no such file or directory","time":"2020-10-24T09:15:49Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":152,"msg":"http: no such file","time":"2020-10-24T09:15:49Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":217,"msg":"http: no such file","time":"2020-10-24T09:15:49Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":136,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post8: no such file or directory","time":"2020-10-24T09:15:57Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":152,"msg":"http: no such file","time":"2020-10-24T09:15:57Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":217,"msg":"http: no such file","time":"2020-10-24T09:15:57Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":136,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post13: no such file or directory","time":"2020-10-24T09:16:25Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":94,"msg":"template: mypage.circle.html:6:44: executing \"contents\" at \u003c.User.Name\u003e: can't evaluate field User in type data.Membership","time":"2020-10-25T08:32:50Z"}
+o","level":"warning","line":76,"msg":"html/template:layout.mypage.html:18:41: no such template \"contents\"","time":"2020-10-25T08:03:37Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":76,"msg":"html/template:layout.mypage.html:18:41: no such template \"contents\"","time":"2020-10-25T08:03:38Z"}
+template: user.show.html:14:34: executing \"content\" at \u003c.User.ID\u003e: can't evaluate field ID in type data.User","time":"2020-10-25T07:08:07Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":70,"msg":"template: user.show.html:14:34: executing \"content\" at \u003c.User.ID\u003e: can't evaluate field ID in type data.User","time":"2020-10-25T07:08:08Z"}
+o such file or directory","time":"2020-10-25T05:43:02Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":209,"msg":"sql: no rows in result set","time":"2020-10-25T05:43:10Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":209,"msg":"sql: no rows in result set","time":"2020-10-25T05:43:14Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":29,"msg":"sql: no rows in result set","time":"2020-10-25T05:44:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":29,"msg":"sql: no rows in result set","time":"2020-10-25T05:44:47Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":194,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user2/default.png: no such file or directory","time":"2020-10-25T05:47:49Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":136,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user2/posts/post2: no such file or directory","time":"2020-10-25T05:48:38Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"warning","line":190,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user2/posts/post2/default_thumbnail.jpg: no such file or directory","time":"2020-10-25T05:48:38Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":158,"msg":"remove /go/src/github.com/souhub/wecircles/web/img/user2/posts/post2/default_thumbnail.jpg: no such file or directory","time":"2020-10-25T05:48:38Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":209,"msg":"sql: no rows in result set","time":"2020-10-25T05:48:54Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":209,"msg":"sql: no rows in result set","time":"2020-10-25T05:48:57Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":29,"msg":"sql: no rows in result set","time":"2020-10-25T05:49:27Z"}
+s/web/img/user1/posts/post13: no such file or directory","time":"2020-10-24T09:16:25Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"warning","line":190,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post13/default_thumbnail.jpg: no such file or directory","time":"2020-10-24T09:16:25Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":158,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post13/default_thumbnail.jpg: no such file or directory","time":"2020-10-24T09:16:25Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":137,"msg":"sql: no rows in result set","time":"2020-10-24T09:16:32Z"}

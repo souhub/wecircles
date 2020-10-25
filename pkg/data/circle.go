@@ -41,6 +41,23 @@ func GetCirclebyUser(userIdStr string) (circle Circle, err error) {
 	return circle, err
 }
 
+// Get the owner
+func (circle *Circle) GetOwner() (user User, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT id, name, user_id_str, image_path
+			  FROM users
+			  WHERE id=?`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	defer stmt.Close()
+	err = stmt.QueryRow(circle.OwnerID).Scan(&user.Id, &user.Name, &user.UserIdStr, &user.ImagePath)
+	return user, err
+}
+
 // Get all of the circles
 func Circles() (circles []Circle, err error) {
 	db := NewDB()
@@ -55,7 +72,7 @@ func Circles() (circles []Circle, err error) {
 	}
 	for rows.Next() {
 		var circle Circle
-		err = rows.Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.Owner.Id, &circle.OwnerIDStr, &circle.CreatedAt)
+		err = rows.Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.CreatedAt)
 		if err != nil {
 			log.Fatal(err)
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -75,6 +92,22 @@ func (circle *Circle) UserByOwnerID() (user User, err error) {
 			  WHERE id=?`
 	err = db.QueryRow(query, circle.OwnerID).Scan(&user.Id, &user.Name, &user.UserIdStr, &user.ImagePath, &user.CreatedAt)
 	return
+}
+
+// Get the circle from owner_id
+func CirclebyOwnerID(id string) (circle Circle, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT *
+			  FROM circles
+			  WHERE owner_id_str=?`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	err = stmt.QueryRow(id).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.CreatedAt)
+	return circle, err
 }
 
 func (circle *Circle) Create() (err error) {

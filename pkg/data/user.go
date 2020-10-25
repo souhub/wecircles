@@ -44,6 +44,62 @@ func Users() (users []User, err error) {
 	return
 }
 
+func (user *User) Memberships() (memberships []Membership, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT *
+			  FROM memberships
+			  WHERE user_id=?`
+	rows, err := db.Query(query, user.Id)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	for rows.Next() {
+		var membership Membership
+		err = rows.Scan(&membership.ID, &membership.UserID, &membership.CircleID)
+		if err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+		memberships = append(memberships, membership)
+	}
+	rows.Close()
+	return
+}
+
+func (user *User) Membership() (membership Membership, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT *
+			  FROM memberships
+			  WHERE user_id=?`
+	err = db.QueryRow(query, user.Id).Scan(&membership.ID, &membership.UserID, &membership.CircleID)
+	return
+}
+
+func (membership Membership) Check() (valid bool, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT *
+			  FROM memberships
+			  WHERE user_id=?
+			  AND circle_id=?`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	defer stmt.Close()
+	err = stmt.QueryRow(membership.UserID, membership.CircleID).Scan(&membership.ID, &membership.UserID, &membership.CircleID)
+	if err != nil {
+		valid = false
+		return
+	}
+	if membership.ID != 0 {
+		valid = true
+	}
+	return
+}
+
 // Get all of the posts by the user.
 func (user *User) PostsByUser() (posts []Post, err error) {
 	db := NewDB()

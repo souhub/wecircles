@@ -1,0 +1,97 @@
+{{define "navbar"}}
+
+<div class="mb-4">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <h1><a class="navbar-brand" href="/">WeCircle</a></h1>
+
+    <!-- 右上のユーザー画像のメニュー -->
+    <div style="position: absolute; right: 100px; top: 12px">
+      <a
+        class="nav-link dropdown-toggle"
+        href="#"
+        role="button"
+        id="dropdownMenuLink"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        {{if eq .MyUser.ImagePath "default.png"}}
+        <img
+          src="/static/img/default.png"
+          alt="user_profile_image"
+          style="
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+          "
+        />
+        {{else}}
+        <img
+          src="/static/img/user{{.MyUser.Id}}/{{.MyUser.ImagePath}}"
+          alt="user_profile_image"
+          style="
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+          "
+        />
+        {{end}}
+      </a>
+      <!-- ドロップメニューの設定 -->
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" href="/mypage">{{.MyUser.Name}}</a>
+        <a class="dropdown-item" href="/posts">記事</a>
+        <a class="dropdown-item" href="/circle/manage">サークル</a>
+        <a class="dropdown-item" href="/user/edit">プロフィール設定</a>
+        <a class="dropdown-item" href="/logout">ログアウト</a>
+      </div>
+    </div>
+    <!-- 右上のユーザー画像のメニューここまで -->
+
+    <div style="position: absolute; top: 20px; right: 10px">
+      <a href="/post/new">
+        <button class="btn btn-success">
+          <i class="fas fa-pen mg-5px"></i> 投稿
+        </button>
+      </a>
+    </div>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+
+  <nav class="navbar navbar-expand navbar-light bg-light">
+    <div class="collapse navbar-collapse mb-5" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">ホーム</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/circles">サークル</a>
+        </li>
+      </ul>
+    </div>
+    <div id="wrap" class="ml-auto d-block mt-5">
+      <form action="" autocomplete="on">
+        <input
+          id="search"
+          name="search"
+          type="text"
+          placeholder="キーワードやサークル名で検索"
+        /><input id="search_submit" value="Rechercher" type="submit" />
+      </form>
+    </div>
+  </nav>
+</div>
+{{end}}

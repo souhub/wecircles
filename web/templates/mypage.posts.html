@@ -1,25 +1,4 @@
-{{define "content"}}
-
-<div>
-  <h2 class="text-center">{{.User.Name}}</h2>
-  <p>
-    {{if eq .User.ImagePath "default.png"}}
-    <img
-      src="/static/img/default.png"
-      alt="user_profile_image"
-      style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
-    />
-    {{else}}
-    <img
-      src="/static/img/user{{.User.Id}}/{{.User.ImagePath}}"
-      alt="user_profile_image"
-      style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
-    />
-    {{end}}
-  </p>
-</div>
-
-{{if .Posts}} {{range .Posts}}
+{{define "contents"}} {{if .Posts}} {{range .Posts}}
 <div class="card mx-auto mb-5">
   <a href="/post/show?id={{.Uuid}}">
     {{if eq .ThumbnailPath "default_thumbnail.jpg"}}

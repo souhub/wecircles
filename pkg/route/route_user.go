@@ -42,10 +42,6 @@ func ShowUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
-	type Data struct {
-		User  data.User
-		Posts []data.Post
-	}
 	data := Data{
 		User:  user,
 		Posts: posts,
@@ -64,8 +60,18 @@ func ShowUser(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/mypage", 302)
 		return
 	}
+	myUser, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+	}
+	data = Data{
+		MyUser: myUser,
+		User:   user,
+		Posts:  posts,
+	}
 	// ログイン後に他人のユーザー名をクリックした場合
-	tmp := parseTemplateFiles("layout", "navbar.private", "user.show")
+	tmp := parseTemplateFiles("layout.mypage", "navbar.mypage", "mypage.header", "mypage.posts")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}

@@ -31,10 +31,14 @@ func parseTemplateFiles(filenames ...string) (t *template.Template) {
 }
 
 type Data struct {
-	User    data.User
-	Users   []data.User
-	Post    data.Post
-	Posts   []data.Post
-	Circle  data.Circle
-	Circles []data.Circle
+	MyUser          data.User
+	User            data.User
+	Users           []data.User
+	Post            data.Post
+	Posts           []data.Post
+	Circle          data.Circle
+	Circles         []data.Circle
+	Membership      data.Membership
+	Memberships     []data.Membership
+	MembershipValid bool
 }

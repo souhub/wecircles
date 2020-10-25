@@ -49,14 +49,14 @@ func Circle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
 	// ログイン済かつかつidが自分のものの場合
-	if user.UserIdStr == id {
+	if myUser.UserIdStr == id {
 		// サークル持っているかどうかはMyCircleハンドラで振り分ける
 		http.Redirect(w, r, "/mycircle", 302)
 		return
@@ -74,11 +74,22 @@ func Circle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/circle/new", 302)
 		return
 	}
-	data := Data{
-		User:   user,
-		Circle: circle,
+	owner, err := circle.GetOwner()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
 	}
-	tmp := parseTemplateFiles("layout", "navbar.private", "circle.public")
+	memberships, err := myUser.Memberships()
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	data := Data{
+		MyUser:      myUser,
+		User:        owner,
+		Circle:      circle,
+		Memberships: memberships,
+	}
+	tmp := parseTemplateFiles("layout.mypage", "navbar.mypage", "mypage.header", "mypage.circle")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
@@ -115,8 +126,70 @@ func Circles(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func MembershipsCircle(w http.ResponseWriter, r *http.Request) {
-	return
+func MembershipsCircles(w http.ResponseWriter, r *http.Request) {
+	session, err := session(w, r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	user, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	memberships, err := user.MembershipsByUserID()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	var circles []data.Circle
+	for _, membership := range memberships {
+		circle, err := membership.Circle()
+		if err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+		circles = append(circles, circle)
+	}
+	data := Data{
+		User:    user,
+		Circles: circles,
+	}
+	tmp := parseTemplateFiles("layout", "navbar.private", "circles")
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+}
+
+func MembershipsCircleCreate(w http.ResponseWriter, r *http.Request) {
+	vals := r.URL.Query()
+	id := vals.Get("id")
+	session, err := session(w, r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	user, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	circle, err := data.CirclebyOwnerID(id)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	membership := data.Membership{
+		UserID:   user.Id,
+		CircleID: circle.ID,
+	}
+	if err := membership.Create(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	http.Redirect(w, r, "/circle/memberships", 302)
 }
 
 func CircleManage(w http.ResponseWriter, r *http.Request) {
@@ -206,6 +279,19 @@ func CreateCircle(w http.ResponseWriter, r *http.Request) {
 	if err = circle.Create(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/circle/new", 302)
+		return
+	}
+	createdCircle, err := data.GetCirclebyUser(user.UserIdStr)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	membership := data.Membership{
+		UserID:   createdCircle.OwnerID,
+		CircleID: createdCircle.ID,
+	}
+	if err := membership.Create(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
 	url := fmt.Sprintf("/circle?id=%s", user.UserIdStr)

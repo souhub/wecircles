@@ -75,6 +75,16 @@ func init() {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
+	// Create the memberships table
+	cmd = `CREATE TABLE IF NOT EXISTS memberships(
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		user_id INT,
+		circle_id INT
+		)`
+	_, err = db.Exec(cmd)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 }
 
 func NewDB() *sql.DB {

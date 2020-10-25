@@ -1,16 +1,8 @@
-{{define "content"}}
+{{define "header"}}
 <div>
-  {{if eq .Membership.CircleID .Circle.ID}} {{else}}
-  <a
-    class="btn btn-outline-success"
-    href="/circle/memberships/create?id={{.Circle.OwnerIDStr}}"
-    >このサークルのメンバーになる</a
-  >
-  {{end}}
-
-  <h2 class="text-center">{{.Circle.Owner.Name}}</h2>
+  <h2 class="text-center">{{.User.Name}}</h2>
   <p>
-    {{if eq .Circle.Owner.ImagePath "default.png"}}
+    {{if eq .User.ImagePath "default.png"}}
     <img
       src="/static/img/default.png"
       alt="user_profile_image"
@@ -18,7 +10,7 @@
     />
     {{else}}
     <img
-      src="/static/img/user{{.Circle.Owner.Id}}/{{.Circle.Owner.ImagePath}}"
+      src="/static/img/user{{.User.Id}}/{{.User.ImagePath}}"
       alt="user_profile_image"
       style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
     />
@@ -30,7 +22,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/mypage">ホーム</a>
+        <a class="nav-link" href="/user?id={{.User.UserIdStr}}">ホーム</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/circle?id={{.User.UserIdStr}}">サークル</a>
@@ -38,10 +30,4 @@
     </ul>
   </div>
 </nav>
-
-<div>
-  <h2>{{.Circle.Name}}</h2>
-  <p>{{.Circle.Overview}}</p>
-</div>
-
 {{end}}
