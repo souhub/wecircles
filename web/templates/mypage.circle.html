@@ -1,4 +1,4 @@
-{{define "contents"}} {{.MembershipValid}}
+{{define "content"}}
 <div>
   <h2>{{.Circle.Name}}</h2>
   <p>{{.Circle.Overview}}</p>
@@ -10,7 +10,7 @@
   href="/circle/membership/delete?id={{.Circle.OwnerIDStr}}"
   >このサークルを退会する</a
 >
-{{.User.Id}} {{else}}
+{{else}}
 <a
   class="btn btn-outline-success"
   href="/circle/membership/create?id={{.Circle.OwnerIDStr}}"

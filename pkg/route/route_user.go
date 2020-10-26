@@ -1,8 +1,6 @@
 package route
 
 import (
-	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/souhub/wecircles/pkg/data"
@@ -16,13 +14,13 @@ func MyPage(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	}
-	user, err := session.User()
-	posts, err := user.PostsByUser()
+	myUser, err := session.User()
+	posts, err := myUser.PostsByUser()
 	data := Data{
-		User:  user,
-		Posts: posts,
+		MyUser: myUser,
+		Posts:  posts,
 	}
-	tmp := parseTemplateFiles("layout", "navbar.private", "mypage", "posts")
+	tmp := parseTemplateFiles("layout", "navbar.private", "user", "posts")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
@@ -31,11 +29,13 @@ func MyPage(w http.ResponseWriter, r *http.Request) {
 
 // GET /user/show
 // Get the users
-func ShowUser(w http.ResponseWriter, r *http.Request) {
+func User(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
-	user, err := data.UserByUserIdStr(vals.Get(("id")))
+	id := vals.Get("id")
+	user, err := data.UserByUserIdStr(id)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/mypage", 302)
 		return
 	}
 	posts, err := user.PostsByUser()
@@ -49,7 +49,7 @@ func ShowUser(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	// ログイン前にユーザー名クリックした場合
 	if err != nil {
-		tmp := parseTemplateFiles("layout", "navbar.public", "user.show")
+		tmp := parseTemplateFiles("layout", "navbar.public", "user", "posts")
 		if err := tmp.Execute(w, data); err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
@@ -71,7 +71,7 @@ func ShowUser(w http.ResponseWriter, r *http.Request) {
 		Posts:  posts,
 	}
 	// ログイン後に他人のユーザー名をクリックした場合
-	tmp := parseTemplateFiles("layout.mypage", "navbar.mypage", "mypage.header", "mypage.posts")
+	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header", "mypage.posts")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
@@ -84,20 +84,17 @@ func EditUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
-	type Data struct {
-		User data.User
-	}
 	data := Data{
-		User: user,
+		MyUser: myUser,
 	}
 	tmp := parseTemplateFiles("layout", "user.edit", "navbar.private")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		log.Fatal(err)
+		return
 	}
 }
 
@@ -108,35 +105,39 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Fatal(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
 	// Allow the "POST" method, only
-	// if r.Method != "POST" {
-	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	// }
+	if r.Method != "POST" {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 
 	// Parse the form
 	if err = r.ParseForm(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
-	userImagePath, err := user.Upload(r)
+	userImagePath, err := myUser.Upload(r)
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
-	user.ImagePath = userImagePath
-	user.Name = r.PostFormValue("name")
-	user.UserIdStr = r.PostFormValue("user_id_str")
+	myUser.ImagePath = userImagePath
+	myUser.Name = r.PostFormValue("name")
+	myUser.UserIdStr = r.PostFormValue("user_id_str")
 
-	if err = user.Update(); err != nil {
+	if err = myUser.Update(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	fmt.Println(user.UserIdStr)
+	if err = myUser.UpdatePostUserIdStr(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
 	http.Redirect(w, r, "/mypage", 302)
 }
 
@@ -148,14 +149,14 @@ func EditUserImage(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	tmp := parseTemplateFiles("layout", "user.edit.image", "navbar.private")
-	if err := tmp.Execute(w, user); err != nil {
+	if err := tmp.Execute(w, myUser); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		log.Fatal(err)
+		return
 	}
 }
 
@@ -163,29 +164,29 @@ func EditUserImage(w http.ResponseWriter, r *http.Request) {
 // Update the user image
 func UpdateUserImage(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Fatal(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 	}
-	err = user.DeleteUserImage()
+	err = myUser.DeleteUserImage()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 
-	// Uplaod the new user's image.
-	user.ImagePath, err = user.Upload(r)
+	// Uplaod the new myUser's image.
+	myUser.ImagePath, err = myUser.Upload(r)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
 
-	// Update the user's image path from old one to the new one in the DB.
-	if err = user.UpdateImage(); err != nil {
-		log.Fatal(err)
+	// Update the myUser's image path from old one to the new one in the DB.
+	if err = myUser.UpdateImage(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	http.Redirect(w, r, "/user/edit", 302)
+	http.Redirect(w, r, "/myUser/edit", 302)
 }
 
 // POST /user/delete
@@ -196,7 +197,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
@@ -209,17 +210,17 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	if user.Password == data.Encrypt(r.FormValue("password")) {
-		if err = user.DeleteUserImageDir(); err != nil {
+	if myUser.Password == data.Encrypt(r.FormValue("password")) {
+		if err = myUser.DeleteUserImageDir(); err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 			http.Redirect(w, r, "/user/delete/confirm", 302)
 			return
 		}
-		if err = user.DeletePosts(); err != nil {
+		if err = myUser.DeletePosts(); err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 			return
 		}
-		if err = user.Delete(); err != nil {
+		if err = myUser.Delete(); err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 			return
 		}
@@ -229,20 +230,22 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/user/delete/confirm", 302)
 }
 
+// GET /user/delete/confirm
+// Get the user-delete-confirm page
 func DeleteUserConfirm(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
 	tmp := parseTemplateFiles("layout", "user.delete.confirm", "navbar.private")
-	if err := tmp.Execute(w, user); err != nil {
+	if err := tmp.Execute(w, myUser); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return

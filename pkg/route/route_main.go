@@ -12,7 +12,7 @@ import (
 func Index(w http.ResponseWriter, r *http.Request) {
 	posts, err := data.Posts()
 	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	data := Data{
 		Posts: posts,
@@ -28,14 +28,14 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
 	data = Data{
-		Posts: posts,
-		User:  user,
+		MyUser: myUser,
+		Posts:  posts,
 	}
 	tmp := parseTemplateFiles("layout", "index", "navbar.private", "posts")
 	if err := tmp.Execute(w, data); err != nil {

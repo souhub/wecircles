@@ -13,71 +13,78 @@
     <title>Document</title>
   </head>
   <body class="bg-white">
-      <form action="/post/create" method="post" class="mx-auto">
-        <nav
-          class="navbar navbar-expand-lg navbar-light bg-white position-fixed"
-          style="
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            height: 70px;
-            position: absolute;
-            top: 0px;
-          "
-        >
-          <h1 class="box"><a class="navbar-brand" href="/">WeCircle</a></h1>
+    <form
+      action="/post/create"
+      method="post"
+      enctype="multipart/form-data"
+      class="mx-auto"
+    >
+      <nav
+        class="navbar navbar-expand-lg navbar-light bg-white position-fixed"
+        style="
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          height: 70px;
+          position: absolute;
+          top: 0px;
+        "
+      >
+        <h1 class="box"><a class="navbar-brand" href="/">WeCircle</a></h1>
 
-          <div class="box" style="display: flex">
-            <button
-              type="button"
-              onclick="javascript:history.back();"
-              class="btn btn-outline-secondary"
-            >
-              戻る
-            </button>
+        <div class="box" style="display: flex">
+          <button
+            type="button"
+            onclick="javascript:history.back();"
+            class="btn btn-outline-secondary"
+          >
+            戻る
+          </button>
 
-            <button type="submit" class="btn btn-outline-success ml-2">
-              投稿
-            </button>
-          </div>
-        </nav>
+          <button type="submit" class="btn btn-outline-success ml-2">
+            投稿
+          </button>
+        </div>
+      </nav>
 
       <div class="mx-auto" style="max-width: 540px">
-
-        <div class="form-group text-center" style="height:250px;padding-top: 100px; margin-bottom: 150px;">
-          <div style="display: block; height: 200px;">
-            <div style="height: 250px;">
+        <div
+          class="form-group text-center"
+          style="height: 250px; padding-top: 100px; margin-bottom: 150px"
+        >
+          <div style="display: block; height: 200px">
+            <div style="height: 250px">
               <img
                 src="/static/img/default_thumbnail.jpg"
                 alt="user_profile_image"
                 style="width: 400px; height: 250px; object-fit: cover"
               />
             </div>
-            <div style="height: 250px; position: relative; bottom: 250px;">
+            <div style="height: 250px; position: relative; bottom: 250px">
               <img
                 id="preview"
                 src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
                 style="width: 400px; height: 250px; object-fit: cover"
               />
             </div>
-            <div style="height:250px; position: relative; bottom: 500px;">
+            <div style="height: 250px; position: relative; bottom: 500px">
               <label
                 for="image"
                 style="width: 400px; height: 250px; object-fit: cover"
               >
                 <i
-                class="fas fa-image fa-4x"
-                style="
-                  width: 400px;
-                  height: 250px;
-                  background-color: white;
-                  opacity: 0.4;
-                  text-align: center;
-                  vertical-align: middle;
-                  display: table-cell;
-                  color: black;
-                "
-              ></i>
+                  class="fas fa-image fa-4x"
+                  style="
+                    width: 400px;
+                    height: 250px;
+                    background-color: white;
+                    opacity: 0.4;
+                    text-align: center;
+                    vertical-align: middle;
+                    display: table-cell;
+                    color: black;
+                  "
+                ></i>
                 <input
                   style="display: none"
                   id="image"
@@ -90,7 +97,6 @@
             </div>
           </div>
         </div>
-
 
         <div>
           <label for="title"
@@ -106,36 +112,35 @@
               placeholder="タイトル"
               required
             ></textarea>
-            </h2>
-            <label for="body"
-              >本文<span class="text-danger small"> 必須</span></label
-            >
-            <textarea
-              type="text"
-              name="body"
-              class="form-control auto-resize"
-              style="line-height: 16px; white-space: prewrap; border: none"
-              rows="30"
-              placeholder="今日のサークルでの出来事ををWeCircleに書いてみませんか？"
-              required
-            ></textarea>
+          </h2>
+          <label for="body"
+            >本文<span class="text-danger small"> 必須</span></label
+          >
+          <textarea
+            type="text"
+            name="body"
+            class="form-control auto-resize"
+            style="line-height: 16px; white-space: prewrap; border: none"
+            rows="30"
+            placeholder="今日のサークルでの出来事ををWeCircleに書いてみませんか？"
+            required
+          ></textarea>
         </div>
-        <input type="hidden" name="uuid" value="{{.UUID}}" />
-      </form>
+      </div>
+    </form>
 
-      <!-- jQuery読み込み -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <!-- PopperのJS読み込み -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-      <!-- BootstrapのJS読み込み -->
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-      <!-- fontawssomeの読み込み -->
-      <script
-        src="https://kit.fontawesome.com/dab6f66964.js"
-        crossorigin="anonymous"
-      ></script>
-      <script type="text/javascript" src="/static/js/preview.js"></script>
-      <script type="text/javascript" src="/static/js/navbar-search.js"></script>
-    </div>
+    <!-- jQuery読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- PopperのJS読み込み -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <!-- BootstrapのJS読み込み -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- fontawssomeの読み込み -->
+    <script
+      src="https://kit.fontawesome.com/dab6f66964.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="/static/js/preview.js"></script>
+    <script type="text/javascript" src="/static/js/navbar-search.js"></script>
   </body>
 </html>

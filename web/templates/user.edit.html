@@ -3,7 +3,7 @@
   <div class="form-group">
     <div style="display: block; height: 200px">
       <div>
-        {{if eq .User.ImagePath "default.png"}}
+        {{if eq .MyUser.ImagePath "default.png"}}
         <img
           src="/static/img/default.png"
           alt="user_profile_image"
@@ -16,7 +16,7 @@
         />
         {{else}}
         <img
-          src="/static/img/user{{.User.Id}}/{{.User.ImagePath}}"
+          src="/static/img/user{{.MyUser.Id}}/{{.MyUser.ImagePath}}"
           alt="user_profile_image"
           style="
             width: 200px;
@@ -74,7 +74,7 @@
       type="text"
       name="name"
       class="form-control"
-      value="{{.User.Name}}"
+      value="{{.MyUser.Name}}"
       required
     />
   </div>
@@ -85,7 +85,7 @@
       type="text"
       name="user_id_str"
       class="form-control"
-      value="{{.User.UserIdStr}}"
+      value="{{.MyUser.UserIdStr}}"
       required
     />
   </div>

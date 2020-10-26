@@ -48,10 +48,11 @@ func init() {
 			uuid VARCHAR(255),
 			title VARCHAR(255),
 			body TEXT,
+			thumbnail_path VARCHAR(255),
 			user_id INT,
 			user_id_str VARCHAR(255),
 			user_name VARCHAR(255),
-			thumbnail_path VARCHAR(255),
+			user_image_path VARCHAR(255),
 			created_at  VARCHAR(255)
 			)`
 	_, err = db.Exec(cmd)

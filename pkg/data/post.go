@@ -15,10 +15,11 @@ type Post struct {
 	Uuid          string
 	Title         string
 	Body          string
+	ThumbnailPath string
 	UserId        int
 	UserIdStr     string
 	UserName      string
-	ThumbnailPath string
+	UserImagePath string
 	CreatedAt     string
 }
 
@@ -36,7 +37,7 @@ func Posts() (posts []Post, err error) {
 	}
 	for rows.Next() {
 		var post Post
-		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.ThumbnailPath, &post.CreatedAt)
+		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.ThumbnailPath, &post.UserId, &post.UserIdStr, &post.UserName, &post.UserImagePath, &post.CreatedAt)
 		if err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 			return
@@ -55,7 +56,7 @@ func PostByUuid(uuid string) (post Post, err error) {
 	query := `SELECT *
 			  FROM posts
 			  WHERE uuid=?`
-	err = db.QueryRow(query, uuid).Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.ThumbnailPath, &post.CreatedAt)
+	err = db.QueryRow(query, uuid).Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.ThumbnailPath, &post.UserId, &post.UserIdStr, &post.UserName, &post.UserImagePath, &post.CreatedAt)
 	return
 }
 
@@ -87,9 +88,9 @@ func (post *Post) UserByPost() (user User, err error) {
 func (post *Post) Create() (err error) {
 	db := NewDB()
 	defer db.Close()
-	query := `INSERT INTO posts (uuid, title, body, user_id, user_id_str, user_name, thumbnail_path ,created_at)
-			  VALUES (?,?,?,?,?,?,?,?)`
-	_, err = db.Exec(query, post.Uuid, post.Title, post.Body, post.UserId, post.UserIdStr, post.UserName, "default_thumbnail.jpg", post.CreatedAt)
+	query := `INSERT INTO posts (uuid, title, body, thumbnail_path, user_id, user_id_str, user_name, user_image_path, created_at)
+			  VALUES (?,?,?,?,?,?,?,?,?)`
+	_, err = db.Exec(query, post.Uuid, post.Title, post.Body, post.ThumbnailPath, post.UserId, post.UserIdStr, post.UserName, post.UserImagePath, post.CreatedAt)
 	return
 }
 
@@ -122,15 +123,9 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-
-	// // Delete the current thumbnail.
-	// if err = post.DeleteThembnail(); err != nil {
-	// 	logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	// }
-
 	// Make thumbnail dir.
 	currentRootDir, err := os.Getwd()
-	thumbnailImageDir := fmt.Sprintf("%s/web/img/user%d/posts/post%d", currentRootDir, post.UserId, post.Id)
+	thumbnailImageDir := fmt.Sprintf("%s/web/img/user%d/posts/post%s", currentRootDir, post.UserId, post.Uuid)
 	_, err = os.Stat(thumbnailImageDir)
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -153,14 +148,10 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 		uploadedFileName = post.ThumbnailPath
 		return
 	}
-	// Delete the current thumbnail.
-	if err = post.DeleteThembnail(); err != nil {
-		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
 	uploadedFileName = fileHeader.Filename
 
 	// Set the uploaded file's path
-	imagePath := fmt.Sprintf("web/img/user%d/posts/post%d/%s", post.UserId, post.Id, uploadedFileName)
+	imagePath := fmt.Sprintf("web/img/user%d/posts/post%s/%s", post.UserId, post.Uuid, uploadedFileName)
 
 	// Save the uploaded file to "imagePath"
 	saveImage, err := os.Create(imagePath)
@@ -168,7 +159,6 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-
 	// Write the uploaded file to the file for saving.
 	_, err = io.Copy(saveImage, file)
 	if err != nil {
@@ -181,14 +171,73 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 	return uploadedFileName, err
 }
 
+// func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err error) {
+// 	// Allow the "POST" method, only
+// 	if r.Method != "POST" {
+// 		err = errors.New("method error: POST only")
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		return
+// 	}
+// 	// Make thumbnail dir.
+// 	currentRootDir, err := os.Getwd()
+// 	thumbnailImageDir := fmt.Sprintf("%s/web/img/user%d/posts/post%d", currentRootDir, post.UserId, post.Id)
+// 	_, err = os.Stat(thumbnailImageDir)
+// 	if err != nil {
+// 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		if err = os.MkdirAll(thumbnailImageDir, 0777); err != nil {
+// 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 			return
+// 		}
+// 	}
+// 	// Parse the form
+// 	// err = r.ParseForm()
+// 	// if err != nil {
+// 	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 	// 	return
+// 	// }
+// 	// Get the file sent form the form
+// 	file, fileHeader, err := r.FormFile("image")
+// 	// Get the uploaded file's name from the file.
+// 	if err != nil {
+// 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		uploadedFileName = post.ThumbnailPath
+// 		return
+// 	}
+// 	// Delete the current thumbnail.
+// 	if err = post.DeleteThembnail(); err != nil {
+// 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 	}
+// 	uploadedFileName = fileHeader.Filename
+
+// 	// Set the uploaded file's path
+// 	imagePath := fmt.Sprintf("web/img/user%d/posts/post%d/%s", post.UserId, post.Id, uploadedFileName)
+
+// 	// Save the uploaded file to "imagePath"
+// 	saveImage, err := os.Create(imagePath)
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		return
+// 	}
+
+// 	// Write the uploaded file to the file for saving.
+// 	_, err = io.Copy(saveImage, file)
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		return
+// 	}
+// 	// Close the "saveImage" and "file"
+// 	defer saveImage.Close()
+// 	defer file.Close()
+// 	return uploadedFileName, err
+// }
+
 // Delete the thumbnail
 func (post *Post) DeleteThembnail() (err error) {
 	currentRootDir, err := os.Getwd()
-	thumbnail := fmt.Sprintf("%s/web/img/user%d/posts/post%d/%s", currentRootDir, post.UserId, post.Id, post.ThumbnailPath)
+	thumbnail := fmt.Sprintf("%s/web/img/user%d/posts/post%s/%s", currentRootDir, post.UserId, post.Uuid, post.ThumbnailPath)
 	_, err = os.Stat(thumbnail)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-
 	}
 	err = os.Remove(thumbnail)
 	return

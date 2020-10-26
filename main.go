@@ -20,7 +20,7 @@ func main() {
 	http.HandleFunc("/post/new", route.NewPost)
 	http.HandleFunc("/post/create", route.CreatePost)
 	http.HandleFunc("/posts", route.Posts)
-	http.HandleFunc("/post/show", route.ShowPost)
+	http.HandleFunc("/post", route.ShowPost)
 	http.HandleFunc("/post/edit", route.EditPost)
 	http.HandleFunc("/post/update", route.UpdatePost)
 	http.HandleFunc("/post/delete", route.DeletePost)
@@ -30,7 +30,7 @@ func main() {
 
 	http.HandleFunc("/user/edit", route.EditUser)
 	http.HandleFunc("/user/update", route.UpdateUser)
-	http.HandleFunc("/user", route.ShowUser)
+	http.HandleFunc("/user", route.User)
 	http.HandleFunc("/user/delete/confirm", route.DeleteUserConfirm)
 	http.HandleFunc("/user/delete", route.DeleteUser)
 

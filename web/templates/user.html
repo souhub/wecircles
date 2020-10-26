@@ -1,10 +1,26 @@
 {{define "content"}}
 
 <h2 class="text-center">
-  {{if .MyUser}} {{.MyUser.Name}} {{else}} {{.User.Name}} {{end}}
+  {{if .MyUser.Id}} {{.MyUser.Name}} {{else}} {{.User.Name}} {{end}}
 </h2>
 
-{{if .MyUser}}
+{{if eq .MyUser.Id 0}}
+<div>
+  {{if eq .User.ImagePath "default.png"}}
+  <img
+    src="/static/img/default.png"
+    alt="user_profile_image"
+    style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
+  />
+  {{else}}
+  <img
+    src="/static/img/user{{.User.Id}}/{{.User.ImagePath}}"
+    alt="user_profile_image"
+    style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
+  />
+  {{end}}
+</div>
+{{else}}
 <div style="display: block; height: 200px; width: 200px">
   <a
     href="/user/edit"
@@ -63,20 +79,5 @@
     </ul>
   </div>
 </nav>
-{{else}}
-<div>
-  {{if eq .User.ImagePath "default.png"}}
-  <img
-    src="/static/img/default.png"
-    alt="user_profile_image"
-    style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
-  />
-  {{else}}
-  <img
-    src="/static/img/user{{.User.Id}}/{{.User.ImagePath}}"
-    alt="user_profile_image"
-    style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
-  />
-  {{end}}
-</div>
+
 {{end}} {{template "posts" .}} {{end}}

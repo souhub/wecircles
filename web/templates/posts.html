@@ -4,21 +4,45 @@
     {{if .Posts}} {{range .Posts}}
     <div class="card mb-3">
       <div class="card-body">
-        <a href="/user?id={{.UserIdStr}}">{{.UserIdStr}}</a>
+        <a href="/user?id={{.UserIdStr}}">
+          {{if eq .UserImagePath "default.png"}}
+          <img
+            src="/static/img/{{.UserImagePath}}"
+            style="
+              width: 50px;
+              height: 50px;
+              object-fit: cover;
+              border-radius: 50%;
+            "
+            alt="default thumbnail"
+          />
+          {{else}}
+          <img
+            src="/static/img/user{{.UserId}}/{{.UserImagePath}}"
+            style="
+              width: 50px;
+              height: 50px;
+              object-fit: cover;
+              border-radius: 50%;
+            "
+            alt="customized user image"
+          />
+          {{end}} {{.UserIdStr}}</a
+        >
         <p>{{.CreatedAt}}</p>
       </div>
-      <a href="/post/show?id={{.Uuid}}">
+      <a href="/post?id={{.Uuid}}">
         {{if eq .ThumbnailPath "default_thumbnail.jpg"}}
         <img
-          src="/static/img/{{.ThumbnailPath}}"
+          src="/static/img/default_thumbnail.jpg"
           style="width: 100%; height: 250px; object-fit: cover"
           alt="default thumbnail"
         />
         {{else}}
         <img
-          src="/static/img/user{{.UserId}}/posts/post{{.Id}}/{{.ThumbnailPath}}"
+          src="/static/img/user{{.UserId}}/posts/post{{.Uuid}}/{{.ThumbnailPath}}"
           style="width: 100%; height: 250px; object-fit: cover"
-          alt="default thumbnail"
+          alt="customized thumbnail"
         />
         {{end}}</a
       >
@@ -44,7 +68,7 @@
           </p>
         </div>
         <br /><br /><br />
-        <p><a href="/post/show?id={{.Uuid}}">もっとみる</a></p>
+        <p><a href="/post?id={{.Uuid}}">もっとみる</a></p>
         {{else}}
         <p class="card-text">本文がありません。</p>
         {{end}}

@@ -2,14 +2,12 @@ package route
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/souhub/wecircles/pkg/data"
 	"github.com/souhub/wecircles/pkg/logging"
-	"gopkg.in/go-playground/validator.v9"
 )
 
 // gitgitgit
@@ -21,19 +19,15 @@ func Posts(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	posts, err := user.PostsByUser()
-	type Data struct {
-		User  data.User
-		Posts []data.Post
-	}
+	posts, err := myUser.PostsByUser()
 	data := Data{
-		User:  user,
-		Posts: posts,
+		MyUser: myUser,
+		Posts:  posts,
 	}
 	tmp := parseTemplateFiles("layout", "index", "navbar.private", "posts")
 	tmp.Execute(w, data)
@@ -47,18 +41,18 @@ func NewPost(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
 	type Data struct {
-		User data.User
-		UUID uuid.UUID
+		MyUser data.User
+		UUID   uuid.UUID
 	}
 	data := Data{
-		User: user,
-		UUID: uuid.New(),
+		MyUser: myUser,
+		UUID:   uuid.New(),
 	}
 	tmp := parseTemplateFiles("post.new")
 	if err := tmp.Execute(w, data); err != nil {
@@ -76,8 +70,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	err = r.ParseForm()
-	if err != nil {
+	if err = r.ParseForm(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/post/new", 302)
 		return
@@ -95,32 +88,37 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	date := now.Day()
 	hour := now.Hour()
 	createdAt := fmt.Sprintf("%v年%v月%v日%v時", year, month, date, hour)
-	//postを作成
-	post := data.Post{
-		Uuid:      r.PostFormValue("uuid"),
-		Title:     r.PostFormValue("title"),
-		Body:      r.PostFormValue("body"),
-		UserId:    user.Id,
-		UserIdStr: user.UserIdStr,
-		UserName:  user.Name,
-		CreatedAt: createdAt,
-	}
-	validate := validator.New()  //validatorインスタンス生成
-	err = validate.Struct(&post) //validator実行
-	if err != nil {
+	// formの入力に内容をを解析
+	if err := r.ParseMultipartForm(0); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/post/new", 302)
 		return
 	}
+	//postを作成
+	post := data.Post{
+		Uuid:          uuid.New().String(),
+		Title:         r.PostFormValue("title"),
+		Body:          r.PostFormValue("body"),
+		UserId:        user.Id,
+		UserIdStr:     user.UserIdStr,
+		UserName:      user.Name,
+		UserImagePath: user.ImagePath,
+		CreatedAt:     createdAt,
+	}
+	thumbnailPath, err := post.UploadThumbnail(r)
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	post.ThumbnailPath = thumbnailPath
 	if err = post.Create(); err != nil {
-		log.Fatal(err)
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/post/new", 302)
 		return
 	}
-	url := fmt.Sprint("/post/show?id=", post.Uuid)
+	// url := fmt.Sprint("/post?id=", post.Uuid)
 	http.Redirect(w, r, "/", 302)
 	// この投稿にこのurlを割り当てるためのダミー（エラー発生するが問題ない）
-	http.Redirect(w, r, url, 302)
+	// http.Redirect(w, r, url, 302)
 }
 
 // GET /post/show
@@ -130,7 +128,7 @@ func ShowPost(w http.ResponseWriter, r *http.Request) {
 	id := vals.Get("id")
 	post, err := data.PostByUuid(id)
 	if err != nil {
-		log.Fatal(err)
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	session, err := session(w, r)
 	if err != nil {
@@ -138,11 +136,11 @@ func ShowPost(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	// ログイン判定
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		tmp := parseTemplateFiles("layout", "navbar.public", "post.show")
+		tmp := parseTemplateFiles("layout", "navbar.public", "post")
 		if err := tmp.Execute(w, post); err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 			return
@@ -150,11 +148,11 @@ func ShowPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	data := Data{
-		User: user,
-		Post: post,
+		MyUser: myUser,
+		Post:   post,
 	}
 	// 投稿者判定はテンプレートで行う
-	tmp := parseTemplateFiles("layout", "navbar.private", "post.show")
+	tmp := parseTemplateFiles("layout", "navbar.private", "post")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
@@ -177,15 +175,15 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
 	data := Data{
-		User: user,
-		Post: post,
+		MyUser: myUser,
+		Post:   post,
 	}
 	tmp := parseTemplateFiles("post.edit")
 	if err := tmp.Execute(w, data); err != nil {
@@ -338,7 +336,7 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 	}
 	vals := r.URL.Query()
 	uuid := vals.Get("id")
-	user, err := sess.User()
+	myUser, err := sess.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
@@ -346,7 +344,7 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
-	if user.Id != post.UserId {
+	if myUser.Id != post.UserId {
 		http.Redirect(w, r, "/", 302)
 	}
 	err = post.Delete()

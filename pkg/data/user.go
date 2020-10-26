@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 
@@ -93,7 +92,6 @@ func (user *User) PostsByUser() (posts []Post, err error) {
 		var post Post
 		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.ThumbnailPath, &post.CreatedAt)
 		if err != nil {
-			log.Fatal(err)
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
 		posts = append(posts, post)
@@ -174,6 +172,16 @@ func (user *User) Update() (err error) {
 	query := `UPDATE users
 		      SET name=?, user_id_str=?, image_path=?
 			  WHERE id=?`
+	_, err = db.Exec(query, user.Name, user.UserIdStr, user.ImagePath, user.Id)
+	return
+}
+
+func (user *User) UpdatePostUserIdStr() (err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `UPDATE posts
+		      SET user_name=?, user_id_str=?, user_image_path=?
+			  WHERE user_id=?`
 	_, err = db.Exec(query, user.Name, user.UserIdStr, user.ImagePath, user.Id)
 	return
 }

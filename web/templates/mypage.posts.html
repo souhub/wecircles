@@ -1,4 +1,4 @@
-{{define "contents"}} {{if .Posts}} {{range .Posts}}
+{{define "content"}} {{if .Posts}} {{range .Posts}}
 <div class="card mx-auto mb-5">
   <a href="/post/show?id={{.Uuid}}">
     {{if eq .ThumbnailPath "default_thumbnail.jpg"}}
