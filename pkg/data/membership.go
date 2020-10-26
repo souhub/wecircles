@@ -51,7 +51,7 @@ func (membership *Membership) Circle() (circle Circle, err error) {
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
-	err = stmt.QueryRow(membership.UserID).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.CreatedAt)
+	err = stmt.QueryRow(membership.CircleID).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.CreatedAt)
 	return
 }
 
@@ -76,6 +76,16 @@ func (membership *Membership) Check(circle Circle) (valid bool, err error) {
 	if membership.ID != 0 {
 		valid = true
 	}
+	return
+}
+
+func (membership *Membership) Delete() (err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `DELETE FROM memberships
+			WHERE user_id=?
+			AND circle_id=?`
+	_, err = db.Exec(query, membership.UserID, membership.CircleID)
 	return
 }
 

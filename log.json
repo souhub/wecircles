@@ -1,5 +1,5 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/utils.go","level":"warning","line":42,"msg":"sql: no rows in result set","time":"2020-10-26T05:36:03Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":84,"msg":"sql: no rows in result set","time":"2020-10-26T05:36:03Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/utils.go","level":"warning","line":42,"msg":"sql: no rows in result set","time":"2020-10-26T10:59:47Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":84,"msg":"sql: no rows in result set","time":"2020-10-26T10:59:47Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/utils.go","level":"warning","line":42,"msg":"sql: no rows in result set","time":"2020-10-26T05:35:51Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":84,"msg":"sql: no rows in result set","time":"2020-10-26T05:35:51Z"}
 l:14:34: executing \"content\" at \u003c.User.ID\u003e: can't evaluate field ID in type data.User","time":"2020-10-25T07:08:07Z"}

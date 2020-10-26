@@ -5,10 +5,15 @@
 </div>
 {{if .MembershipValid}}
 <p>参加中</p>
-{{else}}
+<a
+  class="btn btn-outline-danger"
+  href="/circle/membership/delete?id={{.Circle.OwnerIDStr}}"
+  >このサークルを退会する</a
+>
+{{.User.Id}} {{else}}
 <a
   class="btn btn-outline-success"
-  href="/circle/memberships/create?id={{.Circle.OwnerIDStr}}"
+  href="/circle/membership/create?id={{.Circle.OwnerIDStr}}"
   >このサークルのメンバーになる</a
 >
 {{end}} {{end}}

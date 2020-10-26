@@ -36,14 +36,16 @@ func main() {
 
 	http.HandleFunc("/circle", route.Circle)
 	http.HandleFunc("/circles", route.Circles)
-	http.HandleFunc("/circle/memberships", route.MembershipsCircles)
-	http.HandleFunc("/circle/memberships/create", route.MembershipsCircleCreate)
 	http.HandleFunc("/circle/manage", route.CircleManage)
 	http.HandleFunc("/circle/new", route.NewCircle)
 	http.HandleFunc("/circle/create", route.CreateCircle)
 	http.HandleFunc("/circle/edit", route.EditCircle)
 	http.HandleFunc("/circle/update", route.UpdateCircle)
 	http.HandleFunc("/circle/delete", route.DeleteCircle)
+
+	http.HandleFunc("/circle/memberships", route.MembershipsCircles)
+	http.HandleFunc("/circle/membership/create", route.MembershipsCircleCreate)
+	http.HandleFunc("/circle/membership/delete", route.DeleteMembership)
 
 	http.ListenAndServe(":80", nil)
 }
