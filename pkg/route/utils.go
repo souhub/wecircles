@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/souhub/wecircles/pkg/data"
+	"github.com/souhub/wecircles/pkg/logging"
 )
 
 //"_cookie"のValueとUuidと同じUuidを持つSessionを取得
@@ -27,6 +28,26 @@ func parseTemplateFiles(filenames ...string) (t *template.Template) {
 		files = append(files, fmt.Sprintf("web/templates/%s.html", file))
 	}
 	t = template.Must(t.ParseFiles(files...))
+	return
+}
+
+func checkMembership(user data.User, circle data.Circle) (ok bool, err error) {
+	memberships, err := user.Memberships()
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	for _, membership := range memberships {
+		ok, err = membership.Check(circle)
+		if err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			return
+		}
+		if !ok {
+			err = errors.New("Invalid the membership")
+			return
+		}
+		return
+	}
 	return
 }
 

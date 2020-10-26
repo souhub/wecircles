@@ -1,13 +1,14 @@
-{{define "contents"}}
+{{define "contents"}} {{.MembershipValid}}
 <div>
   <h2>{{.Circle.Name}}</h2>
   <p>{{.Circle.Overview}}</p>
 </div>
-{{range .Memberships}} {{.CircleID}} {{.User.Name}} {{end}}
-
+{{if .MembershipValid}}
+<p>参加中</p>
+{{else}}
 <a
   class="btn btn-outline-success"
   href="/circle/memberships/create?id={{.Circle.OwnerIDStr}}"
   >このサークルのメンバーになる</a
 >
-{{end}}
+{{end}} {{end}}

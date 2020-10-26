@@ -1,7 +1,8 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":94,"msg":"template: mypage.circle.html:6:44: executing \"contents\" at \u003c.User.Name\u003e: can't evaluate field User in type data.Membership","time":"2020-10-25T08:32:50Z"}
-o","level":"warning","line":76,"msg":"html/template:layout.mypage.html:18:41: no such template \"contents\"","time":"2020-10-25T08:03:37Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":76,"msg":"html/template:layout.mypage.html:18:41: no such template \"contents\"","time":"2020-10-25T08:03:38Z"}
-template: user.show.html:14:34: executing \"content\" at \u003c.User.ID\u003e: can't evaluate field ID in type data.User","time":"2020-10-25T07:08:07Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/utils.go","level":"warning","line":42,"msg":"sql: no rows in result set","time":"2020-10-26T05:36:03Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":84,"msg":"sql: no rows in result set","time":"2020-10-26T05:36:03Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/utils.go","level":"warning","line":42,"msg":"sql: no rows in result set","time":"2020-10-26T05:35:51Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":84,"msg":"sql: no rows in result set","time":"2020-10-26T05:35:51Z"}
+l:14:34: executing \"content\" at \u003c.User.ID\u003e: can't evaluate field ID in type data.User","time":"2020-10-25T07:08:07Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":70,"msg":"template: user.show.html:14:34: executing \"content\" at \u003c.User.ID\u003e: can't evaluate field ID in type data.User","time":"2020-10-25T07:08:08Z"}
 o such file or directory","time":"2020-10-25T05:43:02Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":209,"msg":"sql: no rows in result set","time":"2020-10-25T05:43:10Z"}

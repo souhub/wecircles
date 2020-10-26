@@ -55,6 +55,30 @@ func (membership *Membership) Circle() (circle Circle, err error) {
 	return
 }
 
+func (membership *Membership) Check(circle Circle) (valid bool, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT *
+			  FROM memberships
+			  WHERE user_id=?
+			  AND circle_id=?`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	defer stmt.Close()
+	err = stmt.QueryRow(membership.UserID, circle.ID).Scan(&membership.ID, &membership.UserID, &membership.CircleID)
+	if err != nil {
+		valid = false
+		return
+	}
+	if membership.ID != 0 {
+		valid = true
+	}
+	return
+}
+
 // func CirclesByMemberships(memberships []Membership) (circles []Circle, err error) {
 // 	db := NewDB()
 // 	defer db.Close()

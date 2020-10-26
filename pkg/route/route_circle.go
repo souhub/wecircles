@@ -79,15 +79,15 @@ func Circle(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	memberships, err := myUser.Memberships()
+	membershipValid, err := checkMembership(myUser, circle)
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	data := Data{
-		MyUser:      myUser,
-		User:        owner,
-		Circle:      circle,
-		Memberships: memberships,
+		MyUser:          myUser,
+		User:            owner,
+		Circle:          circle,
+		MembershipValid: membershipValid,
 	}
 	tmp := parseTemplateFiles("layout.mypage", "navbar.mypage", "mypage.header", "mypage.circle")
 	if err := tmp.Execute(w, data); err != nil {
