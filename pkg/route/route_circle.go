@@ -16,14 +16,14 @@ func MyCircle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
 	// ここでサークルを作成済みかチェックする
-	circle, err := data.GetCirclebyUser(user.UserIdStr)
+	circle, err := data.GetCirclebyUser(myUser.UserIdStr)
 	// サークルを持っていなければエラー発生し、/circle/newに飛ばされる
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -31,7 +31,7 @@ func MyCircle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	data := Data{
-		User:   user,
+		MyUser: myUser,
 		Circle: circle,
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circle.private")
@@ -111,13 +111,13 @@ func Circles(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
 	data := Data{
-		User:    user,
+		MyUser:  myUser,
 		Circles: circles,
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circles")
@@ -133,18 +133,18 @@ func CircleManage(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	circle, err := data.GetCirclebyUser(user.UserIdStr)
+	circle, err := data.GetCirclebyUser(myUser.UserIdStr)
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	data := Data{
-		User:   user,
+		MyUser: myUser,
 		Circle: circle,
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circle.manage")
@@ -161,14 +161,14 @@ func NewCircle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
 	data := Data{
-		User: user,
+		MyUser: myUser,
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circle.new")
 	tmp.Execute(w, data)
@@ -181,19 +181,19 @@ func CreateCircle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
 	currentRootDir, err := os.Getwd()
-	circleImageDir := fmt.Sprintf("%s/web/img/user%d/circles/mycircle", currentRootDir, user.Id)
+	circleImageDir := fmt.Sprintf("%s/web/img/user%d/circles/mycircle", currentRootDir, myUser.Id)
 	_, err = os.Stat(circleImageDir)
 	if err != nil {
 		err = os.MkdirAll(circleImageDir, 0777)
 	}
-	circleImage, err := user.UploadCircleImage(r)
+	circleImage, err := myUser.UploadCircleImage(r)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
@@ -207,15 +207,15 @@ func CreateCircle(w http.ResponseWriter, r *http.Request) {
 		ImagePath:  circleImage,
 		Overview:   r.PostFormValue("overview"),
 		Category:   r.PostFormValue("category"),
-		OwnerID:    user.Id,
-		OwnerIDStr: user.UserIdStr,
+		OwnerID:    myUser.Id,
+		OwnerIDStr: myUser.UserIdStr,
 	}
 	if err = circle.Create(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/circle/new", 302)
 		return
 	}
-	createdCircle, err := data.GetCirclebyUser(user.UserIdStr)
+	createdCircle, err := data.GetCirclebyUser(myUser.UserIdStr)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
@@ -228,7 +228,7 @@ func CreateCircle(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	url := fmt.Sprintf("/circle?id=%s", user.UserIdStr)
+	url := fmt.Sprintf("/circle?id=%s", myUser.UserIdStr)
 	http.Redirect(w, r, url, 302)
 }
 
@@ -267,7 +267,7 @@ func UpdateCircle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
@@ -277,7 +277,7 @@ func UpdateCircle(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	circle, err := data.GetCirclebyUser(user.UserIdStr)
+	circle, err := data.GetCirclebyUser(myUser.UserIdStr)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return

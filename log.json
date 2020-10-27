@@ -1,7 +1,7 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":249,"msg":"template: navbar.private.html:18:23: executing \"navbar\" at \u003c.MyUser.ImagePath\u003e: can't evaluate field MyUser in type data.User","time":"2020-10-27T10:53:43Z"}
-msg":"sql: expected 10 destination arguments in Scan, not 9","time":"2020-10-27T10:52:39Z"}
-:47Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"warning","line":95,"msg":"sql: expected 10 destination arguments in Scan, not 9","time":"2020-10-27T10:49:47Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":73,"msg":"sql: no rows in result set","time":"2020-10-27T13:03:41Z"}
+ at \u003c.MyUser.ImagePath\u003e: can't evaluate field MyUser in type data.User","time":"2020-10-27T10:53:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":29,"msg":"sql: no rows in result set","time":"2020-10-27T12:59:08Z"}
+level":"warning","line":95,"msg":"sql: expected 10 destination arguments in Scan, not 9","time":"2020-10-27T10:49:47Z"}
 pkg/data/user.go","level":"warning","line":95,"msg":"sql: expected 10 destination arguments in Scan, not 9","time":"2020-10-27T10:25:58Z"}
 ,"msg":"http: no such file","time":"2020-10-27T10:06:48Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":215,"msg":"http: no such file","time":"2020-10-27T10:06:48Z"}
