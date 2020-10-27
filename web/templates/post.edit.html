@@ -12,86 +12,109 @@
     <link rel="stylesheet" href="/static/css/navbar-search.css" />
     <title>Document</title>
   </head>
-  <body>
+  <body class="bg-white">
     <form
     action="/post/update?id={{.Post.Uuid}}"
     method="post"
     enctype="multipart/form-data"
   >
-    <nav
-      class="navbar navbar-expand-lg navbar-light bg-light position-fixed"
-      style="
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        height: 70px;
-      "
-    >
-      <h1 class="box"><a class="navbar-brand" href="/">WeCircle</a></h1>
-      <div class="box" style="display: flex">
-        <button
-          type="button"
-          onclick="javascript:history.back();"
-          class="btn btn-outline-secondary"
-        >
-          戻る
-        </button>
-        <button type="submit" class="btn btn-outline-success ml-2">
-          投稿
-        </button>
-      </div>
-    </nav>
+  <nav
+  class="navbar navbar-expand-lg navbar-light bg-white position-fixed"
+  style="
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 70px;
+    position: absolute;
+    top: 0px;
+  "
+>
+  <h1 class="box"><a class="navbar-brand" href="/">WeCircle</a></h1>
 
-    <div class="mx-auto" style="padding-top: 80px">
-        <div class="form-group">
-          <div style="display: flex;">
-            <div class="img mx-5">
-              <small class="form-text text-muted">現在のサムネイル</small>
-              {{if eq .Post.ThumbnailPath "default_thumbnail.jpg"}}
-              <img
-                src="/static/img/{{.Post.ThumbnailPath}}"
-                alt="user_profile_image"
-                style="width: 250px; height: 200px; object-fit: cover"
-              />
-              {{else}}
-              <img
-                src="/static/img/user{{.Post.UserId}}/posts/post{{.Post.Id}}/{{.Post.ThumbnailPath}}"
-                alt="user_profile_image"
-                style="width: auto; height: 250px; object-fit: cover"
-              />
-              {{end}}
-            </div>
-            <div class="img">
-              <small class="form-text text-muted">新しいサムネイル</small>
-              <img
-                id="preview"
-                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                style="width: auto; height: 250px; object-fit: cover"
-              />
-              <input
-                type="file"
-                name="image"
-                onChange="previewImage(this);"
-                accept="image/*"
-              />
-            </div>
-          </div>
+  <div class="box" style="display: flex">
+    <button
+      type="button"
+      onclick="javascript:history.back();"
+      class="btn btn-outline-secondary"
+    >
+      戻る
+    </button>
+
+    <button type="submit" class="btn btn-outline-success ml-2">
+      投稿
+    </button>
+  </div>
+</nav>
+
+<div class="mx-auto" style="max-width: 540px">
+      <div
+      class="form-group text-center"
+      style="height: 250px; padding-top: 100px; margin-bottom: 150px"
+    >
+      <div style="display: block; height: 200px">
+        <div style="height: 250px">
+          <img
+            src="/static/img/user{{.MyUser.Id}}/posts/post{{.Post.Uuid}}/{{.Post.ThumbnailPath}}"
+            alt="existed_thumbnail_image"
+            style="width: 400px; height: 250px; object-fit: cover"
+          />
         </div>
-          <textarea
-            type="text"
-            name="title"
-            class="form-control font-weight-bold"
-            style="font-size: 30px; white-space: prewrap"
+        <div style="height: 250px; position: relative; bottom: 250px">
+          <img
+            id="preview"
+            src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+            alt="new_thumbnail_image"
+            style="width: 400px; height: 250px; object-fit: cover"
+          />
+        </div>
+        <div style="height: 250px; position: relative; bottom: 500px">
+          <label
+            for="image"
+            style="width: 400px; height: 250px; object-fit: cover"
           >
+            <i
+              class="fas fa-image fa-4x"
+              style="
+                width: 400px;
+                height: 250px;
+                background-color: white;
+                opacity: 0.4;
+                text-align: center;
+                vertical-align: middle;
+                display: table-cell;
+                color: black;
+              "
+            ></i>
+            <input
+              style="display: none"
+              id="image"
+              type="file"
+              name="image"
+              onChange="previewImage(this);"
+              accept="image/*"
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+    <textarea
+    type="text"
+    class="form-control font-weight-bold"
+    style="font-size: 30px; border: none"
+    name="title"
+    rows="1"
+    required
+  >
 {{.Post.Title}}</textarea
           >
           <textarea
-            type="text"
-            name="body"
-            class="form-control auto-resize"
-            style="line-height: 16px; white-space: prewrap"
-            rows="50"
-          >
+          type="text"
+          name="body"
+          class="form-control auto-resize"
+          style="line-height: 16px; white-space: prewrap; border: none"
+          rows="35"
+          required
+        >
 {{.Post.Body}}</textarea
           >
       </form>

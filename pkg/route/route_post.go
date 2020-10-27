@@ -3,6 +3,7 @@ package route
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/google/uuid"
@@ -64,7 +65,7 @@ func NewPost(w http.ResponseWriter, r *http.Request) {
 // POST /post/create
 // Create the new post
 func CreatePost(w http.ResponseWriter, r *http.Request) {
-	sess, err := session(w, r)
+	session, err := session(w, r)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
@@ -75,26 +76,23 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/post/new", 302)
 		return
 	}
-	user, err := sess.User()
+	user, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/post/new", 302)
 		return
 	}
-	//createdAtを作成
 	now := time.Now()
 	year := now.Year()
 	month := int(now.Month())
 	date := now.Day()
 	hour := now.Hour()
 	createdAt := fmt.Sprintf("%v年%v月%v日%v時", year, month, date, hour)
-	// formの入力に内容をを解析
 	if err := r.ParseMultipartForm(0); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/post/new", 302)
 		return
 	}
-	//postを作成
 	post := data.Post{
 		Uuid:          uuid.New().String(),
 		Title:         r.PostFormValue("title"),
@@ -108,6 +106,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	thumbnailPath, err := post.UploadThumbnail(r)
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		thumbnailPath = "default_thumbnail.jpg"
 	}
 	post.ThumbnailPath = thumbnailPath
 	if err = post.Create(); err != nil {
@@ -115,10 +114,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/post/new", 302)
 		return
 	}
-	// url := fmt.Sprint("/post?id=", post.Uuid)
 	http.Redirect(w, r, "/", 302)
-	// この投稿にこのurlを割り当てるためのダミー（エラー発生するが問題ない）
-	// http.Redirect(w, r, url, 302)
 }
 
 // GET /post/show
@@ -151,7 +147,7 @@ func ShowPost(w http.ResponseWriter, r *http.Request) {
 		MyUser: myUser,
 		Post:   post,
 	}
-	// 投稿者判定はテンプレートで行う
+	// Contributor determination is done by template.
 	tmp := parseTemplateFiles("layout", "navbar.private", "post")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -216,6 +212,12 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
+	// If the thumbnails have been updated, delete the old ones from the folder.
+	if post.ThumbnailPath != thumbnailPath {
+		if err := post.DeleteThembnail(); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+	}
 	post.ThumbnailPath = thumbnailPath
 	if session.UserId != post.UserId {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -230,116 +232,21 @@ func UpdatePost(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 302)
 }
 
-// func (post *Post) UpdatePostThumbnail(r *http.Request) (thumbnailPath string, err error) {
-// 	// _, err := session(w, r)
-// 	// if err != nil {
-// 	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 	// 	http.Redirect(w, r, "/login", 302)
-// 	// 	return
-// 	// }
-// 	// 画像を multiple で送信しているため PaeseForm での解析不可
-// 	// err = r.ParseMultipartForm(0)
-// 	// if err != nil {
-// 	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 	// }
-// 	// uuid := r.FormValue("uuid")
-// 	// post, err := data.PostByUuid(uuid)
-// 	// if err != nil {
-// 	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 	// }
-// 	// userごとの画像保存フォルダにサムネイル保存フォルダ作成
-// 	currentRootDir, err := os.Getwd()
-// 	thumbnailImageDir := fmt.Sprintf("%s/web/img/user%d/posts/post%d", currentRootDir, post.UserId, post.Id)
-// 	_, err = os.Stat(thumbnailImageDir)
-// 	if err != nil {
-// 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 		if err = os.MkdirAll(thumbnailImageDir, 0777); err != nil {
-// 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 			return
-// 		}
-// 		return
-// 	}
-// 	// Delete the current thumbnail.
-// 	err = post.DeleteThembnail()
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 		return
-// 	}
-// 	// Uplaod the new thumbnail.
-// 	thumbnailPath, err = post.UploadThumbnail(r)
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 		return
-// 	}
-// 	// post.ThumbnailPath = thumbnailPath
-// 	// // Update the user's image path from old one to the new one in the DB.
-// 	// if err = post.UpdateThumbnail(); err != nil {
-// 	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 	// 	return
-// 	// }
-// 	return
-// 	// url := fmt.Sprintf("/post/edit?id=%s", uuid)
-// 	// http.Redirect(w, r, "/", 302)
-// }
-
-// POST /post/update/thumbnail
-// Update the thumbnail
-// func UpdatePostThumbnail(w http.ResponseWriter, r *http.Request) {
-// 	_, err := session(w, r)
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 		http.Redirect(w, r, "/login", 302)
-// 		return
-// 	}
-// 	// 画像を multiple で送信しているため PaeseForm での解析不可
-// 	err = r.ParseMultipartForm(0)
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 	}
-// 	uuid := r.FormValue("uuid")
-// 	post, err := data.PostByUuid(uuid)
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 	}
-// 	// userごとの画像保存フォルダにサムネイル保存フォルダ作成
-// 	currentRootDir, err := os.Getwd()
-// 	thumbnailImageDir := fmt.Sprintf("%s/web/img/user%d/posts/post%d", currentRootDir, post.UserId, post.Id)
-// 	_, err = os.Stat(thumbnailImageDir)
-// 	if err != nil {
-// 		err = os.MkdirAll(thumbnailImageDir, 0777)
-// 	}
-// 	// Delete the current thumbnail.
-// 	err = post.DeleteThembnail()
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 	}
-// 	// Uplaod the new thumbnail.
-// 	thumbnailPath, err := post.UploadThumbnail(r)
-// 	if err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 	}
-// 	post.ThumbnailPath = thumbnailPath
-// 	// Update the user's image path from old one to the new one in the DB.
-// 	if err = post.UpdateThumbnail(); err != nil {
-// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 	}
-// 	// url := fmt.Sprintf("/post/edit?id=%s", uuid)
-// 	http.Redirect(w, r, "/", 302)
-// }
-
 // DELETE /post/delete
 // Delete the post
 func DeletePost(w http.ResponseWriter, r *http.Request) {
-	sess, err := session(w, r)
+	session, err := session(w, r)
 	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+	}
+	myUser, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 	}
 	vals := r.URL.Query()
 	uuid := vals.Get("id")
-	myUser, err := sess.User()
-	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
 	post, err := data.PostByUuid(uuid)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -347,10 +254,16 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 	if myUser.Id != post.UserId {
 		http.Redirect(w, r, "/", 302)
 	}
-	err = post.Delete()
-	if err != nil {
+	if err = post.Delete(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	currentRootDir, err := os.Getwd()
+	postPath := fmt.Sprintf("%s/web/img/user%d/posts/post%s", currentRootDir, myUser.Id, post.Uuid)
+	if _, err = os.Stat(postPath); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	if err := os.RemoveAll(postPath); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	http.Redirect(w, r, "/", 302)
-
 }

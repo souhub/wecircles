@@ -90,7 +90,7 @@ func (user *User) PostsByUser() (posts []Post, err error) {
 	}
 	for rows.Next() {
 		var post Post
-		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.UserId, &post.UserIdStr, &post.UserName, &post.ThumbnailPath, &post.CreatedAt)
+		err = rows.Scan(&post.Id, &post.Uuid, &post.Title, &post.Body, &post.ThumbnailPath, &post.UserId, &post.UserIdStr, &post.UserName, &post.UserImagePath, &post.CreatedAt)
 		if err != nil {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		}
