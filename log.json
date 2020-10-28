@@ -1,12 +1,8 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":73,"msg":"sql: no rows in result set","time":"2020-10-27T13:03:41Z"}
- at \u003c.MyUser.ImagePath\u003e: can't evaluate field MyUser in type data.User","time":"2020-10-27T10:53:43Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":29,"msg":"sql: no rows in result set","time":"2020-10-27T12:59:08Z"}
-level":"warning","line":95,"msg":"sql: expected 10 destination arguments in Scan, not 9","time":"2020-10-27T10:49:47Z"}
-pkg/data/user.go","level":"warning","line":95,"msg":"sql: expected 10 destination arguments in Scan, not 9","time":"2020-10-27T10:25:58Z"}
-,"msg":"http: no such file","time":"2020-10-27T10:06:48Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":215,"msg":"http: no such file","time":"2020-10-27T10:06:48Z"}
-39,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user3/posts/postc0f5b75e-569f-4487-9089-924b03cc4800/default_thumbnail.jpg: no such file or directory","time":"2020-10-27T09:57:33Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":215,"msg":"This post's thumbnail is default.\nPostID:\u0026s:%!(EXTRA string=c0f5b75e-569f-4487-9089-924b03cc4800)","time":"2020-10-27T09:57:33Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":252,"msg":"template: user.delete.confirm.html:5:17: executing \"content\" at \u003c.Myuser.ImagePath\u003e: can't evaluate field Myuser in type route.Data","time":"2020-10-28T00:35:40Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":252,"msg":"template: user.delete.confirm.html:5:17: executing \"content\" at \u003c.Myuser.ImagePath\u003e: can't evaluate field Myuser in type route.Data","time":"2020-10-28T00:35:41Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":252,"msg":"template: user.delete.confirm.html:5:17: executing \"content\" at \u003c.Myuser.ImagePath\u003e: can't evaluate field Myuser in type route.Data","time":"2020-10-28T00:36:05Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":252,"msg":"template: user.delete.confirm.html:5:17: executing \"content\" at \u003c.Myuser.ImagePath\u003e: can't evaluate field Myuser in type route.Data","time":"2020-10-28T00:37:35Z"}
+com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":215,"msg":"This post's thumbnail is default.\nPostID:\u0026s:%!(EXTRA string=c0f5b75e-569f-4487-9089-924b03cc4800)","time":"2020-10-27T09:57:33Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":146,"msg":"http: no such file","time":"2020-10-27T09:57:42Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":219,"msg":"http: no such file","time":"2020-10-27T09:57:42Z"}
 -26T16:14:18Z"}

@@ -196,9 +196,32 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
+		return
 	}
 	myUser, err := session.User()
 	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	if err := r.ParseForm(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	if myUser.Password != data.Encrypt(r.FormValue("password")) {
+		http.Redirect(w, r, "/user/delete/confirm", 302)
+		return
+	}
+	if err = myUser.DeleteUserImageDir(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/user/delete/confirm", 302)
+		return
+	}
+	if err = myUser.DeletePosts(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	if err = myUser.Delete(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
@@ -206,28 +229,8 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	if err := r.ParseForm(); err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		return
-	}
-	if myUser.Password == data.Encrypt(r.FormValue("password")) {
-		if err = myUser.DeleteUserImageDir(); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-			http.Redirect(w, r, "/user/delete/confirm", 302)
-			return
-		}
-		if err = myUser.DeletePosts(); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-			return
-		}
-		if err = myUser.Delete(); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-			return
-		}
-		http.Redirect(w, r, "/signup", 302)
-		return
-	}
-	http.Redirect(w, r, "/user/delete/confirm", 302)
+	http.Redirect(w, r, "/signup", 302)
+	return
 }
 
 // GET /user/delete/confirm
@@ -244,8 +247,11 @@ func DeleteUserConfirm(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
+	data := Data{
+		MyUser: myUser,
+	}
 	tmp := parseTemplateFiles("layout", "user.delete.confirm", "navbar.private")
-	if err := tmp.Execute(w, myUser); err != nil {
+	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
