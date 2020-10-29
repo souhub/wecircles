@@ -1,8 +1,10 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":252,"msg":"template: user.delete.confirm.html:5:17: executing \"content\" at \u003c.Myuser.ImagePath\u003e: can't evaluate field Myuser in type route.Data","time":"2020-10-28T00:35:40Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":252,"msg":"template: user.delete.confirm.html:5:17: executing \"content\" at \u003c.Myuser.ImagePath\u003e: can't evaluate field Myuser in type route.Data","time":"2020-10-28T00:35:41Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":252,"msg":"template: user.delete.confirm.html:5:17: executing \"content\" at \u003c.Myuser.ImagePath\u003e: can't evaluate field Myuser in type route.Data","time":"2020-10-28T00:36:05Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":252,"msg":"template: user.delete.confirm.html:5:17: executing \"content\" at \u003c.Myuser.ImagePath\u003e: can't evaluate field Myuser in type route.Data","time":"2020-10-28T00:37:35Z"}
-com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":215,"msg":"This post's thumbnail is default.\nPostID:\u0026s:%!(EXTRA string=c0f5b75e-569f-4487-9089-924b03cc4800)","time":"2020-10-27T09:57:33Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":144,"msg":"sql: no rows in result set","time":"2020-10-29T11:26:18Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":144,"msg":"sql: no rows in result set","time":"2020-10-29T11:26:23Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":144,"msg":"sql: no rows in result set","time":"2020-10-29T11:26:31Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":144,"msg":"sql: no rows in result set","time":"2020-10-29T11:26:36Z"}
+ng","line":60,"msg":"template: layout.post.new-edit.html:16:9: executing \"layout.post.new-edit.html\" at \u003c.Uuid\u003e: can't evaluate field Uuid in type route.Data","time":"2020-10-29T11:17:00Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":60,"msg":"template: layout.post.new-edit.html:16:9: executing \"layout.post.new-edit.html\" at \u003c.Uuid\u003e: can't evaluate field Uuid in type route.Data","time":"2020-10-29T11:18:02Z"}
+cles/pkg/route/route_post.go","level":"info","line":215,"msg":"This post's thumbnail is default.\nPostID:\u0026s:%!(EXTRA string=c0f5b75e-569f-4487-9089-924b03cc4800)","time":"2020-10-27T09:57:33Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":146,"msg":"http: no such file","time":"2020-10-27T09:57:42Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":219,"msg":"http: no such file","time":"2020-10-27T09:57:42Z"}
 -26T16:14:18Z"}
