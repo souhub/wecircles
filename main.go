@@ -19,14 +19,14 @@ func main() {
 
 	http.HandleFunc("/post/new", route.NewPost)
 	http.HandleFunc("/post/create", route.CreatePost)
-	http.HandleFunc("/posts", route.Posts)
+	http.HandleFunc("/posts/manage", route.PostsManage)
 	http.HandleFunc("/post", route.ShowPost)
 	http.HandleFunc("/post/edit", route.EditPost)
 	http.HandleFunc("/post/update", route.UpdatePost)
 	http.HandleFunc("/post/delete", route.DeletePost)
 
-	http.HandleFunc("/mypage", route.MyPage)
-	http.HandleFunc("/mycircle", route.MyCircle)
+	// http.HandleFunc("/mypage", route.MyPage)
+	// http.HandleFunc("/mycircle", route.MyCircle)
 
 	http.HandleFunc("/user/edit", route.EditUser)
 	http.HandleFunc("/user/update", route.UpdateUser)
@@ -46,6 +46,8 @@ func main() {
 	http.HandleFunc("/circle/memberships", route.MembershipsCircles)
 	http.HandleFunc("/circle/membership/create", route.MembershipsCircleCreate)
 	http.HandleFunc("/circle/membership/delete", route.DeleteMembership)
+
+	http.HandleFunc("/chat/create", route.CreateChat)
 
 	http.ListenAndServe(":80", nil)
 }

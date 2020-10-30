@@ -9,36 +9,41 @@ import (
 	"github.com/souhub/wecircles/pkg/logging"
 )
 
-func MyCircle(w http.ResponseWriter, r *http.Request) {
-	session, err := session(w, r)
-	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		http.Redirect(w, r, "/login", 302)
-		return
-	}
-	myUser, err := session.User()
-	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		http.Redirect(w, r, "/login", 302)
-		return
-	}
-	// ここでサークルを作成済みかチェックする
-	circle, err := data.GetCirclebyUser(myUser.UserIdStr)
-	// サークルを持っていなければエラー発生し、/circle/newに飛ばされる
-	if err != nil {
-		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		http.Redirect(w, r, "/circle/new", 302)
-		return
-	}
-	data := Data{
-		MyUser: myUser,
-		Circle: circle,
-	}
-	tmp := parseTemplateFiles("layout", "navbar.private", "circle.private")
-	if err := tmp.Execute(w, data); err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
-}
+// func MyCircle(w http.ResponseWriter, r *http.Request) {
+// 	session, err := session(w, r)
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		http.Redirect(w, r, "/login", 302)
+// 		return
+// 	}
+// 	myUser, err := session.User()
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		http.Redirect(w, r, "/login", 302)
+// 		return
+// 	}
+// 	// ここでサークルを作成済みかチェックする
+// 	circle, err := data.GetCirclebyUser(myUser.UserIdStr)
+// 	// サークルを持っていなければエラー発生し、/circle/newに飛ばされる
+// 	if err != nil {
+// 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		http.Redirect(w, r, "/circle/new", 302)
+// 		return
+// 	}
+// 	chats, err := data.GetChats(circle.ID)
+// 	if err != nil {
+// 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 	}
+// 	data := Data{
+// 		MyUser: myUser,
+// 		Circle: circle,
+// 		Chats:  chats,
+// 	}
+// 	tmp := parseTemplateFiles("layout", "navbar.private", "circle.private")
+// 	if err := tmp.Execute(w, data); err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 	}
+// }
 
 func Circle(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
@@ -57,8 +62,27 @@ func Circle(w http.ResponseWriter, r *http.Request) {
 	}
 	// ログイン済かつかつidが自分のものの場合
 	if myUser.UserIdStr == id {
-		// サークル持っているかどうかはMyCircleハンドラで振り分ける
-		http.Redirect(w, r, "/mycircle", 302)
+		// ここでサークルを作成済みかチェックする
+		circle, err := data.GetCirclebyUser(myUser.UserIdStr)
+		// サークルを持っていなければエラー発生し、/circle/newに飛ばされる
+		if err != nil {
+			logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			http.Redirect(w, r, "/circle/new", 302)
+			return
+		}
+		chats, err := data.GetChats(circle.ID)
+		if err != nil {
+			logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+		data := Data{
+			MyUser: myUser,
+			Circle: circle,
+			Chats:  chats,
+		}
+		tmp := parseTemplateFiles("layout", "navbar.private", "circle.private")
+		if err := tmp.Execute(w, data); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
 		return
 	}
 	// ログイン済かつidが他人のもの場合
@@ -83,13 +107,19 @@ func Circle(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
+	chats, err := data.GetChats(circle.ID)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
 	data := Data{
 		MyUser:          myUser,
 		User:            owner,
 		Circle:          circle,
 		MembershipValid: membershipValid,
+		Chats:           chats,
 	}
-	tmp := parseTemplateFiles("layout.mypage", "navbar.mypage", "mypage.header", "mypage.circle")
+	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header", "mypage.circle")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}

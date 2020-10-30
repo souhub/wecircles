@@ -1,6 +1,7 @@
 package route
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/souhub/wecircles/pkg/data"
@@ -35,7 +36,8 @@ func User(w http.ResponseWriter, r *http.Request) {
 	user, err := data.UserByUserIdStr(id)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		http.Redirect(w, r, "/mypage", 302)
+		url := fmt.Sprintf("/user?id=%s", user.UserIdStr)
+		http.Redirect(w, r, url, 302)
 		return
 	}
 	posts, err := user.PostsByUser()
@@ -55,15 +57,31 @@ func User(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	// ログイン後に自分のユーザー名をクリックした場合
-	if session.UserId == user.Id {
-		http.Redirect(w, r, "/mypage", 302)
-		return
-	}
 	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	// ログイン後に自分のユーザー名をクリックした場合
+	if session.UserId == user.Id {
+		// http.Redirect(w, r, "/mypage", 302)
+		myUser, err := session.User()
+		if err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			return
+		}
+		posts, err := myUser.PostsByUser()
+		data := Data{
+			MyUser: myUser,
+			Posts:  posts,
+		}
+		tmp := parseTemplateFiles("layout", "navbar.private", "user", "posts")
+		if err := tmp.Execute(w, data); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			return
+		}
+		return
 	}
 	data = Data{
 		MyUser: myUser,
@@ -71,7 +89,7 @@ func User(w http.ResponseWriter, r *http.Request) {
 		Posts:  posts,
 	}
 	// ログイン後に他人のユーザー名をクリックした場合
-	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header", "mypage.posts")
+	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header", "index", "posts")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}

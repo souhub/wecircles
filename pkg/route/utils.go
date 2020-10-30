@@ -61,5 +61,7 @@ type Data struct {
 	Circles         []data.Circle
 	Membership      data.Membership
 	Memberships     []data.Membership
+	Chat            data.Chat
+	Chats           []data.Chat
 	MembershipValid bool
 }

@@ -1,6 +1,7 @@
 package route
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/souhub/wecircles/pkg/data"
@@ -16,13 +17,13 @@ func MembershipsCircles(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	memberships, err := user.MembershipsByUserID()
+	memberships, err := myUser.MembershipsByUserID()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
@@ -35,7 +36,7 @@ func MembershipsCircles(w http.ResponseWriter, r *http.Request) {
 		circles = append(circles, circle)
 	}
 	data := Data{
-		User:    user,
+		MyUser:  myUser,
 		Circles: circles,
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circles")
@@ -74,7 +75,8 @@ func MembershipsCircleCreate(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	http.Redirect(w, r, "/circle/memberships", 302)
+	url := fmt.Sprintf("/circle?id=%s", circle.OwnerIDStr)
+	http.Redirect(w, r, url, 302)
 }
 
 // DELETE /circle/membership/delete
@@ -107,5 +109,6 @@ func DeleteMembership(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	http.Redirect(w, r, "/circle/memberships", 302)
+	url := fmt.Sprintf("/circle?id=%s", circle.OwnerIDStr)
+	http.Redirect(w, r, url, 302)
 }

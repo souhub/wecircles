@@ -88,19 +88,3 @@ func (membership *Membership) Delete() (err error) {
 	_, err = db.Exec(query, membership.UserID, membership.CircleID)
 	return
 }
-
-// func CirclesByMemberships(memberships []Membership) (circles []Circle, err error) {
-// 	db := NewDB()
-// 	defer db.Close()
-// 	query := `SELECT *
-// 			FROM circles
-// 			WHERE id=?`
-// 	var rows *sql.Rows
-// 	for _, membership := range memberships {
-// 		row, err := db.QueryRow(query, membership.ID)
-// 		if err != nil {
-// 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-// 		}
-// 		rows = append(rows, row)
-// 	}
-// }

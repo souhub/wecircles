@@ -1,16 +1,54 @@
 {{define "content"}}
-<div>
-  <h2>{{.Circle.Name}}</h2>
-  <p>{{.Circle.Overview}}</p>
+<div class="bg-white">
+  <h3 style="text-align: center">{{.Circle.Name}}</h3>
+  <p style="white-space: pre; width: 200px; word-wrap: break-all">
+    {{.Circle.Overview}}
+  </p>
 </div>
 {{if .MembershipValid}}
-<p>参加中</p>
 <a
   class="btn btn-outline-danger"
   href="/circle/membership/delete?id={{.Circle.OwnerIDStr}}"
   >このサークルを退会する</a
 >
-{{else}}
+<form action="/chat/create?id={{.Circle.OwnerIDStr}}" method="post">
+  <div>
+    <textarea
+      type="text"
+      name="body"
+      class="form-control auto-resize"
+      style="line-height: 16px; white-space: prewrap; border: none"
+      rows="5"
+      placeholder="今日のサークルでの出来事ををWeCircleに書いてみませんか？"
+      required
+    ></textarea>
+  </div>
+  <button type="submit" class="btn btn-outline-success">投稿</button>
+</form>
+
+{{if .Chats}} {{range .Chats}}
+<div class="card mb-3">
+  <div class="card-body">
+    <a href="/user?id={{.UserIdStr}}">
+      {{if eq .UserImagePath "default.png"}}
+      <img
+        src="/static/img/{{.UserImagePath}}"
+        style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%"
+        alt="default thumbnail"
+      />
+      {{else}}
+      <img
+        src="/static/img/user{{.UserId}}/{{.UserImagePath}}"
+        style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%"
+        alt="customized user image"
+      />
+      {{end}} {{.UserIdStr}}</a
+    >
+    <p>{{.CreatedAt}}</p>
+    <p>{{.Body}}</p>
+  </div>
+</div>
+{{end}} {{end}} {{else}}
 <a
   class="btn btn-outline-success"
   href="/circle/membership/create?id={{.Circle.OwnerIDStr}}"

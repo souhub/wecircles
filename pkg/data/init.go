@@ -86,6 +86,21 @@ func init() {
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
+
+	// Create the chats table
+	cmd = `CREATE TABLE IF NOT EXISTS chats(
+			id INT AUTO_INCREMENT PRIMARY KEY,
+			body TEXT,
+			user_id INT,
+			user_id_str VARCHAR(50),
+			user_image_path VARCHAR(255),
+			circle_id INT,
+			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+			)`
+	_, err = db.Exec(cmd)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 }
 
 func NewDB() *sql.DB {

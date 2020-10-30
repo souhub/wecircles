@@ -1,0 +1,24 @@
+{{define "content"}} {{if .Posts}} {{range .Posts}}
+<div class="card mx-auto">
+  <div>
+    <a href="/post?id={{.Uuid}}" class="flaot-left">
+      {{if .Title}}
+      <h5 class="card-title">{{.Title}}</h5>
+      {{else}}
+      <h5 class="card-title">NO TITLE</h5>
+      {{end}}
+      <p>{{.CreatedAt}}</p>
+    </a>
+  </div>
+  <div>
+    <a href="/post/delete?id={{.Uuid}}" class="float-right"
+      ><button class="btn btn-outline-danger">削除</button></a
+    >
+    <a href="/post/edit?id={{.Uuid}}" class="float-right"
+      ><button class="btn btn-outline-success">編集</button></a
+    >
+  </div>
+</div>
+{{end}} {{else}}
+<p class="text-center">まだ投稿がありません。</p>
+{{end}} {{end}}

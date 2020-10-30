@@ -14,7 +14,7 @@ import (
 // gitgitgit
 
 // GET /post
-func Posts(w http.ResponseWriter, r *http.Request) {
+func PostsManage(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
@@ -30,8 +30,10 @@ func Posts(w http.ResponseWriter, r *http.Request) {
 		MyUser: myUser,
 		Posts:  posts,
 	}
-	tmp := parseTemplateFiles("layout", "index", "navbar.private", "posts")
-	tmp.Execute(w, data)
+	tmp := parseTemplateFiles("layout", "navbar.private", "posts.manage")
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 }
 
 // GET /post/new

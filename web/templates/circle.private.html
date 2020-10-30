@@ -1,9 +1,12 @@
 {{define "content"}}
 <div>
-  <h2 class="text-center">{{.User.Name}}</h2>
-  <p>
-    <a href="/user/edit">
-      {{if eq .User.ImagePath "default.png"}}
+  <h2 class="text-center">{{.MyUser.Name}}</h2>
+  <div style="display: block; height: 200px; width: 200px">
+    <a
+      href="/user/edit"
+      style="display: block; width: 200px; height: 200px; border-radius: 50%"
+    >
+      {{if eq .MyUser.ImagePath "default.png"}}
       <img
         src="/static/img/default.png"
         alt="user_profile_image"
@@ -16,7 +19,7 @@
       />
       {{else}}
       <img
-        src="/static/img/user{{.User.Id}}/{{.User.ImagePath}}"
+        src="/static/img/user{{.MyUser.Id}}/{{.MyUser.ImagePath}}"
         alt="user_profile_image"
         style="
           width: 200px;
@@ -26,81 +29,64 @@
         "
       />
       {{end}}
-      <p>プロフィールを編集する</p>
+      <div
+        style="
+          height: 200px;
+          width: 200px;
+          position: relative;
+          bottom: 200px;
+          vertical-align: middle;
+          display: table-cell;
+          text-align: center;
+          z-index: 100;
+        "
+      >
+        <i class="fas fa-edit fa-3x" style="color: black"></i>
+      </div>
+      <div
+        style="
+          background-color: white;
+          opacity: 0.2;
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          position: relative;
+          bottom: 400px;
+        "
+      ></div>
     </a>
-  </p>
+  </div>
 </div>
 
+<br /><br />
 <nav class="navbar navbar-expand navbar-light">
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/mypage">ホーム</a>
+        <a class="nav-link" href="/user?id={{.MyUser.UserIdStr}}">ホーム</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/circle?id={{.User.UserIdStr}}">サークル</a>
+        <a class="nav-link" href="/circle?id={{.MyUser.UserIdStr}}">サークル</a>
       </li>
     </ul>
   </div>
 </nav>
 
-<h2>サークル</h2>
-<nav class="navbar navbar-expand navbar-light">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-      <a class="nav-link" href="/circle?id={{.User.UserIdStr}}">自分</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/circle/memberships">参加中</a>
-    </li>
-  </ul>
-</nav>
+<form action="/chat/create?id={{.Circle.OwnerIDStr}}" method="post">
+  <div>
+    <textarea
+      type="text"
+      name="body"
+      class="form-control auto-resize"
+      style="line-height: 16px; white-space: prewrap; border: none"
+      rows="5"
+      placeholder="今日のサークルでの出来事ををWeCircleに書いてみませんか？"
+      required
+    ></textarea>
+  </div>
+  <button type="submit" class="btn btn-outline-success">投稿</button>
+</form>
 
-<h3>管理</h3>
-<div>
-  <h4>サークル画像</h4>
-  <p>
-    {{if eq .Circle.ImagePath ""}}
-    <img
-      src="/static/img/default_thumbnail.jpg"
-      alt="circle_default_image"
-      style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
-    />
-    {{else}}
-    <img
-      src="/static/img/user{{.Circle.OwnerID}}/circles/mycircle/{{.Circle.ImagePath}}"
-      alt="circle_image"
-      style="width: 350px; height: 200px; border-radius: 5%; object-fit: cover"
-    />
-    {{end}}
-  </p>
-</div>
-
-<div>
-  <h4>サークル名</h4>
-  <p>{{.Circle.Name}}</p>
-</div>
-
-<div>
-  <h4>概要</h4>
-  <p>{{.Circle.Overview}}</p>
-</div>
-
-<div class="form-group">
-  <h4>カテゴリ</h4>
-  {{if eq .Circle.Category "tennis"}}
-  <p>テニス</p>
-  {{else if eq .Circle.Category "soccer"}}
-  <p>サッカー</p>
-  {{else if eq .Circle.Category "volunteer"}}
-  <p>ボランティア</p>
-  {{else if eq .Circle.Category "photo"}}
-  <p>写真</p>
-  {{else if eq .Circle.Category "basketball"}}
-  <p>バスケットボール</p>
-  {{else}}
-  <p>その他</p>
-  {{end}}
-</div>
-
-{{end}}
+{{if .Chats}} {{range .Chats}}
+<p>{{.Body}}</p>
+{{end}} {{end}} {{end}}
