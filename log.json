@@ -1,7 +1,7 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":94,"msg":"html/template:layout.mypage.html:18:41: no such template \"content\"","time":"2020-10-30T14:20:32Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":94,"msg":"html/template:layout.mypage.html:18:41: no such template \"content\"","time":"2020-10-30T14:20:40Z"}
-:42,"msg":"sql: no rows in result set","time":"2020-10-30T13:30:19Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":108,"msg":"sql: no rows in result set","time":"2020-10-30T13:30:19Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/utils.go","level":"warning","line":42,"msg":"sql: no rows in result set","time":"2020-10-31T01:51:22Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":108,"msg":"sql: no rows in result set","time":"2020-10-31T01:51:22Z"}
+route_circle.go","level":"warning","line":124,"msg":"template: mypage.circle.html:41:31: executing \"content\" at \u003c.UserId\u003e: can't evaluate field UserId in type data.Chat","time":"2020-10-31T01:47:21Z"}
+/route_circle.go","level":"info","line":108,"msg":"sql: no rows in result set","time":"2020-10-30T13:30:19Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/utils.go","level":"warning","line":42,"msg":"sql: no rows in result set","time":"2020-10-30T13:30:20Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":108,"msg":"sql: no rows in result set","time":"2020-10-30T13:30:20Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":69,"msg":"sql: no rows in result set","time":"2020-10-30T13:38:30Z"}
