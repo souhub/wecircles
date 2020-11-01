@@ -186,6 +186,16 @@ func (user *User) UpdatePostUserIdStr() (err error) {
 	return
 }
 
+func (user *User) UpdateChatUserIdStr() (err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `UPDATE chats
+		      SET user_id_str=?, user_image_path=?
+			  WHERE user_id=?`
+	_, err = db.Exec(query, user.UserIdStr, user.ImagePath, user.Id)
+	return
+}
+
 // Update the user image
 func (user *User) UpdateImage() (err error) {
 	db := NewDB()

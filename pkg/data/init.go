@@ -95,6 +95,7 @@ func init() {
 			user_id_str VARCHAR(50),
 			user_image_path VARCHAR(255),
 			circle_id INT,
+			circle_owner_id_str VARCHAR(50),
 			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 			)`
 	_, err = db.Exec(cmd)

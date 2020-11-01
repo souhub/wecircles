@@ -48,6 +48,7 @@ func main() {
 	http.HandleFunc("/circle/membership/delete", route.DeleteMembership)
 
 	http.HandleFunc("/chat/create", route.CreateChat)
+	http.HandleFunc("/chat/delete", route.DeleteChat)
 
 	http.ListenAndServe(":80", nil)
 }

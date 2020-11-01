@@ -45,6 +45,97 @@ import (
 // 	}
 // }
 
+// func Circle(w http.ResponseWriter, r *http.Request) {
+// 	vals := r.URL.Query()
+// 	id := vals.Get("id")
+// 	session, err := session(w, r)
+// 	if err != nil {
+// 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		http.Redirect(w, r, "/login", 302)
+// 		return
+// 	}
+// 	myUser, err := session.User()
+// 	if err != nil {
+// 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		http.Redirect(w, r, "/login", 302)
+// 		return
+// 	}
+// 	// ログイン済かつかつidが自分のものの場合
+// 	if myUser.UserIdStr == id {
+// 		// ここでサークルを作成済みかチェックする
+// 		circle, err := data.GetCirclebyUser(myUser.UserIdStr)
+// 		// サークルを持っていなければエラー発生し、/circle/newに飛ばされる
+// 		if err != nil {
+// 			logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 			http.Redirect(w, r, "/circle/new", 302)
+// 			return
+// 		}
+// 		chats, err := data.GetChats(circle.ID)
+// 		if err != nil {
+// 			logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		}
+// 		owner, err := circle.GetOwner()
+// 		if err != nil {
+// 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 			return
+// 		}
+// 		membershipValid, err := checkMembership(myUser, circle)
+// 		if err != nil {
+// 			logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		}
+// 		data := Data{
+// 			MyUser:          myUser,
+// 			User:            owner,
+// 			Circle:          circle,
+// 			MembershipValid: membershipValid,
+// 			Chats:           chats,
+// 		}
+// 		tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header.private", "mypage.circle")
+// 		if err := tmp.Execute(w, data); err != nil {
+// 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		}
+// 		return
+// 	}
+// 	// ログイン済かつidが他人のもの場合
+// 	// user, err := data.UserByUserIdStr(id)
+// 	// if err != nil {
+// 	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 	// 	http.Redirect(w, r, "/circle/new", 302)
+// 	// 	return
+// 	// }
+// 	circle, err := data.GetCirclebyUser(id)
+// 	if err != nil {
+// 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		http.Redirect(w, r, "/circle/new", 302)
+// 		return
+// 	}
+// 	owner, err := circle.GetOwner()
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		return
+// 	}
+// 	membershipValid, err := checkMembership(myUser, circle)
+// 	if err != nil {
+// 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 	}
+// 	chats, err := data.GetChats(circle.ID)
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		return
+// 	}
+// 	data := Data{
+// 		MyUser:          myUser,
+// 		User:            owner,
+// 		Circle:          circle,
+// 		MembershipValid: membershipValid,
+// 		Chats:           chats,
+// 	}
+// 	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header", "mypage.circle")
+// 	if err := tmp.Execute(w, data); err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 	}
+// }
+
 func Circle(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
 	id := vals.Get("id")
@@ -60,42 +151,11 @@ func Circle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	// ログイン済かつかつidが自分のものの場合
-	if myUser.UserIdStr == id {
-		// ここでサークルを作成済みかチェックする
-		circle, err := data.GetCirclebyUser(myUser.UserIdStr)
-		// サークルを持っていなければエラー発生し、/circle/newに飛ばされる
-		if err != nil {
-			logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-			http.Redirect(w, r, "/circle/new", 302)
-			return
-		}
-		chats, err := data.GetChats(circle.ID)
-		if err != nil {
-			logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-		data := Data{
-			MyUser: myUser,
-			Circle: circle,
-			Chats:  chats,
-		}
-		tmp := parseTemplateFiles("layout", "navbar.private", "circle.private")
-		if err := tmp.Execute(w, data); err != nil {
-			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		}
-		return
-	}
-	// ログイン済かつidが他人のもの場合
-	// user, err := data.UserByUserIdStr(id)
-	// if err != nil {
-	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	// 	http.Redirect(w, r, "/circle/new", 302)
-	// 	return
-	// }
 	circle, err := data.GetCirclebyUser(id)
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		http.Redirect(w, r, "/circle/new", 302)
+		url := fmt.Sprintf("/circle?id=%s", myUser.UserIdStr)
+		http.Redirect(w, r, url, 302)
 		return
 	}
 	owner, err := circle.GetOwner()
@@ -119,7 +179,39 @@ func Circle(w http.ResponseWriter, r *http.Request) {
 		MembershipValid: membershipValid,
 		Chats:           chats,
 	}
-	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header", "mypage.circle")
+	// ログイン済かつかつidが自分のものの場合
+	if myUser.UserIdStr == id {
+		// ここでサークルを作成済みかチェックする
+		// circle, err := data.GetCirclebyUser(myUser.UserIdStr)
+		// // サークルを持っていなければエラー発生し、/circle/newに飛ばされる
+		// if err != nil {
+		// 	logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		// 	http.Redirect(w, r, "/circle/new", 302)
+		// 	return
+		// }
+		// chats, err := data.GetChats(circle.ID)
+		// if err != nil {
+		// 	logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		// }
+		// data := Data{
+		// 	MyUser: myUser,
+		// 	Circle: circle,
+		// 	Chats:  chats,
+		// }
+		tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header.private", "mypage.circle", "mypage.chats.private")
+		if err := tmp.Execute(w, data); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+		return
+	}
+	// ログイン済かつidが他人のもの場合
+	// user, err := data.UserByUserIdStr(id)
+	// if err != nil {
+	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	// 	http.Redirect(w, r, "/circle/new", 302)
+	// 	return
+	// }
+	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header", "mypage.circle", "mypage.chats")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}

@@ -156,6 +156,11 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
+	if err = myUser.UpdateChatUserIdStr(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
 	http.Redirect(w, r, "/mypage", 302)
 }
 
