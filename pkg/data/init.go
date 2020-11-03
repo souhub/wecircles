@@ -69,6 +69,7 @@ func init() {
 			category VARCHAR(30),
 			owner_id INT,
 			owner_id_str VARCHAR(50),
+			twitter_id VARCHAR(50),
 			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 			)`
 	_, err = db.Exec(cmd)

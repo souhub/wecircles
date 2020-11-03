@@ -20,6 +20,7 @@ type Circle struct {
 	OwnerID        int
 	OwnerIDStr     string
 	OwnerImagePath string
+	TwitterID      string
 	CreatedAt      string
 	Owner          User
 	Members        []User
@@ -37,7 +38,7 @@ func GetCirclebyUser(userIdStr string) (circle Circle, err error) {
 		return
 	}
 	defer stmt.Close()
-	err = stmt.QueryRow(userIdStr).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.CreatedAt)
+	err = stmt.QueryRow(userIdStr).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.TwitterID, &circle.CreatedAt)
 	return circle, err
 }
 
@@ -72,7 +73,7 @@ func Circles() (circles []Circle, err error) {
 	}
 	for rows.Next() {
 		var circle Circle
-		err = rows.Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.CreatedAt)
+		err = rows.Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.TwitterID, &circle.CreatedAt)
 		if err != nil {
 			log.Fatal(err)
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -106,16 +107,16 @@ func CirclebyOwnerID(id string) (circle Circle, err error) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	err = stmt.QueryRow(id).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.CreatedAt)
+	err = stmt.QueryRow(id).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.TwitterID, &circle.CreatedAt)
 	return circle, err
 }
 
 func (circle *Circle) Create() (err error) {
 	db := NewDB()
 	defer db.Close()
-	query := `INSERT INTO circles (name, image_path, overview, category, owner_id, owner_id_str)
-			  VALUES (?,?,?,?,?,?)`
-	_, err = db.Exec(query, circle.Name, circle.ImagePath, circle.Overview, circle.Category, circle.OwnerID, circle.OwnerIDStr)
+	query := `INSERT INTO circles (name, image_path, overview, category, owner_id, owner_id_str, twitter_id)
+			  VALUES (?,?,?,?,?,?,?)`
+	_, err = db.Exec(query, circle.Name, circle.ImagePath, circle.Overview, circle.Category, circle.OwnerID, circle.OwnerIDStr, circle.TwitterID)
 	return
 }
 
@@ -123,9 +124,9 @@ func (circle *Circle) Update() (err error) {
 	db := NewDB()
 	defer db.Close()
 	query := `UPDATE circles
-			  SET name=?,image_path=?, overview=?, category=?
+			  SET name=?,image_path=?, overview=?, category=?, twitter_id=?
 			  WHERE id=?`
-	_, err = db.Exec(query, circle.Name, circle.ImagePath, circle.Overview, circle.Category, circle.ID)
+	_, err = db.Exec(query, circle.Name, circle.ImagePath, circle.Overview, circle.Category, circle.TwitterID, circle.ID)
 	return
 }
 

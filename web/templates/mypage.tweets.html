@@ -1,0 +1,25 @@
+{{define "content"}}
+<div class="bg-white">
+  <h3 style="text-align: center">{{.Circle.Name}}</h3>
+  <p style="white-space: pre; width: 200px; word-wrap: break-all">
+    {{.Circle.Overview}}
+  </p>
+</div>
+{{if .MembershipValid}} {{template "circle-navbar" .}} {{if .Circle.TwitterID}}
+<a
+  class="twitter-timeline"
+  href="https://twitter.com/{{.Circle.TwitterID}}?ref_src=twsrc%5Etfw"
+  style="font-size: 15px"
+></a>
+<script
+  async
+  src="https://platform.twitter.com/widgets.js"
+  charset="utf-8"
+></script>
+{{else}} {{if eq .MyUser.UserIdStr .Circle.OwnerIDStr}}
+<a class="btn btn-outline-success" href="/circle/manage"
+  >サークルとツイッターアカウントを連携させる</a
+>
+{{else}}
+<p>Twitterアカウントは登録されていません。</p>
+{{end}} {{end}} {{end}} {{end}}

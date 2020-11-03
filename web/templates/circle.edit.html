@@ -28,7 +28,7 @@
               <div>
                 {{if eq .Circle.ImagePath ""}}
                 <img
-                  src="/static/img/default.png"
+                  src="/static/img/default_thumbnail.jpg"
                   alt="user_profile_image"
                   style="
                     width: 350px;
@@ -165,6 +165,19 @@
             <option selected>その他</option>
             {{end}}
           </select>
+        </div>
+
+        <div class="form-group">
+          <label for="twitter"
+            >サークル公式Twitter</label
+          >
+          <input
+            type="text"
+            name="twitter"
+            class="form-control"
+            value="{{.Circle.TwitterID}}"
+            placeholder="サークル公式TwitterアカウントがあればアカウントIDを入力してください。（例：@wecircles）"
+          />
         </div>
       <button type="submit" class="btn btn-success mb-5 float-right">更新する</button>
     </form>

@@ -5,12 +5,8 @@
     {{.Circle.Overview}}
   </p>
 </div>
-{{if .MembershipValid}}
-<a
-  class="btn btn-outline-danger"
-  href="/circle/membership/delete?id={{.Circle.OwnerIDStr}}"
-  >このサークルを退会する</a
->
+{{if .MembershipValid}} {{template "circle-navbar" .}}
+
 <form action="/chat/create?id={{.Circle.OwnerIDStr}}" method="post">
   <div>
     <textarea
@@ -19,10 +15,10 @@
       class="form-control auto-resize"
       style="line-height: 16px; white-space: prewrap; border: none"
       rows="5"
-      placeholder="今日のサークルでの出来事ををWeCircleに書いてみませんか？"
+      placeholder="サークルのみんなにつぶやいてみませんか？"
       required
     ></textarea>
   </div>
-  <button type="submit" class="btn btn-outline-success">投稿</button>
+  <button type="submit" class="btn btn-outline-success">Tweet</button>
 </form>
 {{end}} {{ template "chats" .}} {{end}}

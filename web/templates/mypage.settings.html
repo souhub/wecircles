@@ -1,0 +1,15 @@
+{{define "content"}}
+<div class="bg-white">
+  <h3 style="text-align: center">{{.Circle.Name}}</h3>
+  <p style="white-space: pre; width: 200px; word-wrap: break-all">
+    {{.Circle.Overview}}
+  </p>
+</div>
+{{if .MembershipValid}} {{template "circle-navbar" .}}
+<a
+  class="btn btn-outline-danger"
+  href="/circle/membership/delete?id={{.Circle.OwnerIDStr}}"
+  >このサークルを退会する</a
+>
+
+{{end}} {{end}}

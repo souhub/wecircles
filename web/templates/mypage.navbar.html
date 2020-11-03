@@ -1,0 +1,23 @@
+{{define "circle-navbar"}}
+<nav class="navbar navbar-expand navbar-light">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/circle?id={{.User.UserIdStr}}"
+          ><i class="far fa-comments"></i
+        ></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/circle/tweets?id={{.User.UserIdStr}}"
+          ><i class="fab fa-twitter"></i
+        ></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/circle/settings?id={{.User.UserIdStr}}"
+          ><i class="fas fa-cog"></i
+        ></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+{{end}}
