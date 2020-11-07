@@ -187,10 +187,23 @@ func CircleManageMembers(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/circle/manage", 302)
 		return
 	}
+	numberOfMemberships, err := circle.CountMemberships()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/circle/manage", 302)
+		return
+	}
+	type Data struct {
+		MyUser              data.User
+		Circle              data.Circle
+		Users               []data.User
+		NumberOfMemberships int
+	}
 	data := Data{
-		MyUser: myUser,
-		Circle: circle,
-		Users:  users,
+		MyUser:              myUser,
+		Circle:              circle,
+		Users:               users,
+		NumberOfMemberships: numberOfMemberships,
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circle.manage.memberships")
 	if err := tmp.Execute(w, data); err != nil {

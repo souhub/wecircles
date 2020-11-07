@@ -81,6 +81,27 @@ func (circle *Circle) MembershipsByCircleID() (memberships []Membership, err err
 	return
 }
 
+// Get the number of circle's memberships
+func (circle *Circle) CountMemberships() (numberOfMemberships int, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT COUNT(*)
+			FROM memberships
+			WHERE circle_id=?`
+	rows, err := db.Query(query, circle.ID)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	for rows.Next() {
+		err = rows.Scan(&numberOfMemberships)
+		if err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+	}
+	rows.Close()
+	return
+}
+
 // Get all of the circles
 func Circles() (circles []Circle, err error) {
 	db := NewDB()

@@ -39,6 +39,21 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 		Password:  data.Encrypt(r.PostFormValue("password")),
 		ImagePath: "default.png",
 	}
+	// ユーザーIDとメールアドレスの一意性を保証
+	existedUsers, err := data.Users()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/signup", 302)
+		return
+	}
+	for _, existedUser := range existedUsers {
+		if user.UserIdStr == existedUser.UserIdStr || user.Email == existedUser.Email {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			http.Redirect(w, r, "/signup", 302)
+
+			return
+		}
+	}
 	validate := validator.New() //validatorインスタンス生成
 	//validator実行
 	if err := validate.Struct(&user); err != nil {
@@ -55,13 +70,18 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	// http.Redirect(w, r, "/login", 302)
 	//そのまま認証終わらせてマイページに飛ばす
 	signupedUserID := user.UserIdStr
-
 	signupedUser, err := data.UserByUserIdStr(signupedUserID)
 	// userごとの画像保存フォルダ作成
 	currentRootDir, err := os.Getwd()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/signup", 302)
+		return
+	}
 	userImageDir := fmt.Sprintf("%s/web/img/user%d", currentRootDir, signupedUser.Id)
 	_, err = os.Stat(userImageDir)
 	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		err = os.Mkdir(userImageDir, 0777)
 	}
 	session, err := signupedUser.CreateSession()

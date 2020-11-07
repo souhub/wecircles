@@ -14,7 +14,7 @@ import (
 type User struct {
 	Id        int
 	Name      string `validate:"required"`
-	UserIdStr string `validate:"alphanumunicode"`
+	UserIdStr string `validate:"alphanum"`
 	Email     string `validate:"required,email"`
 	Password  string `validate:"required"`
 	ImagePath string

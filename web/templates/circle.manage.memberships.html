@@ -14,6 +14,7 @@
 
   {{$myUserID := .MyUser.Id}} {{if .Users}}
   <div class="container">
+    <p>サークルメンバー：{{.NumberOfMemberships}}人</p>
     {{range .Users}}
     <div>
       <div class="mb-5">
@@ -45,7 +46,7 @@
         {{if eq .Id $myUserID}}
         <p>管理者</p>
         {{else}}
-        <p>メンバー</p>
+        <p>{{.Name}}</p>
         <p>
           <a
             class="btn btn-outline-danger"
