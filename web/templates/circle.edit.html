@@ -16,7 +16,7 @@
     <h3 class="mb-5">管理</h3>
     <a
       class="btn btn-outline-success"
-      href="/circle?id={{.User.UserIdStr}}"
+      href="/circle?id={{.MyUser.UserIdStr}}"
       style="float: right"
       >サークルを見る</a
     >
@@ -39,7 +39,7 @@
                 />
                 {{else}}
                 <img
-                  src="/static/img/user{{.User.Id}}/circles/mycircle/{{.Circle.ImagePath}}"
+                  src="/static/img/user{{.MyUser.Id}}/circles/mycircle/{{.Circle.ImagePath}}"
                   alt="user_profile_image"
                   style="
                     width: 350px;

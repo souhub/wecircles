@@ -158,6 +158,47 @@ func CircleManage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func CircleManageMembers(w http.ResponseWriter, r *http.Request) {
+	session, err := session(w, r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	myUser, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	circle, err := data.GetCirclebyUser(myUser.UserIdStr)
+	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	memberships, err := circle.MembershipsByCircleID()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/circle/manage", 302)
+		return
+	}
+	users, err := data.GetUsersByUserID(memberships)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/circle/manage", 302)
+		return
+	}
+	data := Data{
+		MyUser: myUser,
+		Circle: circle,
+		Users:  users,
+	}
+	tmp := parseTemplateFiles("layout", "navbar.private", "circle.manage.memberships")
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+}
+
 func TweetsCircle(w http.ResponseWriter, r *http.Request) {
 	vals := r.URL.Query()
 	id := vals.Get("id")
@@ -281,6 +322,7 @@ func CreateCircle(w http.ResponseWriter, r *http.Request) {
 	circleImageDir := fmt.Sprintf("%s/web/img/user%d/circles/mycircle", currentRootDir, myUser.Id)
 	_, err = os.Stat(circleImageDir)
 	if err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		err = os.MkdirAll(circleImageDir, 0777)
 	}
 	circleImage, err := myUser.UploadCircleImage(r)
@@ -330,18 +372,18 @@ func EditCircle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	user, err := session.User()
+	myUser, err := session.User()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	circle, err := data.GetCirclebyUser(user.UserIdStr)
+	circle, err := data.GetCirclebyUser(myUser.UserIdStr)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	data := Data{
-		User:   user,
+		MyUser: myUser,
 		Circle: circle,
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circle.edit")

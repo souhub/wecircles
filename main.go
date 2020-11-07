@@ -37,6 +37,7 @@ func main() {
 	http.HandleFunc("/circle", route.Circle)
 	http.HandleFunc("/circles", route.Circles)
 	http.HandleFunc("/circle/manage", route.CircleManage)
+	http.HandleFunc("/circle/manage/members", route.CircleManageMembers)
 	http.HandleFunc("/circle/new", route.NewCircle)
 	http.HandleFunc("/circle/create", route.CreateCircle)
 	http.HandleFunc("/circle/edit", route.EditCircle)
@@ -46,6 +47,7 @@ func main() {
 	http.HandleFunc("/circle/memberships", route.MembershipsCircles)
 	http.HandleFunc("/circle/membership/create", route.MembershipsCircleCreate)
 	http.HandleFunc("/circle/membership/delete", route.DeleteMembership)
+	http.HandleFunc("/circle/membership/delete/byowner", route.DeleteMembershipByOwner)
 	http.HandleFunc("/circle/tweets", route.TweetsCircle)
 	http.HandleFunc("/circle/settings", route.SettingsCircle)
 

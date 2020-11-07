@@ -112,3 +112,41 @@ func DeleteMembership(w http.ResponseWriter, r *http.Request) {
 	url := fmt.Sprintf("/circle?id=%s", circle.OwnerIDStr)
 	http.Redirect(w, r, url, 302)
 }
+
+// DELETE /circle/membership/delete
+// Delete the membership.
+func DeleteMembershipByOwner(w http.ResponseWriter, r *http.Request) {
+	vals := r.URL.Query()
+	id := vals.Get("id")
+	session, err := session(w, r)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	myUser, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	circle, err := data.CirclebyOwnerID(myUser.UserIdStr)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	deletedUser, err := data.UserByUserIdStr(id)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	membership := data.Membership{
+		UserID:   deletedUser.Id,
+		CircleID: circle.ID,
+	}
+	if err := membership.Delete(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	http.Redirect(w, r, "/circle/manage/members", 302)
+}

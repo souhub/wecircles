@@ -41,6 +41,29 @@ func (user *User) MembershipsByUserID() (memberships []Membership, err error) {
 	return
 }
 
+func GetUsersByUserID(memberships []Membership) (users []User, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT id, name, user_id_str, image_path
+	FROM users
+	WHERE id=?`
+	for _, membership := range memberships {
+		var user User
+		rows, err := db.Query(query, membership.UserID)
+		if err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+		for rows.Next() {
+			err = rows.Scan(&user.Id, &user.Name, &user.UserIdStr, &user.ImagePath)
+			if err != nil {
+				logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+			}
+		}
+		users = append(users, user)
+	}
+	return
+}
+
 func (membership *Membership) Circle() (circle Circle, err error) {
 	db := NewDB()
 	defer db.Close()
@@ -51,7 +74,7 @@ func (membership *Membership) Circle() (circle Circle, err error) {
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
-	err = stmt.QueryRow(membership.CircleID).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.CreatedAt)
+	err = stmt.QueryRow(membership.CircleID).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.TwitterID, &circle.CreatedAt)
 	return
 }
 

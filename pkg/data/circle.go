@@ -59,6 +59,28 @@ func (circle *Circle) GetOwner() (user User, err error) {
 	return user, err
 }
 
+func (circle *Circle) MembershipsByCircleID() (memberships []Membership, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT *
+			FROM memberships
+			WHERE circle_id=?`
+	rows, err := db.Query(query, circle.ID)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	for rows.Next() {
+		var membership Membership
+		err = rows.Scan(&membership.ID, &membership.UserID, &membership.CircleID)
+		if err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+		memberships = append(memberships, membership)
+	}
+	rows.Close()
+	return
+}
+
 // Get all of the circles
 func Circles() (circles []Circle, err error) {
 	db := NewDB()
