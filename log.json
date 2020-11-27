@@ -1,9 +1,9 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":17,"msg":"http: named cookie not present","time":"2020-11-26T13:45:10Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":60,"msg":"Key: 'User.Email' Error:Field validation for 'Email' failed on the 'email' tag","time":"2020-11-27T02:34:46Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":17,"msg":"http: named cookie not present","time":"2020-11-27T02:35:15Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":51,"msg":"\u003cnil\u003e","time":"2020-11-27T02:36:05Z"}
-g/route/route_main.go","level":"warning","line":33,"msg":"sql: no rows in result set","time":"2020-11-07T07:48:20Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":33,"msg":"sql: no rows in result set","time":"2020-11-07T07:48:22Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":226,"msg":"http: no such file","time":"2020-11-27T06:33:05Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"info","line":143,"msg":"http: no such file","time":"2020-11-27T06:33:05Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":226,"msg":"http: no such file","time":"2020-11-27T06:33:15Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"info","line":143,"msg":"http: no such file","time":"2020-11-27T06:33:15Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":130,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post41f8ef34-1e06-48f6-9097-45f3d7016115: no such file or directory","time":"2020-11-27T06:20:45Z"}
+rcles/pkg/route/route_main.go","level":"warning","line":33,"msg":"sql: no rows in result set","time":"2020-11-07T07:48:22Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":33,"msg":"sql: no rows in result set","time":"2020-11-07T07:48:22Z"}
 ield NumberOfMemberships in type route.Data","time":"2020-11-07T05:07:51Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":210,"msg":"template: circle.manage.memberships.html:60:9: executing \"content\" at \u003c.NumberOfMemberships\u003e: can't evaluate field NumberOfMemberships in type route.Data","time":"2020-11-07T05:07:51Z"}
