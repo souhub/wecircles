@@ -1,8 +1,8 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":83,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user4: no such file or directory","time":"2020-11-07T08:19:04Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":51,"msg":"\u003cnil\u003e","time":"2020-11-07T08:32:12Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":51,"msg":"\u003cnil\u003e","time":"2020-11-07T08:42:56Z"}
-b/wecircles/pkg/route/route_main.go","level":"warning","line":33,"msg":"sql: no rows in result set","time":"2020-11-07T07:48:16Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":33,"msg":"sql: no rows in result set","time":"2020-11-07T07:48:20Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":17,"msg":"http: named cookie not present","time":"2020-11-26T13:45:10Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":60,"msg":"Key: 'User.Email' Error:Field validation for 'Email' failed on the 'email' tag","time":"2020-11-27T02:34:46Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":17,"msg":"http: named cookie not present","time":"2020-11-27T02:35:15Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":51,"msg":"\u003cnil\u003e","time":"2020-11-27T02:36:05Z"}
+g/route/route_main.go","level":"warning","line":33,"msg":"sql: no rows in result set","time":"2020-11-07T07:48:20Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":33,"msg":"sql: no rows in result set","time":"2020-11-07T07:48:22Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":33,"msg":"sql: no rows in result set","time":"2020-11-07T07:48:22Z"}
 ield NumberOfMemberships in type route.Data","time":"2020-11-07T05:07:51Z"}
