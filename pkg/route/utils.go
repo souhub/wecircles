@@ -64,4 +64,5 @@ type Data struct {
 	Chat            data.Chat
 	Chats           []data.Chat
 	MembershipValid bool
+	ImagePathPrefix string
 }

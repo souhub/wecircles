@@ -7,6 +7,10 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/souhub/wecircles/pkg/logging"
 )
 
@@ -21,6 +25,40 @@ type Post struct {
 	UserName      string
 	UserImagePath string
 	CreatedAt     string
+}
+
+func S3Upload(imagePath string) error {
+	// credentialsの作成
+	creds := credentials.NewStaticCredentials(os.Getenv("AWS_ACCESS_KEY_ID"), os.Getenv("AWS_SECRET_ACCESS_KEY"), "")
+	cfg := aws.Config{
+		Credentials: creds,
+		Region:      aws.String(os.Getenv("AWS_DEFAULT_REGION")),
+		// Endpoint:    aws.String("http://127.0.0.1:9000"),
+	}
+	// sessionの作成
+	sess, err := session.NewSession(&cfg)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	// ファイルを開く
+	targetFilePath := imagePath
+	f, err := os.Open(targetFilePath)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	defer f.Close()
+
+	bucketName := os.Getenv("WECIRCLES_S3_IMAGE_BUCKET")
+	objectKey := targetFilePath
+
+	// Uploaderを作成し、ローカルファイルをアップロード
+	uploader := s3manager.NewUploader(sess)
+	_, err = uploader.Upload(&s3manager.UploadInput{
+		Bucket: aws.String(bucketName),
+		Key:    aws.String(objectKey),
+		Body:   f,
+	})
+	return err
 }
 
 // Get all of the posts
@@ -134,11 +172,11 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 		}
 	}
 	// Parse the form
-	// err = r.ParseForm()
-	// if err != nil {
-	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	// 	return
-	// }
+	err = r.ParseForm()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
 	// Get the file sent form the form
 	file, fileHeader, err := r.FormFile("image")
 	// Get the uploaded file's name from the file.
@@ -165,8 +203,19 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 		return
 	}
 	// Close the "saveImage" and "file"
-	defer saveImage.Close()
-	defer file.Close()
+	saveImage.Close()
+	file.Close()
+
+	// Upload to S3
+	if err = S3Upload(imagePath); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+
+	// Delete the post directory
+	if err = os.RemoveAll(imagePath); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 	return uploadedFileName, err
 }
 

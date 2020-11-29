@@ -11,8 +11,6 @@ import (
 	"github.com/souhub/wecircles/pkg/logging"
 )
 
-// gitgitgit
-
 // GET /post
 func PostsManage(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
@@ -27,8 +25,9 @@ func PostsManage(w http.ResponseWriter, r *http.Request) {
 	}
 	posts, err := myUser.PostsByUser()
 	data := Data{
-		MyUser: myUser,
-		Posts:  posts,
+		MyUser:          myUser,
+		Posts:           posts,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "posts.manage")
 	if err := tmp.Execute(w, data); err != nil {
@@ -50,12 +49,14 @@ func NewPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	type Data struct {
-		MyUser data.User
-		UUID   uuid.UUID
+		MyUser          data.User
+		UUID            uuid.UUID
+		ImagePathPrefix string
 	}
 	data := Data{
-		MyUser: myUser,
-		UUID:   uuid.New(),
+		MyUser:          myUser,
+		UUID:            uuid.New(),
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("post.new")
 	if err := tmp.Execute(w, data); err != nil {

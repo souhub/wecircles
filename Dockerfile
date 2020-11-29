@@ -16,6 +16,10 @@ ENV DB_PROTOCOL tcp
 
 ENV DB_NAME wecircles
 
+ENV WECIRCLES_S3_IMAGE_BUCKET wecircles-img
+
+ENV IMAGE_PATH https://wecircles-img.s3-ap-northeast-1.amazonaws.com/web
+
 EXPOSE 80
 
 CMD ["go","run","/go/src/github.com/souhub/wecircles"]

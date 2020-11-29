@@ -6,3 +6,4 @@ Dockerfile.dev
 tmp
 docker
 wecircles
+.env
