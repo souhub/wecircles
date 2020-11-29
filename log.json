@@ -1,58 +1,61 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":226,"msg":"http: no such file","time":"2020-11-27T06:33:05Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"info","line":143,"msg":"http: no such file","time":"2020-11-27T06:33:05Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":226,"msg":"http: no such file","time":"2020-11-27T06:33:15Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"info","line":143,"msg":"http: no such file","time":"2020-11-27T06:33:15Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":130,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post41f8ef34-1e06-48f6-9097-45f3d7016115: no such file or directory","time":"2020-11-27T06:20:45Z"}
-rcles/pkg/route/route_main.go","level":"warning","line":33,"msg":"sql: no rows in result set","time":"2020-11-07T07:48:22Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":33,"msg":"sql: no rows in result set","time":"2020-11-07T07:48:22Z"}
-ield NumberOfMemberships in type route.Data","time":"2020-11-07T05:07:51Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":210,"msg":"template: circle.manage.memberships.html:60:9: executing \"content\" at \u003c.NumberOfMemberships\u003e: can't evaluate field NumberOfMemberships in type route.Data","time":"2020-11-07T05:07:51Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":210,"msg":"template: circle.manage.memberships.html:60:9: executing \"content\" at \u003c.NumberOfMemberships\u003e: can't evaluate field NumberOfMemberships in type route.Data","time":"2020-11-07T05:08:42Z"}
-2T08:38:43Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:44Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:45Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:45Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":133,"msg":"Invalid Session","time":"2020-11-29T05:24:34Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":17,"msg":"http: named cookie not present","time":"2020-11-29T05:34:10Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":84,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user5: no such file or directory","time":"2020-11-29T05:34:45Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":232,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user5/default.png: no such file or directory","time":"2020-11-29T05:40:05Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":130,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user5/posts/post0a3ffdb7-c35e-4869-913f-ab2c9cf1813d: no such file or directory","time":"2020-11-29T05:41:27Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":146,"msg":"http: no such file","time":"2020-11-29T05:41:27Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":110,"msg":"http: no such file","time":"2020-11-29T05:41:27Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"warning","line":178,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user5/posts/post0a3ffdb7-c35e-4869-913f-ab2c9cf1813d/default_thumbnail.jpg: no such file or directory","time":"2020-11-29T05:41:48Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":220,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user5/posts/post0a3ffdb7-c35e-4869-913f-ab2c9cf1813d/default_thumbnail.jpg: no such file or directory","time":"2020-11-29T05:41:48Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/circle.go","level":"info","line":198,"msg":"http: no such file","time":"2020-11-29T05:44:57Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":433,"msg":"http: no such file","time":"2020-11-29T05:44:57Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-29T05:45:02Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/utils.go","level":"warning","line":42,"msg":"sql: no rows in result set","time":"2020-11-29T05:51:14Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":50,"msg":"sql: no rows in result set","time":"2020-11-29T05:51:14Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":148,"msg":"sql: no rows in result set","time":"2020-11-29T05:56:05Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":148,"msg":"sql: no rows in result set","time":"2020-11-29T05:56:59Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/utils.go","level":"warning","line":42,"msg":"sql: no rows in result set","time":"2020-11-29T05:57:03Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":50,"msg":"sql: no rows in result set","time":"2020-11-29T05:57:03Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/utils.go","level":"warning","line":42,"msg":"sql: no rows in result set","time":"2020-11-29T05:59:03Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":50,"msg":"sql: no rows in result set","time":"2020-11-29T05:59:03Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":130,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post3a8fa7cc-fc08-4ac5-a80d-14091e11788c: no such file or directory","time":"2020-11-29T06:01:07Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/circle.go","level":"info","line":198,"msg":"http: no such file","time":"2020-11-29T06:02:53Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":433,"msg":"http: no such file","time":"2020-11-29T06:02:53Z"}
+g/data/post.go","level":"info","line":146,"msg":"http: no such file","time":"2020-11-29T03:50:22Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":215,"msg":"http: no such file","time":"2020-11-29T03:50:22Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":146,"msg":"http: no such file","time":"2020-11-29T03:50:41Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":215,"msg":"http: no such file","time":"2020-11-29T03:50:41Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":146,"msg":"http: no such file","time":"2020-11-29T03:51:55Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":215,"msg":"http: no such file","time":"2020-11-29T03:51:55Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":146,"msg":"http: no such file","time":"2020-11-29T03:52:13Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":215,"msg":"http: no such file","time":"2020-11-29T03:52:13Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":146,"msg":"http: no such file","time":"2020-11-29T03:52:48Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":215,"msg":"http: no such file","time":"2020-11-29T03:52:48Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-29T03:53:17Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-29T03:53:27Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":226,"msg":"http: no such file","time":"2020-11-29T03:57:58Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"info","line":143,"msg":"http: no such file","time":"2020-11-29T03:57:58Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":84,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user3: no such file or directory","time":"2020-11-29T04:00:53Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":232,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user3/default.png: no such file or directory","time":"2020-11-29T04:02:05Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":226,"msg":"http: no such file","time":"2020-11-29T04:02:39Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"info","line":143,"msg":"http: no such file","time":"2020-11-29T04:02:39Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":130,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user3/posts/postcccd2883-3de2-4a1f-97df-53b1e6288aea: no such file or directory","time":"2020-11-29T04:11:41Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":226,"msg":"http: no such file","time":"2020-11-29T04:12:15Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"info","line":143,"msg":"http: no such file","time":"2020-11-29T04:12:15Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":148,"msg":"sql: no rows in result set","time":"2020-11-29T04:12:22Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":338,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user3/circles/mycircle: no such file or directory","time":"2020-11-29T04:41:51Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/circle.go","level":"info","line":198,"msg":"http: no such file","time":"2020-11-29T04:46:30Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":433,"msg":"http: no such file","time":"2020-11-29T04:46:30Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-29T04:46:32Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/circle.go","level":"info","line":198,"msg":"http: no such file","time":"2020-11-29T04:47:20Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":433,"msg":"http: no such file","time":"2020-11-29T04:47:20Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-29T04:47:21Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":84,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user4: no such file or directory","time":"2020-11-29T04:48:33Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":232,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user4/default.png: no such file or directory","time":"2020-11-29T04:49:15Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":130,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user4/posts/post820d2d47-b91b-4487-a03a-75f8afddbaeb: no such file or directory","time":"2020-11-29T04:51:23Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"info","line":146,"msg":"http: no such file","time":"2020-11-29T04:52:40Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":215,"msg":"http: no such file","time":"2020-11-29T04:52:40Z"}
+ch template \"header\"","time":"2020-11-02T08:38:45Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:45Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":36,"msg":"html/template:layout.mypage.html:18:17: no such template \"header\"","time":"2020-11-02T08:38:45Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-02T08:38:45Z"}

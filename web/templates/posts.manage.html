@@ -1,7 +1,7 @@
 {{define "content"}} {{if .Posts}} {{range .Posts}}
 <div class="card mx-auto">
   <div>
-    <a href="/post?id={{.Uuid}}" class="flaot-left">
+    <a href="/post?id={{.Uuid}}" class="flaot-left" style="color: black">
       {{if .Title}}
       <h5 class="card-title">{{.Title}}</h5>
       {{else}}

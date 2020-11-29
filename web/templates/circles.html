@@ -1,6 +1,6 @@
 {{define "content"}} {{if .Circles}} {{range .Circles}}
 <div class="card mx-auto mb-5">
-  <a href="/circle?id={{.OwnerIDStr}}">
+  <a href="/circle?id={{.OwnerIDStr}}" style="color: black">
     {{if eq .ImagePath ""}}
     <img
       src="/static/img/default_thumbnail.jpg"
