@@ -1,13 +1,21 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/souhub/wecircles/pkg/route"
 )
 
 func main() {
-	files := http.FileServer(http.Dir("web/"))
+	currentRootDir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	dir := fmt.Sprintf("%s/web/", currentRootDir)
+	files := http.FileServer(http.Dir(dir))
 	http.Handle("/static/", http.StripPrefix("/static/", files))
 
 	http.HandleFunc("/", route.Index)
