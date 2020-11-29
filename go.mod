@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/GNOME/gtk v3.22.20+incompatible // indirect
+	github.com/aws/aws-sdk-go v1.35.35 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/google/uuid v1.1.2
