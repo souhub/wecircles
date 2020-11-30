@@ -12,13 +12,13 @@
   >
     {{if eq .MyUser.ImagePath "default.png"}}
     <img
-      src="/static/img/default.png"
+      src="{{.ImagePathPrefix}}/img/default.png"
       alt="user_profile_image"
       style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
     />
     {{else}}
     <img
-      src="/static/img/user{{.MyUser.Id}}/{{.MyUser.ImagePath}}"
+      src="{{.ImagePathPrefix}}/img/user{{.MyUser.Id}}/{{.MyUser.ImagePath}}"
       alt="user_profile_image"
       style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
     />
@@ -67,13 +67,13 @@
 <div>
   {{if eq .User.ImagePath "default.png"}}
   <img
-    src="/static/img/default.png"
+    src="{{.ImagePathPrefix}}/img/default.png"
     alt="user_profile_image"
     style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
   />
   {{else}}
   <img
-    src="/static/img/user{{.User.Id}}/{{.User.ImagePath}}"
+    src="{{.ImagePathPrefix}}/img/user{{.User.Id}}/{{.User.ImagePath}}"
     alt="user_profile_image"
     style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover"
   />

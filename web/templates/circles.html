@@ -1,15 +1,16 @@
-{{define "content"}} {{if .Circles}} {{range .Circles}}
+{{define "content"}} {{$imagePathPrefix := .ImagePathPrefix}} {{if .Circles}}
+{{range .Circles}}
 <div class="card mx-auto mb-5">
   <a href="/circle?id={{.OwnerIDStr}}" style="color: black">
     {{if eq .ImagePath ""}}
     <img
-      src="/static/img/default_thumbnail.jpg"
+      src="{{$imagePathPrefix}}/img/default_thumbnail.jpg"
       style="width: 100%; height: 200px; object-fit: cover"
       alt="default thumbnail"
     />
     {{else}}
     <img
-      src="/static/img/user{{.OwnerID}}/circles/mycircle/{{.ImagePath}}"
+      src="{{$imagePathPrefix}}/img/user{{.OwnerID}}/circles/mycircle/{{.ImagePath}}"
       style="width: 100%; height: 200px; object-fit: cover"
       alt="default thumbnail"
     />

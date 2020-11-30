@@ -2,6 +2,7 @@ package route
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/souhub/wecircles/pkg/data"
 	"github.com/souhub/wecircles/pkg/logging"
@@ -14,13 +15,11 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
-	data := Data{
-		Posts: posts,
-	}
 	session, err := session(w, r)
 	if err != nil {
 		data := Data{
-			Posts: posts,
+			Posts:           posts,
+			ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 		}
 		tmp := parseTemplateFiles("layout", "index", "navbar.public", "posts")
 		if err := tmp.Execute(w, data); err != nil {
@@ -33,9 +32,10 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	data = Data{
-		MyUser: myUser,
-		Posts:  posts,
+	data := Data{
+		MyUser:          myUser,
+		Posts:           posts,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("layout", "index", "navbar.private", "posts")
 	if err := tmp.Execute(w, data); err != nil {

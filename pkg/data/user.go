@@ -65,16 +65,6 @@ func (user *User) Memberships() (memberships []Membership, err error) {
 	return
 }
 
-// func (user *User) GetMembership() (membership Membership, err error) {
-// 	db := NewDB()
-// 	defer db.Close()
-// 	query := `SELECT *
-// 			  FROM memberships
-// 			  WHERE user_id=?`
-// 	err = db.QueryRow(query, user.Id).Scan(&membership.ID, &membership.UserID, &membership.CircleID)
-// 	return
-// }
-
 // Get all of the posts by the user.
 func (user *User) PostsByUser() (posts []Post, err error) {
 	db := NewDB()
@@ -253,6 +243,16 @@ func (user *User) Upload(r *http.Request) (uploadedFileName string, err error) {
 	// Close the "saveImage" and "file"
 	defer saveImage.Close()
 	defer file.Close()
+	// Upload to S3
+	if err = S3Upload(imagePath); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+
+	// Delete the post directory on the server
+	if err = os.Remove(imagePath); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 	return uploadedFileName, err
 }
 
@@ -294,6 +294,17 @@ func (user *User) UploadCircleImage(r *http.Request) (uploadedFileName string, e
 	// Close the "saveImage" and "file"
 	defer saveImage.Close()
 	defer file.Close()
+
+	// Upload to S3
+	if err = S3Upload(imagePath); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+
+	// Delete the post directory on the server
+	if err = os.Remove(imagePath); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 	return uploadedFileName, err
 }
 
@@ -308,15 +319,18 @@ func (user *User) Delete() (err error) {
 }
 
 // Delete the user image to update the new one
-func (user *User) DeleteUserImage() error {
-	currentDir, err := os.Getwd()
-	userImage := fmt.Sprintf("%s/web/img/user%d/%s", currentDir, user.Id, user.ImagePath)
-	_, err = os.Stat(userImage)
-	if err != nil {
-		return err
+func (user *User) DeleteUserImage() (err error) {
+	// currentDir, err := os.Getwd()
+	userImage := fmt.Sprintf("web/img/user%d/%s", user.Id, user.ImagePath)
+	// _, err = os.Stat(userImage)
+	// if err != nil {
+	// 	return err
+	// }
+	if err = S3Delete(userImage); err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
 	}
-	err = os.Remove(userImage)
-	return err
+	return
 }
 
 // Delete the user image to update the new one

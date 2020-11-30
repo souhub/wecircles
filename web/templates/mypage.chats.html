@@ -1,17 +1,18 @@
-{{define "chats"}} {{$MyUserIdStr := .MyUser.UserIdStr}} {{if .MembershipValid}}
-{{range .Chats}} {{if eq $MyUserIdStr .UserIdStr}}
+{{define "chats"}} {{$imagePathPrefix := .ImagePathPrefix}} {{$MyUserIdStr :=
+.MyUser.UserIdStr}} {{if .MembershipValid}} {{range .Chats}} {{if eq
+$MyUserIdStr .UserIdStr}}
 <div class="card mb-3">
   <div class="card-body">
     <a href="/user?id={{.UserIdStr}}">
       {{if eq .UserImagePath "default.png"}}
       <img
-        src="/static/img/{{.UserImagePath}}"
+        src="{{$imagePathPrefix}}/img/{{.UserImagePath}}"
         style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%"
         alt="default thumbnail"
       />
       {{else}}
       <img
-        src="/static/img/user{{.UserID}}/{{.UserImagePath}}"
+        src="{{$imagePathPrefix}}/img/user{{.UserID}}/{{.UserImagePath}}"
         style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%"
         alt="customized user image"
       />
@@ -32,7 +33,7 @@
       <a href="/user?id={{.UserIdStr}}">
         {{if eq .UserImagePath "default.png"}}
         <img
-          src="/static/img/{{.UserImagePath}}"
+          src="{{$imagePathPrefix}}/img/{{.UserImagePath}}"
           style="
             width: 50px;
             height: 50px;
@@ -43,7 +44,7 @@
         />
         {{else}}
         <img
-          src="/static/img/user{{.UserID}}/{{.UserImagePath}}"
+          src="{{$imagePathPrefix}}/img/user{{.UserID}}/{{.UserImagePath}}"
           style="
             width: 50px;
             height: 50px;

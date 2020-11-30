@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/souhub/wecircles/pkg/logging"
 )
@@ -58,6 +59,34 @@ func S3Upload(imagePath string) error {
 		Key:    aws.String(objectKey),
 		Body:   f,
 	})
+	return err
+}
+
+func S3Delete(imagePath string) error {
+	// credentialsの作成
+	creds := credentials.NewStaticCredentials(os.Getenv("AWS_ACCESS_KEY_ID"), os.Getenv("AWS_SECRET_ACCESS_KEY"), "")
+	cfg := aws.Config{
+		Credentials: creds,
+		Region:      aws.String(os.Getenv("AWS_DEFAULT_REGION")),
+		// Endpoint:    aws.String("http://127.0.0.1:9000"),
+	}
+	// sessionの作成
+	sess, err := session.NewSession(&cfg)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+
+	bucketName := os.Getenv("WECIRCLES_S3_IMAGE_BUCKET")
+	objectKey := imagePath
+
+	svc := s3.New(sess)
+	_, err = svc.DeleteObject(&s3.DeleteObjectInput{Bucket: aws.String(bucketName), Key: aws.String(objectKey)})
+
+	err = svc.WaitUntilObjectNotExists(&s3.HeadObjectInput{
+		Bucket: aws.String(bucketName),
+		Key:    aws.String(objectKey),
+	})
+
 	return err
 }
 
@@ -196,7 +225,7 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	// Write the uploaded file to the file for saving.
+	// Write the uploaded file to the file for saving on the server.
 	_, err = io.Copy(saveImage, file)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -212,8 +241,8 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 		return
 	}
 
-	// Delete the post directory
-	if err = os.RemoveAll(imagePath); err != nil {
+	// Delete the post directory on the server
+	if err = os.Remove(imagePath); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	return uploadedFileName, err
@@ -221,13 +250,17 @@ func (post *Post) UploadThumbnail(r *http.Request) (uploadedFileName string, err
 
 // Delete the thumbnail
 func (post *Post) DeleteThembnail() (err error) {
-	currentRootDir, err := os.Getwd()
-	thumbnail := fmt.Sprintf("%s/web/img/user%d/posts/post%s/%s", currentRootDir, post.UserId, post.Uuid, post.ThumbnailPath)
-	if _, err = os.Stat(thumbnail); err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	// currentRootDir, err := os.Getwd()
+	thumbnail := fmt.Sprintf("web/img/user%d/posts/post%s/%s", post.UserId, post.Uuid, post.ThumbnailPath)
+	// if _, err = os.Stat(thumbnail); err != nil {
+	// 	logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	// 	return
+	// }
+	// err = os.Remove(thumbnail)
+	if err = S3Delete(thumbnail); err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	err = os.Remove(thumbnail)
 	return
 }
 

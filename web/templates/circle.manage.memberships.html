@@ -21,7 +21,7 @@
         <a href="/user?id={{.UserIdStr}}">
           {{if eq .ImagePath "default.png"}}
           <img
-            src="/static/img/default.png"
+            src="{{.ImagePathPrefix}}/img/default.png"
             alt="user_profile_image"
             style="
               width: 100px;
@@ -32,7 +32,7 @@
           />
           {{else}}
           <img
-            src="/static/img/user{{.Id}}/{{.ImagePath}}"
+            src="{{.ImagePathPrefix}}/img/user{{.Id}}/{{.ImagePath}}"
             alt="user_profile_image"
             style="
               width: 100px;

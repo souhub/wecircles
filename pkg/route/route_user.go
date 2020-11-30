@@ -3,6 +3,7 @@ package route
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/souhub/wecircles/pkg/data"
 	"github.com/souhub/wecircles/pkg/logging"
@@ -45,8 +46,9 @@ func User(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	data := Data{
-		User:  user,
-		Posts: posts,
+		User:            user,
+		Posts:           posts,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	session, err := session(w, r)
 	// ログイン前にユーザー名クリックした場合
@@ -73,8 +75,9 @@ func User(w http.ResponseWriter, r *http.Request) {
 		}
 		posts, err := myUser.PostsByUser()
 		data := Data{
-			MyUser: myUser,
-			Posts:  posts,
+			MyUser:          myUser,
+			Posts:           posts,
+			ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 		}
 		tmp := parseTemplateFiles("layout", "navbar.private", "user", "posts")
 		if err := tmp.Execute(w, data); err != nil {
@@ -84,9 +87,10 @@ func User(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	data = Data{
-		MyUser: myUser,
-		User:   user,
-		Posts:  posts,
+		MyUser:          myUser,
+		User:            user,
+		Posts:           posts,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	// ログイン後に他人のユーザー名をクリックした場合
 	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header", "index", "posts")
@@ -107,7 +111,8 @@ func EditUser(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	data := Data{
-		MyUser: myUser,
+		MyUser:          myUser,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("layout", "user.edit", "navbar.private")
 	if err := tmp.Execute(w, data); err != nil {

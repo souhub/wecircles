@@ -27,7 +27,8 @@ func Circle(w http.ResponseWriter, r *http.Request) {
 	circle, err := data.GetCirclebyUser(id)
 	if err != nil {
 		data := Data{
-			MyUser: myUser,
+			MyUser:          myUser,
+			ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 		}
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		if myUser.UserIdStr == id {
@@ -60,6 +61,7 @@ func Circle(w http.ResponseWriter, r *http.Request) {
 		Circle:          circle,
 		MembershipValid: membershipValid,
 		Chats:           chats,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	// ログイン済かつかつidが自分のものの場合
 	if myUser.UserIdStr == id {
@@ -107,7 +109,8 @@ func Circles(w http.ResponseWriter, r *http.Request) {
 	session, err := session(w, r)
 	if err != nil {
 		data := Data{
-			Circles: circles,
+			Circles:         circles,
+			ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 		}
 		tmp := parseTemplateFiles("layout", "circles", "navbar.public")
 		if err := tmp.Execute(w, data); err != nil {
@@ -121,8 +124,9 @@ func Circles(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	data := Data{
-		MyUser:  myUser,
-		Circles: circles,
+		MyUser:          myUser,
+		Circles:         circles,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circles")
 	if err := tmp.Execute(w, data); err != nil {
@@ -148,8 +152,9 @@ func CircleManage(w http.ResponseWriter, r *http.Request) {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	data := Data{
-		MyUser: myUser,
-		Circle: circle,
+		MyUser:          myUser,
+		Circle:          circle,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circle.manage")
 	if err := tmp.Execute(w, data); err != nil {
@@ -193,17 +198,12 @@ func CircleManageMembers(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/circle/manage", 302)
 		return
 	}
-	type Data struct {
-		MyUser              data.User
-		Circle              data.Circle
-		Users               []data.User
-		NumberOfMemberships int
-	}
 	data := Data{
 		MyUser:              myUser,
 		Circle:              circle,
 		Users:               users,
 		NumberOfMemberships: numberOfMemberships,
+		ImagePathPrefix:     os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circle.manage.memberships")
 	if err := tmp.Execute(w, data); err != nil {
@@ -248,6 +248,7 @@ func TweetsCircle(w http.ResponseWriter, r *http.Request) {
 		User:            owner,
 		Circle:          circle,
 		MembershipValid: membershipValid,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header", "mypage.navbar", "mypage.tweets")
 	if err := tmp.Execute(w, data); err != nil {
@@ -291,6 +292,7 @@ func SettingsCircle(w http.ResponseWriter, r *http.Request) {
 		User:            owner,
 		Circle:          circle,
 		MembershipValid: membershipValid,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header", "mypage.navbar", "mypage.settings")
 	if err := tmp.Execute(w, data); err != nil {
@@ -312,7 +314,8 @@ func NewCircle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	data := Data{
-		MyUser: myUser,
+		MyUser:          myUser,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circle.new")
 	tmp.Execute(w, data)
@@ -396,8 +399,9 @@ func EditCircle(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	data := Data{
-		MyUser: myUser,
-		Circle: circle,
+		MyUser:          myUser,
+		Circle:          circle,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circle.edit")
 	if err := tmp.Execute(w, data); err != nil {

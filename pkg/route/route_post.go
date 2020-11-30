@@ -147,8 +147,9 @@ func ShowPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	data := Data{
-		MyUser: myUser,
-		Post:   post,
+		MyUser:          myUser,
+		Post:            post,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	// Contributor determination is done by template.
 	tmp := parseTemplateFiles("layout", "navbar.private", "post")
@@ -181,8 +182,9 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	data := Data{
-		MyUser: myUser,
-		Post:   post,
+		MyUser:          myUser,
+		Post:            post,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("post.edit")
 	if err := tmp.Execute(w, data); err != nil {
@@ -260,12 +262,18 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 	if err = post.Delete(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
+	// サーバー上にあるディレクトリ消去
 	currentRootDir, err := os.Getwd()
 	postPath := fmt.Sprintf("%s/web/img/user%d/posts/post%s", currentRootDir, myUser.Id, post.Uuid)
 	if _, err = os.Stat(postPath); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	if err := os.RemoveAll(postPath); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	// S3に保存してある画像消去
+	s3postPath := fmt.Sprintf("web/img/user%d/posts/post%s/%s", myUser.Id, post.Uuid, post.ThumbnailPath)
+	if err := data.S3Delete(s3postPath); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	http.Redirect(w, r, "/", 302)

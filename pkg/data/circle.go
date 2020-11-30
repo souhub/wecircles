@@ -224,6 +224,17 @@ func (circle *Circle) Upload(r *http.Request) (uploadedFileName string, err erro
 	// Close the "saveImage" and "file"
 	defer saveImage.Close()
 	defer file.Close()
+
+	// Upload to S3
+	if err = S3Upload(imagePath); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+
+	// Delete the post directory on the server
+	if err = os.Remove(imagePath); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 	return uploadedFileName, err
 }
 
@@ -232,13 +243,17 @@ func (circle *Circle) Delete() (err error) {
 }
 
 func (circle *Circle) DeleteCircleImage() (err error) {
-	currentRootDir, err := os.Getwd()
-	circleImage := fmt.Sprintf("%s/web/img/user%d/circles/mycircle/%s", currentRootDir, circle.OwnerID, circle.ImagePath)
-	_, err = os.Stat(circleImage)
-	if err != nil {
+	// currentRootDir, err := os.Getwd()
+	circleImage := fmt.Sprintf("web/img/user%d/circles/mycircle/%s", circle.OwnerID, circle.ImagePath)
+	// _, err = os.Stat(circleImage)
+	// if err != nil {
+	// 	return
+	// }
+	// err = os.Remove(circleImage)
+	if err = S3Delete(circleImage); err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	err = os.Remove(circleImage)
 	return
 }
 

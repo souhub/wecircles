@@ -55,13 +55,13 @@
             <div style="height: 250px">
               {{if eq .Post.ThumbnailPath "default_thumbnail.jpg"}}
               <img
-                src="/static/img/default_thumbnail.jpg"
+                src="{{.ImagePathPrefix}}/img/default_thumbnail.jpg"
                 alt="user_profile_image"
                 style="width: 400px; height: 250px; object-fit: cover"
               />
               {{else}}
               <img
-                src="/static/img/user{{.MyUser.Id}}/posts/post{{.Post.Uuid}}/{{.Post.ThumbnailPath}}"
+                src="{{.ImagePathPrefix}}/img/user{{.MyUser.Id}}/posts/post{{.Post.Uuid}}/{{.Post.ThumbnailPath}}"
                 alt="existed_thumbnail_image"
                 style="width: 400px; height: 250px; object-fit: cover"
               />

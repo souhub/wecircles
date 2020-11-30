@@ -28,7 +28,7 @@
               <div>
                 {{if eq .Circle.ImagePath ""}}
                 <img
-                  src="/static/img/default_thumbnail.jpg"
+                  src="{{.ImagePathPrefix}}/img/default_thumbnail.jpg"
                   alt="user_profile_image"
                   style="
                     width: 350px;
@@ -39,7 +39,7 @@
                 />
                 {{else}}
                 <img
-                  src="/static/img/user{{.MyUser.Id}}/circles/mycircle/{{.Circle.ImagePath}}"
+                  src="{{.ImagePathPrefix}}/img/user{{.MyUser.Id}}/circles/mycircle/{{.Circle.ImagePath}}"
                   alt="user_profile_image"
                   style="
                     width: 350px;

@@ -52,17 +52,18 @@ func checkMembership(user data.User, circle data.Circle) (ok bool, err error) {
 }
 
 type Data struct {
-	MyUser          data.User
-	User            data.User
-	Users           []data.User
-	Post            data.Post
-	Posts           []data.Post
-	Circle          data.Circle
-	Circles         []data.Circle
-	Membership      data.Membership
-	Memberships     []data.Membership
-	Chat            data.Chat
-	Chats           []data.Chat
-	MembershipValid bool
-	ImagePathPrefix string
+	MyUser              data.User
+	User                data.User
+	Users               []data.User
+	Post                data.Post
+	Posts               []data.Post
+	Circle              data.Circle
+	Circles             []data.Circle
+	Membership          data.Membership
+	Memberships         []data.Membership
+	Chat                data.Chat
+	Chats               []data.Chat
+	NumberOfMemberships int
+	MembershipValid     bool
+	ImagePathPrefix     string
 }

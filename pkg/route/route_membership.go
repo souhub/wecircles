@@ -3,6 +3,7 @@ package route
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/souhub/wecircles/pkg/data"
 	"github.com/souhub/wecircles/pkg/logging"
@@ -36,8 +37,9 @@ func MembershipsCircles(w http.ResponseWriter, r *http.Request) {
 		circles = append(circles, circle)
 	}
 	data := Data{
-		MyUser:  myUser,
-		Circles: circles,
+		MyUser:          myUser,
+		Circles:         circles,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("layout", "navbar.private", "circles")
 	if err := tmp.Execute(w, data); err != nil {

@@ -1,13 +1,11 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":84,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1: no such file or directory","time":"2020-11-29T20:29:23Z"}
-magePathPrefix in type route.Data","time":"2020-11-29T20:26:03Z"}
-vel":"info","line":169,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/post35b42b1c-dd70-4ead-9b97-fb47f686edd3: no such file or directory","time":"2020-11-29T19:56:25Z"}
-g":"stat /go/src/github.com/souhub/wecircles/web/img/user1/posts/postc97aa63e-fe0b-4525-8e2a-3558e32418f8: no such file or directory","time":"2020-11-29T19:44:00Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"warning","line":212,"msg":"InvalidParameter: 1 validation error(s) found.\n- minimum field size of 1, PutObjectInput.Bucket.\n","time":"2020-11-29T19:44:00Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":110,"msg":"InvalidParameter: 1 validation error(s) found.\n- minimum field size of 1, PutObjectInput.Bucket.\n","time":"2020-11-29T19:44:00Z"}
-,"msg":"http: no such file","time":"2020-11-29T05:41:27Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"info","line":110,"msg":"http: no such file","time":"2020-11-29T05:41:27Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/data/post.go","level":"warning","line":178,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user5/posts/post0a3ffdb7-c35e-4869-913f-ab2c9cf1813d/default_thumbnail.jpg: no such file or directory","time":"2020-11-29T05:41:48Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_post.go","level":"warning","line":220,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user5/posts/post0a3ffdb7-c35e-4869-913f-ab2c9cf1813d/default_thumbnail.jpg: no such file or directory","time":"2020-11-29T05:41:48Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-11-30T01:14:54Z"}
+ats\" at \u003c.ImagePathPrefix\u003e: can't evaluate field ImagePathPrefix in type data.Chat","time":"2020-11-30T00:58:33Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":87,"msg":"template: mypage.chats.private.html:3:24: executing \"chats\" at \u003c.ImagePathPrefix\u003e: can't evaluate field ImagePathPrefix in type data.Chat","time":"2020-11-30T00:58:34Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":87,"msg":"template: mypage.chats.private.html:3:24: executing \"chats\" at \u003c.ImagePathPrefix\u003e: can't evaluate field ImagePathPrefix in type data.Chat","time":"2020-11-30T00:43:42Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":87,"msg":"template: mypage.chats.private.html:3:24: executing \"chats\" at \u003c.ImagePathPrefix\u003e: can't evaluate field ImagePathPrefix in type data.Chat","time":"2020-11-30T00:43:52Z"}
+n.go","level":"warning","line":39,"msg":"template: posts.html:10:19: executing \"posts\" at \u003c.ImagePathPrefix\u003e: can't evaluate field ImagePathPrefix in type data.Post","time":"2020-11-29T22:59:43Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":39,"msg":"template: posts.html:10:19: executing \"posts\" at \u003c.ImagePathPrefix\u003e: can't evaluate field ImagePathPrefix in type data.Post","time":"2020-11-29T22:59:43Z"}
+ecircles/pkg/route/route_post.go","level":"warning","line":220,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user5/posts/post0a3ffdb7-c35e-4869-913f-ab2c9cf1813d/default_thumbnail.jpg: no such file or directory","time":"2020-11-29T05:41:48Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/data/circle.go","level":"info","line":198,"msg":"http: no such file","time":"2020-11-29T05:44:57Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":433,"msg":"http: no such file","time":"2020-11-29T05:44:57Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":32,"msg":"sql: no rows in result set","time":"2020-11-29T05:45:02Z"}
