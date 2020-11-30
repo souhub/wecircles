@@ -15,7 +15,9 @@
   {{$myUserID := .MyUser.Id}} {{if .Users}}
   <div class="container">
     <p>サークルメンバー：{{.NumberOfMemberships}}人</p>
-    {{$imagePathPrefix:=ImagePathPrefix}} {{range .Users}}
+    {{$imagePathPrefix := ImagePathPrefix}}
+    <br />
+    {{range .Users}}
     <div>
       <div class="mb-5">
         <a href="/user?id={{.UserIdStr}}">
