@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	files := http.FileServer(http.Dir("/web/"))
+	files := http.FileServer(http.Dir("web/"))
 	http.Handle("/static/", http.StripPrefix("/static/", files))
 
 	http.HandleFunc("/", route.Index)
@@ -24,9 +24,6 @@ func main() {
 	http.HandleFunc("/post/edit", route.EditPost)
 	http.HandleFunc("/post/update", route.UpdatePost)
 	http.HandleFunc("/post/delete", route.DeletePost)
-
-	// http.HandleFunc("/mypage", route.MyPage)
-	// http.HandleFunc("/mycircle", route.MyCircle)
 
 	http.HandleFunc("/user/edit", route.EditUser)
 	http.HandleFunc("/user/update", route.UpdateUser)
