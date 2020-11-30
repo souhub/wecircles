@@ -12,11 +12,11 @@
     </ul>
   </div>
 
-  {{$myUserID := .MyUser.Id}} {{if .Users}}
+  {{$imagePathPrefix := .ImagePathPrefix}} {{$myUserID := .MyUser.Id}}
+  <br />
+  {{if.Users}}
   <div class="container">
     <p>サークルメンバー：{{.NumberOfMemberships}}人</p>
-    {{$imagePathPrefix := ImagePathPrefix}}
-    <br />
     {{range .Users}}
     <div>
       <div class="mb-5">
