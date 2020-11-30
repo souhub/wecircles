@@ -51,6 +51,7 @@ https://wecircles.net
 - Terraform:0.13.3
 - AWS
   - VPC
+  - S3
   - RDS
   - ECR
   - ECS (Fargate)
