@@ -13,5 +13,14 @@
     }, {
         "name": "DB_ENDPOINT",
         "valueFrom": "/wecircles/rds/endpoint"
+    },{
+        "name": "AWS_ACCESS_KEY_ID",
+        "valueFrom": "/wecircles/aws/s3/accesskey"
+    },{
+        "name":"AWS_SECRET_ACCESS_KEY",
+        "valueFrom":"/wecircles/aws/s3/secretkey"
+    },{
+        "name":"AWS_DEFAULT_REGION",
+        "valueFrom":"/wecircles/aws/s3/region"
     }]
 }]
