@@ -61,4 +61,4 @@
 
 ## インフラ構成図
 
-![インフラ構成図](/assets/infra_structures.drawio)
+![インフラ構成図](/assets/infra_structures.png)
