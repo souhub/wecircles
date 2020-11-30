@@ -1,12 +1,12 @@
 # _____________________________Task Definitions______________________________________
 resource "aws_ecs_task_definition" "task" {
-  family                   = "wecircles"
-  cpu                      = 256
-  memory                   = 512
-  network_mode             = "awsvpc"
-  requires_compatibilities = ["FARGATE"]
-  execution_role_arn       = "arn:aws:iam::535411933495:role/ecsTaskExecutionRole"
-  container_definitions    = file("task-definitions.json")
+  family       = "wecircles"
+  cpu          = 256
+  memory       = 512
+  network_mode = "awsvpc"
+  # requires_compatibilities = ["FARGATE"]
+  execution_role_arn    = "arn:aws:iam::535411933495:role/ecsTaskExecutionRole"
+  container_definitions = file("task-definitions.json")
 }
 
 # _____________________________Cluster______________________________________
@@ -23,8 +23,8 @@ resource "aws_ecs_service" "service" {
   health_check_grace_period_seconds = 60
 
   network_configuration {
-    assign_public_ip = true
-    security_groups  = [aws_security_group.ec2_sg.id]
+    # assign_public_ip = true
+    security_groups = [aws_security_group.ec2_sg.id]
 
     subnets = [
       aws_subnet.publicA.id,
