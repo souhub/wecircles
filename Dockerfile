@@ -16,9 +16,9 @@ ENV DB_PROTOCOL tcp
 
 ENV DB_NAME wecircles
 
-ENV WECIRCLES_S3_IMAGE_BUCKET wecircles-img
+ENV WECIRCLES_S3_IMAGE_BUCKET wecircles-img-dev
 
-ENV IMAGE_PATH https://wecircles-img.s3-ap-northeast-1.amazonaws.com/web
+ENV IMAGE_PATH https://wecircles-img-dev.s3-ap-northeast-1.amazonaws.com/web
 
 EXPOSE 80
 
