@@ -20,7 +20,7 @@ resource "aws_ecs_service" "service" {
   cluster                           = aws_ecs_cluster.cluster.arn
   task_definition                   = aws_ecs_task_definition.task.arn
   desired_count                     = 2
-  launch_type                       = "FARGATE"
+  launch_type                       = "EC2"
   platform_version                  = "1.4.0"
   health_check_grace_period_seconds = 60
 
