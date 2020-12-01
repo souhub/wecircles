@@ -277,7 +277,8 @@ func DeleteUserConfirm(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	data := Data{
-		MyUser: myUser,
+		MyUser:          myUser,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
 	tmp := parseTemplateFiles("layout", "user.delete.confirm", "navbar.private")
 	if err := tmp.Execute(w, data); err != nil {
