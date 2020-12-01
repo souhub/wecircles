@@ -1,12 +1,14 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":84,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user3: no such file or directory","time":"2020-12-01T18:26:23Z"}
-ouhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-01T18:59:41Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-01T18:59:44Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-01T18:59:46Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-01T18:59:46Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-01T19:01:49Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-01T19:01:50Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-01T19:01:50Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-01T19:01:55Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-01T19:01:58Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-01T19:01:58Z"}
+cted 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}

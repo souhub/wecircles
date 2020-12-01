@@ -147,7 +147,7 @@ func CircleManage(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	circle, err := data.GetCirclebyUser(myUser.UserIdStr)
+	circle, err := data.GetCirclebyUserID(myUser.Id)
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
