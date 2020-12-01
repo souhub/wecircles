@@ -131,7 +131,8 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 			HttpOnly: true,
 		}
 		http.SetCookie(w, &cookie)
-		http.Redirect(w, r, "/", 302)
+		url := fmt.Sprintf("/user?id=%s", user.UserIdStr)
+		http.Redirect(w, r, url, 302)
 		return
 	} else {
 		//認証されなかったらログインファームにリダイレクトさせる

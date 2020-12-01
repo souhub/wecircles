@@ -81,14 +81,14 @@
 
   <div class="form-group">
     <label for="user_id_str">ユーザーID</label>
-
-    <!-- <p class="form-control">
+    {{if eq .MyUser.Id 1}}
+    <p class="form-control">
       {{.MyUser.Name}}
       <span style="font-size: 10px; color: gray"
-        >※ポートフォリオ閲覧用ユーザーのためIDが変更できません。</span
+        >※ポートフォリオ閲覧用ユーザーのためIDは変更できません。</span
       >
-    </p> -->
-
+    </p>
+    {{else}}
     <input
       type="text"
       name="user_id_str"
@@ -96,6 +96,7 @@
       value="{{.MyUser.UserIdStr}}"
       required
     />
+    {{end}}
   </div>
 
   <button type="submit" class="btn btn-outline-success btn-block">更新</button>
