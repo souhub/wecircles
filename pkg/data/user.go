@@ -364,6 +364,16 @@ func ResetUsers() (err error) {
 	return
 }
 
+// ポートフォリオ用ユーザーGET
+func UserForPortfolio() (user User, err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `SELECT * FROM users
+			  WHERE id=?`
+	err = db.QueryRow(query, 1).Scan(&user.Id, &user.Name, &user.UserIdStr, &user.Email, &user.Password, &user.ImagePath, &user.CreatedAt)
+	return
+}
+
 // func ResetUserImageDir() (err error) {
 // 	db := NewDB()
 // 	defer db.Close()

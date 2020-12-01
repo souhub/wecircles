@@ -1,25 +1,30 @@
 {{define "content"}}
-<div style="display: flex">
-  <div class="box" style="width: 30%">
-    <h2>サークル</h2>
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/circle/manage">自分</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/circle/memberships">参加中</a>
-      </li>
-    </ul>
-  </div>
+
+<div class="mb-5">
+  <h4 class="font-weight-bold">サークル</h4>
+      <a class="btn btn-success" href="/circle/manage">自分のサークル</a>
+      <a class="btn btn-outline-success" href="/circle/memberships">参加中のサークル</a>
+</div>
 
   {{if eq .Circle.Name ""}}
-  <div class="box">
+  <!-- <div class="box">
     <a href="/circle/new" class="btn btn-outline-success"
-      >サークルを新しく作る</a
+      >自分でサークルを新しく作る</a
     >
-  </div>
+    <a href="/circles" class="btn btn-outline-success"
+    >参加するサークルを見つける</a
+  >
+  </div> -->
+  <p class="text-center">まだサークルを作成していません。</p>
+<a href="/circle?id={{.User.UserIdStr}}" style="text-decoration: none"
+  ><button type="submit" class="btn btn-outline-success btn-block">
+    自分のサークルを作りましょう！
+  </button></a
+>
   {{else}}
-  <div class="box" style="width: 70%">
+
+
+  <div class="box" >
     <h3 class="mb-5 font-weight-bold">管理</h3>
     <a
       class="btn btn-outline-success"
@@ -61,11 +66,20 @@
       <p>{{.Circle.Name}}</p>
     </div>
 
-    <div>
+    <div style="width: 100%; overflow: hidden">
       <label class="font-weight-bold">概要</label>
-      <p>{{.Circle.Overview}}</p>
+      <p
+        class="card-text index-post-body"
+        style="
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 5;
+        "
+      >
+        {{.Circle.Overview}}
+      </p>
     </div>
-
+    <br />
     <div class="form-group">
       <label class="font-weight-bold">カテゴリ</label>
       {{if eq .Circle.Category "tennis"}}
@@ -81,6 +95,11 @@
       {{else}}
       <p>その他</p>
       {{end}}
+    </div>
+
+    <div>
+      <label class="font-weight-bold">TwitterID</label>
+      <p>@{{.Circle.TwitterID}}</p>
     </div>
     <a href="/circle/edit" class="btn btn-success mb-5 float-right">編集する</a>
     <div class="pt-5 border-top border-secondary" style="margin-top: 70px">

@@ -33,11 +33,23 @@
       placeholder="パスワード"
       required
     />
-    <small id="emailHelp" class="form-text text-muted"
-      >※退会すると{{.MyUser.Name}}さんのデータはすべて削除されます。</small
-    >
+    <p id="emailHelp" style="color: red">
+      ※退会すると{{.MyUser.Name}}さんのデータはすべて削除されます。
+    </p>
   </div>
-
+  <a
+    href="/user?id={{.MyUser.UserIdStr}}"
+    class="btn btn-outline-secondary btn-block mt-3"
+    >退会しない</a
+  >
+  {{if eq .MyUser.Id 1}}
+  <a href="/user/delete" class="btn btn-outline-danger btn-block mt-3">
+    退会する
+  </a>
+  <p style="font-size: 10px; color: gray">
+    ※ポートフォリオ閲覧用ユーザーのため正しいパスワードを入力しても退会できません。
+  </p>
+  {{else}}
   <button
     type="submit"
     href="/user/delete"
@@ -45,10 +57,6 @@
   >
     退会する
   </button>
+  {{end}}
 </form>
-<a
-  href="/user?id={{.MyUser.UserIdStr}}"
-  class="btn btn-outline-secondary btn-block mt-3"
-  >退会しない</a
->
 {{end}}

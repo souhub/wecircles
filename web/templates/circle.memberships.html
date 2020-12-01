@@ -1,5 +1,12 @@
-{{define "content"}} {{$imagePathPrefix := .ImagePathPrefix}} {{if .Circles}}
-{{range .Circles}}
+{{define "content"}} {{$imagePathPrefix := .ImagePathPrefix}}
+<div class="mb-5">
+  <h4 class="font-weight-bold">サークル</h4>
+  <a class="btn btn-outline-success" href="/circle/manage">自分のサークル</a>
+  <a class="btn btn-success" href="/circle/memberships">参加中のサークル</a>
+</div>
+{{if .Circles}} {{range .Circles}}
+
+<h3 class="mb-5 font-weight-bold">参加中のサークル</h3>
 <div class="card mx-auto mb-5">
   <a href="/circle?id={{.OwnerIDStr}}" style="color: black">
     {{if eq .ImagePath ""}}
@@ -37,9 +44,9 @@
 </div>
 {{end}} {{else}}
 <p class="text-center">まだ参加しているサークルがありません。</p>
-<a href="/circle?id={{.User.UserIdStr}}" style="text-decoration: none"
+<a href="/circles" style="text-decoration: none"
   ><button type="submit" class="btn btn-outline-success btn-block">
-    初めてのサークルを作りましょう！
+    参加したいサークルを探しましょう！
   </button></a
 >
 {{end}} {{end}}

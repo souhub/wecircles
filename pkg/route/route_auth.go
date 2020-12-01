@@ -81,7 +81,7 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	userImageDir := fmt.Sprintf("%s/web/img/user%d", currentRootDir, signupedUser.Id)
 	_, err = os.Stat(userImageDir)
 	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		err = os.Mkdir(userImageDir, 0777)
 	}
 	session, err := signupedUser.CreateSession()

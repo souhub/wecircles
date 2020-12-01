@@ -41,7 +41,7 @@ func MembershipsCircles(w http.ResponseWriter, r *http.Request) {
 		Circles:         circles,
 		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
-	tmp := parseTemplateFiles("layout", "navbar.private", "circles")
+	tmp := parseTemplateFiles("layout", "navbar.private", "circle.memberships")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}

@@ -1,9 +1,8 @@
 {{define "content"}}
+
 <div class="bg-white">
   <h3 style="text-align: center">{{.Circle.Name}}</h3>
-  <p style="white-space: pre; width: 100%; word-wrap: break-all">
-    {{.Circle.Overview}}
-  </p>
+  <p style="word-wrap: break-all">{{.Circle.Overview}}</p>
 </div>
 {{if .MembershipValid}} {{template "circle-navbar" .}}
 
