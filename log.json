@@ -1,9 +1,10 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-01T22:32:25Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-01T22:32:33Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-01T22:32:37Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-01T22:32:39Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-01T22:32:41Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-01T22:32:42Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":226,"msg":"http: no such file","time":"2020-12-01T23:00:36Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"info","line":148,"msg":"http: no such file","time":"2020-12-01T23:00:36Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":114,"msg":"sql: no rows in result set","time":"2020-12-01T23:00:42Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":114,"msg":"sql: no rows in result set","time":"2020-12-01T23:00:46Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/data/user.go","level":"info","line":226,"msg":"http: no such file","time":"2020-12-01T23:00:55Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"info","line":148,"msg":"http: no such file","time":"2020-12-01T23:00:55Z"}
+s in result set","time":"2020-12-01T22:32:42Z"}
 : no such file","time":"2020-12-01T22:14:37Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":170,"msg":"Error 1054: Unknown column 'owner_id' in 'where clause'","time":"2020-12-01T22:14:37Z"}
 l":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-01T19:01:55Z"}
