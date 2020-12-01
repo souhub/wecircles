@@ -1,21 +1,15 @@
 {{define "content"}}
 
-<h2>サークル</h2>
-<nav class="navbar navbar-expand navbar-light">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-      <a class="nav-link" href="/circle">自分</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/circle/memberships">参加中</a>
-    </li>
-  </ul>
-</nav>
+<div class="mb-5">
+  <h4 class="font-weight-bold">サークル</h4>
+      <a class="btn btn-success" href="/circle/manage">自分のサークル</a>
+      <a class="btn btn-outline-success" href="/circle/memberships">参加中のサークル</a>
+</div>
 
-<h3>新しくサークルを作る<span class="text-danger" style="font-size: 13px;"> ※作れるサークルは1人1つです。</span></h3>
+<h3>新しくサークルを作る<span class="text-danger" style="font-size: 13px;"> <br/>※作れるサークルは1人1つです。</span></h3>
 <form action="/circle/create" method="post" enctype="multipart/form-data">
 
-  <div class="form-group text-center" style="height:250px;padding-top: 100px; margin-bottom: 150px;">
+  <div class="form-group text-center my-5" style="height:250px">
     <div style="display: block; height: 200px;">
       <label for="image"
       >サークルイメージ画像<span class="text-danger small"> 必須</span></label

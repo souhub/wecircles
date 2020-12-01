@@ -24,7 +24,7 @@ func Circle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	circle, err := data.GetCirclebyUser(id)
+	circle, err := data.GetCirclebyUserID(myUser.Id)
 	if err != nil {
 		data := Data{
 			MyUser:          myUser,

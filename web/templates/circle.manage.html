@@ -66,8 +66,20 @@
       <p>{{.Circle.Name}}</p>
     </div>
 
-    <div style="width: 100%; overflow: hidden">
+
+    <label class="font-weight-bold">概要</label>
+    <div class="cp_box">
+      <input id="cp01" type="checkbox">
+      <label for="cp01"></label>
+      <div class="cp_container">
+        <p>{{.Circle.Overview}}</p>
+      </div>
+    </div>
+
+
+    <!-- <div style="width: 100%; overflow: hidden">
       <label class="font-weight-bold">概要</label>
+
       <p
         class="card-text index-post-body"
         style="
@@ -78,7 +90,7 @@
       >
         {{.Circle.Overview}}
       </p>
-    </div>
+    </div> -->
     <br />
     <div class="form-group">
       <label class="font-weight-bold">カテゴリ</label>
@@ -102,7 +114,7 @@
       <p>@{{.Circle.TwitterID}}</p>
     </div>
     <a href="/circle/edit" class="btn btn-success mb-5 float-right">編集する</a>
-    <div class="pt-5 border-top border-secondary" style="margin-top: 70px">
+    <div class="pt-5 mb-5 border-top border-secondary" style="margin-top: 70px">
       <p class="font-weight-bold">メンバー一覧</p>
       <a href="/circle/manage/members" class="btn btn-outline-success"
         >メンバーを見る</a

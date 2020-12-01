@@ -10,6 +10,9 @@ func main() {
 	files := http.FileServer(http.Dir("web/"))
 	http.Handle("/static/", http.StripPrefix("/static/", files))
 
+	// CSS読み込み用
+	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("web/css/"))))
+
 	http.HandleFunc("/", route.Index)
 	http.HandleFunc("/login", route.Login)
 	http.HandleFunc("/signup", route.Signup)

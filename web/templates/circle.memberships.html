@@ -24,17 +24,13 @@
     {{end}}
     <div class="card-body">
       <h5 class="card-title">{{.Name}}</h5>
-      <div style="width: 100%; overflow: hidden">
-        <p
-          class="card-text index-post-body"
-          style="
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-          "
-        >
-          {{.Overview}}
-        </p>
+      <label class="font-weight-bold">概要</label>
+      <div class="cp_box">
+        <input id="cp01" type="checkbox" />
+        <label for="cp01"></label>
+        <div class="cp_container">
+          <p>{{.Overview}}</p>
+        </div>
       </div>
     </div>
     <div class="card-body">
