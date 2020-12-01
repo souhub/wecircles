@@ -1,6 +1,6 @@
-{{define "chats"}} {{$imagePathPrefix := .ImagePathPrefix}} {{$MyUserIdStr :=
-.MyUser.UserIdStr}} {{if .MembershipValid}} {{range .Chats}} {{if eq
-$MyUserIdStr .UserIdStr}}
+{{define "chats"}} {{if .MembershipValid}} <br />
+{{$imagePathPrefix := .ImagePathPrefix}} {{$MyUserIdStr := .MyUser.UserIdStr}}
+{{range .Chats}} {{if eq $MyUserIdStr .UserIdStr}}
 <div class="card mb-3">
   <div class="card-body">
     <a href="/user?id={{.UserIdStr}}">

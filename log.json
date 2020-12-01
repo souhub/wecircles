@@ -1,8 +1,8 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":84,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1: no such file or directory","time":"2020-11-30T16:34:58Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-11-30T16:35:02Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-11-30T16:35:02Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":341,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/circles/mycircle: no such file or directory","time":"2020-11-30T16:35:10Z"}
-an't evaluate field ImagePathPrefix in type data.Chat","time":"2020-11-30T00:43:42Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":84,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1: no such file or directory","time":"2020-12-01T14:07:52Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-01T14:07:59Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":341,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1/circles/mycircle: no such file or directory","time":"2020-12-01T14:08:07Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":84,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user2: no such file or directory","time":"2020-12-01T14:08:27Z"}
+ime":"2020-11-30T00:43:42Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"warning","line":87,"msg":"template: mypage.chats.private.html:3:24: executing \"chats\" at \u003c.ImagePathPrefix\u003e: can't evaluate field ImagePathPrefix in type data.Chat","time":"2020-11-30T00:43:52Z"}
 n.go","level":"warning","line":39,"msg":"template: posts.html:10:19: executing \"posts\" at \u003c.ImagePathPrefix\u003e: can't evaluate field ImagePathPrefix in type data.Post","time":"2020-11-29T22:59:43Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_main.go","level":"warning","line":39,"msg":"template: posts.html:10:19: executing \"posts\" at \u003c.ImagePathPrefix\u003e: can't evaluate field ImagePathPrefix in type data.Post","time":"2020-11-29T22:59:43Z"}
