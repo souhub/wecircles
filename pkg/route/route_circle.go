@@ -24,7 +24,7 @@ func Circle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	circle, err := data.GetCirclebyUserID(myUser.Id)
+	circle, err := data.GetCirclebyUser(id)
 	if err != nil {
 		data := Data{
 			MyUser:          myUser,
@@ -147,7 +147,7 @@ func CircleManage(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	circle, err := data.GetCirclebyUserID(myUser.Id)
+	circle, err := data.GetCirclebyUser(myUser.UserIdStr)
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
@@ -250,7 +250,7 @@ func TweetsCircle(w http.ResponseWriter, r *http.Request) {
 		MembershipValid: membershipValid,
 		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
-	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header", "mypage.navbar", "mypage.tweets")
+	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header.private", "mypage.navbar", "mypage.tweets")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
@@ -294,7 +294,7 @@ func SettingsCircle(w http.ResponseWriter, r *http.Request) {
 		MembershipValid: membershipValid,
 		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
 	}
-	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header", "mypage.navbar", "mypage.settings")
+	tmp := parseTemplateFiles("layout.mypage", "navbar.private", "mypage.header.private", "mypage.navbar", "mypage.settings")
 	if err := tmp.Execute(w, data); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}

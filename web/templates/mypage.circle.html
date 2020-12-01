@@ -1,8 +1,16 @@
 {{define "content"}}
 
-<div class="bg-white">
+<div class="bg-white container">
   <h3 style="text-align: center">{{.Circle.Name}}</h3>
-  <p style="word-wrap: break-all">{{.Circle.Overview}}</p>
+  <div class="cp_box">
+    <input id="cp01" type="checkbox" />
+    <label for="cp01"></label>
+    <div class="cp_container">
+      <p style="white-space: pre-wrap; word-wrap: break-word">
+        {{.Circle.Overview}}
+      </p>
+    </div>
+  </div>
 </div>
 {{if .MembershipValid}} {{template "circle-navbar" .}}
 

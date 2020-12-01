@@ -176,6 +176,16 @@ func (user *User) UpdatePostUserIdStr() (err error) {
 	return
 }
 
+func (user *User) UpdateCircleOwnerIdStr() (err error) {
+	db := NewDB()
+	defer db.Close()
+	query := `UPDATE circles
+		      SET owner_id_str=?
+			  WHERE owner_id=?`
+	_, err = db.Exec(query, user.UserIdStr, user.Id)
+	return
+}
+
 func (user *User) UpdateChatUserIdStr() (err error) {
 	db := NewDB()
 	defer db.Close()

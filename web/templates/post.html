@@ -1,11 +1,9 @@
 {{define "content"}}
 <div class="mx-auto">
-  <h1>{{.Post.Title}}</h1>
+  <h2>{{.Post.Title}}</h2>
   <a href="/user?id={{.Post.UserIdStr}}">{{.Post.UserName}}</a>
   <p>{{.Post.CreatedAt}}</p>
-  <p style="white-space: pre; width: 200px; word-wrap: break-all">
-    {{.Post.Body}}
-  </p>
+  <p style="white-space: pre-wrap; word-wrap: break-word">{{.Post.Body}}</p>
   {{if eq .MyUser.Id .Post.UserId}}
   <a
     class="btn btn-outline-success btn-block"

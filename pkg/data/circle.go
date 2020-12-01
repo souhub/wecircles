@@ -43,20 +43,20 @@ func GetCirclebyUser(userIdStr string) (circle Circle, err error) {
 }
 
 // ユーザーがサークルを作ったことがあるかを調べるため（ユーザーIDを変更すると2つめのサークルを作れてしまうバグが発生する）
-func GetCirclebyUserID(id int) (circle Circle, err error) {
-	db := NewDB()
-	defer db.Close()
-	query := `SELECT * FROM circles
-			  WHERE owner_id=?`
-	stmt, err := db.Prepare(query)
-	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-		return
-	}
-	defer stmt.Close()
-	err = stmt.QueryRow(id).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.TwitterID, &circle.CreatedAt)
-	return circle, err
-}
+// func GetCirclebyUserID(id int) (circle Circle, err error) {
+// 	db := NewDB()
+// 	defer db.Close()
+// 	query := `SELECT * FROM circles
+// 			  WHERE owner_id=?`
+// 	stmt, err := db.Prepare(query)
+// 	if err != nil {
+// 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+// 		return
+// 	}
+// 	defer stmt.Close()
+// 	err = stmt.QueryRow(id).Scan(&circle.ID, &circle.Name, &circle.ImagePath, &circle.Overview, &circle.Category, &circle.OwnerID, &circle.OwnerIDStr, &circle.TwitterID, &circle.CreatedAt)
+// 	return circle, err
+// }
 
 // Get the owner
 func (circle *Circle) GetOwner() (user User, err error) {

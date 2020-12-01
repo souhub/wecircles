@@ -166,6 +166,11 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
+	if err = myUser.UpdateCircleOwnerIdStr(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
 	url := fmt.Sprintf("/user?id=%s", myUser.UserIdStr)
 	http.Redirect(w, r, url, 302)
 }
