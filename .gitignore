@@ -14,5 +14,6 @@ deployment/aws/.terraform.tfstate.lock.info
 deployment/aws/terraform.tfstate.backup
 
 # web
+web/img/user*
 # web/img
 
