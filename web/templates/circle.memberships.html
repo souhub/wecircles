@@ -25,13 +25,21 @@
     <div class="card-body">
       <h5 class="card-title">{{.Name}}</h5>
       <label class="font-weight-bold">概要</label>
-      <div class="cp_box">
-        <input id="cp01" type="checkbox" />
-        <label for="cp01"></label>
-        <div class="cp_container">
-          <p>{{.Overview}}</p>
-        </div>
+      <div style="overflow: hidden">
+        <p
+          style="
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+          "
+        >
+          {{.Overview}}
+        </p>
       </div>
+      <br />
+      <a href="/circle?id={{.OwnerIDStr}}">もっとみる</a>
     </div>
     <div class="card-body">
       <a href="/user?id={{.OwnerIDStr}}">{{.OwnerIDStr}}</a>
