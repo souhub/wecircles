@@ -260,7 +260,12 @@ func (user *User) Upload(r *http.Request) (uploadedFileName string, err error) {
 	}
 
 	// Delete the post directory on the server
-	if err = os.Remove(imagePath); err != nil {
+	currentDir, err := os.Getwd()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	serverImagePath := fmt.Sprintf("%s/web/img/user%d/%s", currentDir, user.Id, uploadedFileName)
+	if err = os.Remove(serverImagePath); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	return uploadedFileName, err
