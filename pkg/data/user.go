@@ -266,16 +266,22 @@ func (user *User) Upload(r *http.Request) (uploadedFileName string, err error) {
 		return
 	}
 	// Delete the existed file
-	// if err = user.DeleteUserImage(); err != nil {
-	// 	logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	// }
+	if err = user.DeleteUserImage(); err != nil {
+		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
 	// Get the uploaded file's name from the file.
 	uploadedFileName = fileHeader.Filename
 	// Set the uploaded file's path
+	currentDir, err := os.Getwd()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	serverImagePath := fmt.Sprintf("%s/web/img/user%d/%s", currentDir, user.Id, uploadedFileName)
 	imagePath := fmt.Sprintf("web/img/user%d/%s", user.Id, uploadedFileName)
 
 	// Save the uploaded file to "imagePath"
-	saveImage, err := os.Create(imagePath)
+	saveImage, err := os.Create(serverImagePath)
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
