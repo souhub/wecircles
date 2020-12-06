@@ -149,7 +149,13 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 	myUser.ImagePath = userImagePath
 	myUser.Name = r.PostFormValue("name")
-	myUser.UserIdStr = r.PostFormValue("user_id_str")
+
+	// ポートフォリオユーザーのuser_id_strを""と受け取ってしまうため変更を防ぐ
+	if myUser.Id == 1 {
+		myUser.UserIdStr = "akashiii"
+	} else {
+		myUser.UserIdStr = r.PostFormValue("user_id_str")
+	}
 
 	if err = myUser.Update(); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
