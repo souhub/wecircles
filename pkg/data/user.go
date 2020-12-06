@@ -7,6 +7,10 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/google/uuid"
 	"github.com/souhub/wecircles/pkg/logging"
 )
@@ -19,6 +23,40 @@ type User struct {
 	Password  string `validate:"required"`
 	ImagePath string
 	CreatedAt string
+}
+
+func (signupedUser *User) S3DefaultUserImageUpload() error {
+	// credentialsの作成
+	creds := credentials.NewStaticCredentials(os.Getenv("AWS_ACCESS_KEY_ID"), os.Getenv("AWS_SECRET_ACCESS_KEY"), "")
+	cfg := aws.Config{
+		Credentials: creds,
+		Region:      aws.String(os.Getenv("AWS_DEFAULT_REGION")),
+		// Endpoint:    aws.String("http://127.0.0.1:9000"),
+	}
+	// sessionの作成
+	sess, err := session.NewSession(&cfg)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	// ファイルを開く
+	targetFilePath := "web/img/default.png"
+	f, err := os.Open(targetFilePath)
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+	defer f.Close()
+
+	bucketName := os.Getenv("WECIRCLES_S3_IMAGE_BUCKET")
+	objectKey := fmt.Sprintf("web/img/user%d/default.png", signupedUser.Id)
+
+	// Uploaderを作成し、ローカルファイルをアップロード
+	uploader := s3manager.NewUploader(sess)
+	_, err = uploader.Upload(&s3manager.UploadInput{
+		Bucket: aws.String(bucketName),
+		Key:    aws.String(objectKey),
+		Body:   f,
+	})
+	return err
 }
 
 // Get all users from users

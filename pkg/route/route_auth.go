@@ -50,7 +50,6 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 		if user.UserIdStr == existedUser.UserIdStr || user.Email == existedUser.Email {
 			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 			http.Redirect(w, r, "/signup", 302)
-
 			return
 		}
 	}
@@ -71,7 +70,7 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	//そのまま認証終わらせてマイページに飛ばす
 	signupedUserID := user.UserIdStr
 	signupedUser, err := data.UserByUserIdStr(signupedUserID)
-	// userごとの画像保存フォルダ作成
+	// userごとの画像保存フォルダ作成(user image アップデートの一時フォルダとして必要)
 	currentRootDir, err := os.Getwd()
 	if err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
@@ -83,6 +82,13 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		err = os.Mkdir(userImageDir, 0777)
+	}
+
+	// S3にuserごとの画像保存フォルダ作成し、default.pngを移動
+	if err = signupedUser.S3DefaultUserImageUpload(); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		http.Redirect(w, r, "/signup", 302)
+		return
 	}
 	session, err := signupedUser.CreateSession()
 	if err != nil {
