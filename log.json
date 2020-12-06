@@ -1,13 +1,14 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":120,"msg":"sql: no rows in result set","time":"2020-12-06T06:14:15Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":120,"msg":"sql: no rows in result set","time":"2020-12-06T06:14:34Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"info","line":83,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user3: no such file or directory","time":"2020-12-06T06:14:46Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-06T06:15:00Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-06T06:15:00Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":341,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user3/circles/mycircle: no such file or directory","time":"2020-12-06T06:15:10Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"info","line":83,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user4: no such file or directory","time":"2020-12-06T06:15:37Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-06T06:15:41Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-06T06:15:42Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-06T06:15:42Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"info","line":83,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1: no such file or directory","time":"2020-12-06T07:03:22Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":120,"msg":"sql: no rows in result set","time":"2020-12-06T07:03:33Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":120,"msg":"sql: no rows in result set","time":"2020-12-06T07:03:36Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":120,"msg":"sql: no rows in result set","time":"2020-12-06T07:05:27Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":120,"msg":"sql: no rows in result set","time":"2020-12-06T07:05:44Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":120,"msg":"sql: no rows in result set","time":"2020-12-06T07:05:45Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"info","line":83,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user2: no such file or directory","time":"2020-12-06T07:05:56Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-06T07:06:01Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-06T07:06:04Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-06T07:06:04Z"}
+3,"msg":"sql: no rows in result set","time":"2020-12-06T06:15:42Z"}
 "sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":16,"msg":"sql: expected 7 destination arguments in Scan, not 6","time":"2020-12-01T18:13:37Z"}
