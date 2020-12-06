@@ -259,13 +259,8 @@ func (user *User) Upload(r *http.Request) (uploadedFileName string, err error) {
 		return
 	}
 
-	// Delete the post directory on the server
-	currentDir, err := os.Getwd()
-	if err != nil {
-		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
-	serverImagePath := fmt.Sprintf("%s/web/img/user%d/%s", currentDir, user.Id, uploadedFileName)
-	if err = os.Remove(serverImagePath); err != nil {
+	// Delete the existed user image on the server
+	if err = os.Remove(imagePath); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 	return uploadedFileName, err
@@ -316,7 +311,7 @@ func (user *User) UploadCircleImage(r *http.Request) (uploadedFileName string, e
 		return
 	}
 
-	// Delete the post directory on the server
+	// Delete the existed circle image on the server
 	if err = os.Remove(imagePath); err != nil {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
