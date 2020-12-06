@@ -220,7 +220,7 @@ func UpdateUserImage(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 		return
 	}
-	http.Redirect(w, r, "/myUser/edit", 302)
+	http.Redirect(w, r, "/user/edit", 302)
 }
 
 // POST /user/delete

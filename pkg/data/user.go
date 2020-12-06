@@ -266,9 +266,9 @@ func (user *User) Upload(r *http.Request) (uploadedFileName string, err error) {
 		return
 	}
 	// Delete the existed file
-	if err = user.DeleteUserImage(); err != nil {
-		logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
-	}
+	// if err = user.DeleteUserImage(); err != nil {
+	// 	logging.Info(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	// }
 	// Get the uploaded file's name from the file.
 	uploadedFileName = fileHeader.Filename
 	// Set the uploaded file's path
