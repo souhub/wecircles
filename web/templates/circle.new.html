@@ -1,18 +1,18 @@
 {{define "content"}}
 
 <div class="mb-5">
-  <h4 class="font-weight-bold">サークル</h4>
-      <a class="btn btn-success" href="/circle/manage">自分のサークル</a>
-      <a class="btn btn-outline-success" href="/circle/memberships">参加中のサークル</a>
+  <h4 class="font-weight-bold">ブース</h4>
+      <a class="btn btn-success" href="/circle/manage">自分のブース</a>
+      <a class="btn btn-outline-success" href="/circle/memberships">参加中のブース</a>
 </div>
 
-<h3>新しくサークルを作る<span class="text-danger" style="font-size: 13px;"> <br/>※作れるサークルは1人1つです。</span></h3>
+<h3>新しくブースを作る<span class="text-danger" style="font-size: 13px;"> <br/>※作れるブースは1人1つです。</span></h3>
 <form action="/circle/create" method="post" enctype="multipart/form-data">
 
   <div class="form-group text-center my-5" style="height:250px">
     <div style="display: block; height: 200px;">
       <label for="image"
-      >サークルイメージ画像<span class="text-danger small"> 必須</span></label
+      >ブースのイメージ画像<span class="text-danger small"> 必須</span></label
     >
       <div style="height: 250px;">
         <img
@@ -86,16 +86,16 @@
       required
     >
 ■なにをするサークルか
-    例：写真好きが自分の写真を見せ合ったり、アドバイスしたりするサークルです
+  例：写真好きが自分の写真を見せ合ったり、アドバイスしたりするサークルです
 
-    ■活動方針や頻度
-    例：サークルの掲示板で写真を見せ合ったり、Slackを使ったりして話します。掲示板への投稿頻度は月に4回以上、メンバーで写真を撮る会を3ヶ月に1回程度開きます！
+■活動方針や頻度
+  例：サークルの掲示板で写真を見せ合ったり、Slackを使ったりして話します。掲示板への投稿頻度は月に4回以上、メンバーで写真を撮る会を3ヶ月に1回程度開きます！
 
-    ■どんな人に来てほしいか
-    例：カメラが好きな人ならどんな方でも構いません！ 一眼レフを持っている人だとうれしいです！
+■どんな人に来てほしいか
+  例：カメラが好きな人ならどんな方でも構いません！ 一眼レフを持っている人だとうれしいです！
 
-    ■どのように参加してほしいか
-    例：ポジティブな活動を心がけてほしいです！見ているだけでも大丈夫です。</textarea
+■どのように参加してほしいか
+  例：ポジティブな活動を心がけてほしいです！見ているだけでも大丈夫です。</textarea
     >
   </div>
 

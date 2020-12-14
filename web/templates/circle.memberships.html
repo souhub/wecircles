@@ -1,11 +1,11 @@
 {{define "content"}} {{$imagePathPrefix := .ImagePathPrefix}}
 <div class="mb-5">
-  <h4 class="font-weight-bold">サークル</h4>
-  <a class="btn btn-outline-success" href="/circle/manage">自分のサークル</a>
-  <a class="btn btn-success" href="/circle/memberships">参加中のサークル</a>
+  <h4 class="font-weight-bold">ブース</h4>
+  <a class="btn btn-outline-success" href="/circle/manage">自分のブース</a>
+  <a class="btn btn-success" href="/circle/memberships">参加中のブース</a>
 </div>
 {{if .Circles}}
-<h3 class="mb-5 font-weight-bold">参加中のサークル</h3>
+<h3 class="mb-5 font-weight-bold">参加中のブース</h3>
 {{range .Circles}}
 <div class="card mx-auto mb-5">
   <a href="/circle?id={{.OwnerIDStr}}" style="color: black">
@@ -47,10 +47,10 @@
   </a>
 </div>
 {{end}} {{else}}
-<p class="text-center">まだ参加しているサークルがありません。</p>
+<p class="text-center">まだ参加しているブースがありません。</p>
 <a href="/circles" style="text-decoration: none"
   ><button type="submit" class="btn btn-outline-success btn-block">
-    参加したいサークルを探しましょう！
+    参加したいブースを探しましょう！
   </button></a
 >
 {{end}} {{end}}
