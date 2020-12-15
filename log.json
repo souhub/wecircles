@@ -1,10 +1,11 @@
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_user.go","level":"warning","line":111,"msg":"sql: no rows in result set","time":"2020-12-06T10:59:40Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":120,"msg":"sql: no rows in result set","time":"2020-12-06T10:59:42Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"info","line":83,"msg":"stat /go/src/github.com/souhub/wecircles/web/img/user1: no such file or directory","time":"2020-12-06T11:00:09Z"}
-ult set","time":"2020-12-06T10:12:27Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_auth.go","level":"warning","line":120,"msg":"sql: no rows in result set","time":"2020-12-06T10:14:19Z"}
-m/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-06T10:10:40Z"}
-{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-06T10:10:42Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":17,"msg":"Invalid Session","time":"2020-12-15T02:03:14Z"}
+02:02:08Z"}
+"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-15T01:59:08Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-15T01:59:10Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-15T01:59:14Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-15T01:59:20Z"}
+{"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":152,"msg":"sql: no rows in result set","time":"2020-12-15T01:59:25Z"}
+33,"msg":"sql: no rows in result set","time":"2020-12-06T10:10:42Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-06T10:10:42Z"}
 {"file":"/go/src/github.com/souhub/wecircles/pkg/route/route_circle.go","level":"info","line":33,"msg":"sql: no rows in result set","time":"2020-12-06T10:11:21Z"}
 esult set","time":"2020-12-06T07:06:01Z"}

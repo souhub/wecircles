@@ -12,9 +12,9 @@
     </ul>
   </div> -->
   <div class="mb-5">
-    <h4 class="font-weight-bold">サークル</h4>
-        <a class="btn btn-success" href="/circle/manage">自分のサークル</a>
-        <a class="btn btn-outline-success" href="/circle/memberships">参加中のサークル</a>
+    <h4 class="font-weight-bold">ブース</h4>
+        <a class="btn btn-success" href="/circle/manage">自分のブース</a>
+        <a class="btn btn-outline-success" href="/circle/memberships">参加中のブース</a>
   </div>
 
   <div class="box">
@@ -23,12 +23,12 @@
       class="btn btn-outline-success"
       href="/circle?id={{.MyUser.UserIdStr}}"
       style="float: right"
-      >サークルを見る</a
+      >ブースを見る</a
     >
     <form action="/circle/update" method="post" enctype="multipart/form-data">
 
         <div class="form-group"  style="height:250px;">
-            <label class="font-weight-bold">サークル画像</label>
+            <label class="font-weight-bold">ブースのイメージ画像</label>
             <div style="display: block; height: 200px">
               <div>
                 {{if eq .Circle.ImagePath ""}}
@@ -97,7 +97,7 @@
 
         <div class="form-group">
           <label for="name" class="font-weight-bold"
-            >サークル名<span class="text-danger small"> 必須</span></label
+            >ブース名<span class="text-danger small"> 必須</span></label
           >
           <input
             type="text"
@@ -175,14 +175,14 @@
 
         <div class="form-group">
           <label for="twitter"
-            >サークル公式Twitter</label
+            >Twitter連携</label
           >
           <input
             type="text"
             name="twitter"
             class="form-control"
             value="{{.Circle.TwitterID}}"
-            placeholder="サークル公式TwitterアカウントがあればアカウントIDを入力してください。（例：@wecircles）"
+            placeholder="連携させたいTwitterアカウントがあればアカウントIDを入力してください。（例：@wecircles）"
           />
         </div>
       <button type="submit" class="btn btn-success mb-5 float-right">更新する</button>

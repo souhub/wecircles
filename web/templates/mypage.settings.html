@@ -13,14 +13,14 @@
 </div>
 {{$myUserID := .MyUser.Id}} {{$OwnerID := .User.Id}} {{if .MembershipValid}}
 {{template "circle-navbar" .}} {{if eq $myUserID $OwnerID}}
-<a class="btn btn-outline-success" href="/circle/manage">サークル管理へ</a>
+<a class="btn btn-outline-success" href="/circle/manage">ブース管理へ</a>
 <br />
 <br />
 {{else}}
 <a
   class="btn btn-outline-danger"
   href="/circle/membership/delete?id={{.Circle.OwnerIDStr}}"
-  >このサークルを退会する</a
+  >このブースから退出する</a
 >
 <br /><br />
 {{end}} {{end}} {{end}}

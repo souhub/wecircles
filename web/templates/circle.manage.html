@@ -1,9 +1,9 @@
 {{define "content"}}
 
 <div class="mb-5">
-  <h4 class="font-weight-bold">サークル</h4>
-      <a class="btn btn-success" href="/circle/manage">自分のサークル</a>
-      <a class="btn btn-outline-success" href="/circle/memberships">参加中のサークル</a>
+  <h4 class="font-weight-bold">ブース</h4>
+      <a class="btn btn-success" href="/circle/manage">自分のブース</a>
+      <a class="btn btn-outline-success" href="/circle/memberships">参加中のブース</a>
 </div>
 
   {{if eq .Circle.Name ""}}
@@ -15,10 +15,10 @@
     >参加するサークルを見つける</a
   >
   </div> -->
-<p class="text-center">まだサークルを作成していません。</p>
+<p class="text-center">まだブースを作成していません。</p>
 <a href="/circle?id={{.User.UserIdStr}}" style="text-decoration: none"
   ><button type="submit" class="btn btn-outline-success btn-block">
-    自分のサークルを作りましょう！
+    自分のブースを作りましょう！
   </button></a
 >
 {{else}}
@@ -30,10 +30,10 @@
       class="btn btn-outline-success"
       href="/circle?id={{.User.UserIdStr}}"
       style="float: right"
-      >サークルを見る</a
+      >ブースを見る</a
     >
     <div>
-      <label class="font-weight-bold">サークル画像</label>
+      <label class="font-weight-bold">ブースのイメージ画像</label>
       <p>
         {{if eq .Circle.ImagePath ""}}
         <img
@@ -62,7 +62,7 @@
     </div>
 
     <div>
-      <label class="font-weight-bold">サークル名</label>
+      <label class="font-weight-bold">ブース名</label>
       <p>{{.Circle.Name}}</p>
     </div>
 
