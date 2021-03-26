@@ -42,3 +42,28 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
 	}
 }
+
+func About(w http.ResponseWriter, r *http.Request) {
+	session, err := session(w, r)
+	data := Data{}
+	if err != nil {
+		tmp := parseTemplateFiles("layout", "about", "navbar.public")
+		if err := tmp.Execute(w, data); err != nil {
+			logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		}
+		return
+	}
+	myUser, err := session.User()
+	if err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+		return
+	}
+	data = Data{
+		MyUser:          myUser,
+		ImagePathPrefix: os.Getenv("IMAGE_PATH"),
+	}
+	tmp := parseTemplateFiles("layout", "about", "navbar.private")
+	if err := tmp.Execute(w, data); err != nil {
+		logging.Warn(err, logging.GetCurrentFile(), logging.GetCurrentFileLine())
+	}
+}

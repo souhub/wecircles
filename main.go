@@ -14,6 +14,7 @@ func main() {
 	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("web/css/"))))
 
 	http.HandleFunc("/", route.Index)
+	http.HandleFunc("/about", route.About)
 	http.HandleFunc("/login", route.Login)
 	http.HandleFunc("/signup", route.Signup)
 	http.HandleFunc("/signup_account", route.SignupAccount)
